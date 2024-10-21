@@ -19,7 +19,7 @@ namespace HRSystem
             "    <title>HttpListener Example</title>" +
             "  </head>" +
             "  <body>" +
-            "    <p>Page Views: {0}</p>" +
+            "    <p>Page Crap: {0}</p>" +
             "    <form method=\"post\" action=\"shutdown\">" +
             "      <input type=\"submit\" value=\"Shutdown\" {1}>" +
             "    </form>" +
