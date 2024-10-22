@@ -48,7 +48,7 @@ namespace HRSystem
                 if (req.Url.AbsolutePath == "/style.css")
                 {
                     // Serve the CSS file
-                    string cssData = File.ReadAllText("style.css");
+                    string cssData = File.ReadAllText(Path.Combine(baseDirectory,"Resources/style.css"));
                     byte[] data = Encoding.UTF8.GetBytes(cssData);
                     resp.ContentType = "text/css";
                     resp.ContentEncoding = Encoding.UTF8;
