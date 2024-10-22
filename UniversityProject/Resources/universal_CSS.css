@@ -1,0 +1,159 @@
+/* Universal Styles */
+
+/*
+    Dark Purple: 160F29
+    Dark Green: 246A73
+    Cyan: 368F8B
+    Champange: F3DFC1
+    Desert sand: DDBEA8
+
+    Font: Roboto
+*/
+
+.universal_headerBanner {
+    background-color: white;
+    height: 100px;
+    position: relative;
+    z-index: 1000;
+    margin: 0;
+    font-family: Roboto;
+}
+
+.universal_h1 {
+    color: black;
+    margin: 0;
+    padding: 3px;
+    font-family: Roboto;
+}
+
+.universal_h2 {
+    color: black;
+    margin: 0;
+    padding: 5px;
+    font-family: Roboto;
+}
+
+.universal_h3 {
+    color: black;
+    margin: 0;
+    padding: 7px;
+    font-family: Roboto;
+}
+
+.universal_h4 {
+    color: black;
+    margin: 0;
+    padding: 8px;
+    font-family: Roboto;
+}
+
+.universal_p_white {
+    color: white;
+    margin: 0;
+    padding: 0px;
+    font-family: Roboto;
+}
+
+.universal_p_black {
+    color: black;
+    margin: 0;
+    padding: 0px;
+    font-family: Roboto;
+}
+
+.universal_background {
+    background-color: #246A73; 
+}
+
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.wrapper {
+    background-color: #246A73;
+    flex: 1; 
+    display: flex;
+    flex-direction: column; 
+}
+
+nav {
+    margin-top: 10px;
+}
+
+ul {
+    background-color: #333;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+li {
+    flex: 1;
+}
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        background-color: #3C3F40;
+        color: white;
+        font-family: Roboto;
+        border: 1px solid transparent;
+    }
+
+        li a:hover {
+            background-color: #444;
+            border: 1px solid black;
+        }
+
+.content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.recruitmentForm {
+    margin: auto;
+    width: 50%;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    position: relative;
+    top: 20px;
+    background-color: white;
+    
+}
+
+.jobSearchForm {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #f5f5f5;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+    input[type="text"]:hover,
+    select:hover,
+    input[type="text"]:focus,
+    select:focus {
+        border-color: #E0E0E0;
+        background-color: #E0E0E0;
+        outline: none;
+    }

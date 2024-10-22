@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="universal_CSS.css"> <!-- Universal styles -->
+    <title>Global HR Systems - Recruitment</title>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Wrapper div for uniform background -->
+        <header class="universal_headerBanner">
+            <h1 class="universal_h1">Global HR Systems</h1>
+            <h4 class="universal_h4">Permission Level = ETC ETC</h4>
+            <nav>
+                <ul>
+                    <li><a href="homePage.html">Home</a></li>
+                    <li><a class="active" href="analyticsPage.html">Analytics</a></li>
+                    <li><a href="recruitmentPage.html">Recruitment</a></li>
+                    <li><a href="#contact">Leave Requests</a></li>
+                    <li><a href="#about">My Profile</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="content">
+            <div class="recruitmentForm">
+                <form class="jobSearchForm">
+                    <div>
+                        <label for="fname">Keywords:</label><br>
+                        <input type="text" id="fname" name="fname" required>
+                    </div>
+
+                    <div>
+                        <label for="jobTypes">Job Type:</label><br>
+                        <select name="jobTypes" id="jobTypes" required>
+                            <option value="" disabled selected>Select a job type</option>
+                            <option value="jobExample1">Job Example 1</option>
+                            <option value="jobExample2">Job Example 2</option>
+                            <option value="jobExample3">Job Example 3</option>
+                            <option value="jobExample4">Job Example 4</option>
+                            <option value="jobExample5">Job Example 5</option>
+                            <option value="jobExample6">Job Example 6</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="jobLocations">Location:</label><br>
+                        <select name="locations" id="jobLocations" required>
+                            <option value="" disabled selected>Select a location</option>
+                            <option value="barnsley">Barnsley</option>
+                            <option value="sheffield">Sheffield</option>
+                            <option value="leeds">Leeds</option>
+                            <option value="manchester">Manchester</option>
+                            <option value="london">London</option>
+                        </select>
+                    </div>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

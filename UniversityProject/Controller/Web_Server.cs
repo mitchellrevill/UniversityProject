@@ -51,10 +51,10 @@ namespace HRSystem
                     // Write out to the response stream
                     await resp.OutputStream.WriteAsync(data, 0, data.Length);
                 }
-                else if (requestedPath == "Home.html") // Check for specific HTML file
+                else if (requestedPath == "homePage.html") // Check for specific HTML file
                 {
                     // Serve the Home.html file with dynamic content
-                    string htmlContent = File.ReadAllText(Path.Combine(resourcesDirectory, "Home.html"))
+                    string htmlContent = File.ReadAllText(Path.Combine(resourcesDirectory, "homePage.html"))
                         .Replace("{PermissionLevel}", PermissionLevel);
                     byte[] data = Encoding.UTF8.GetBytes(htmlContent);
                     resp.ContentType = "text/html";
