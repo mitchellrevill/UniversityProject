@@ -1,18 +1,63 @@
-
-<html>
-<link rel="stylesheet" href="style.css">
-<header>
-    <h1>Global HR Systems</h1>
-    <h4>Permission Level = ETC ETC</h4>
-    <ul>
-        <li><a class="active" href="anal.html">Analyltics</a></li>
-        <li><a href="recruitment.html">Recruitment</a></li>
-        <li><a href="#contact">Leave Requests</a></li>
-        <li><a href="#about">My Profile</a></li>
-        <li><a href="Home.html">Home</a></li>
-    </ul>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="recruitment.css">
+    <title>Global HR Systems</title>
+</head>
 <body>
+    <header class="headBanner">
+        <h1>Global HR Systems</h1>
+        <h4>Permission Level = ETC ETC</h4>
+        <nav>
+            <ul>
+                <li><a href="Home.html">Home</a></li>
+                <li><a class="active" href="anal.html">Analytics</a></li>
+                <li><a href="recruitment.html">Recruitment</a></li>
+                <li><a href="#contact">Leave Requests</a></li>
+                <li><a href="#about">My Profile</a></li>
+            </ul>
+        </nav>
+    </header>
 
+
+    <div class="content">
+        <!-- Add this wrapper for flex layout -->
+        <div class="recruitmentForm">
+            <form class="jobSearchForm">
+                <div>
+                    <label for="fname">Keywords:</label><br>
+                    <input type="text" id="fname" name="fname">
+                </div>
+
+                <div>
+                    <label for="jobTypes">Job Type:</label><br>
+                    <select name="jobTypes" id="jobTypes">
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="jobLocations">Location:</label><br>
+                    <select name="locations" id="jobLocations">
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
