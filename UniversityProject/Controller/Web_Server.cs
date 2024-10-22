@@ -12,12 +12,9 @@ namespace HRSystem
         public static string url = "http://localhost:8000/";
         public static int requestCount = 0;
 
-        // Declare baseDirectory and FilePath as static fields
+        // Declare baseDirectory as a static field
         private static string baseDirectory = GetBaseDirectory();
-        private static string filePath = Path.Combine(baseDirectory, "Resources/Home.html"); // Corrected the path
-
-        // Read the HTML file data into a static field
-        public static string pageData = File.ReadAllText(filePath);
+        private static string resourcesDirectory = Path.Combine(baseDirectory, "Resources");
 
         // For demo purposes, let's assume the permission level is stored in a variable
         public static string PermissionLevel = "Admin";
@@ -26,17 +23,12 @@ namespace HRSystem
         {
             bool runServer = true;
 
-            // While a user hasn't visited the `shutdown` url, keep on handling requests
             while (runServer)
             {
-                // Will wait here until we hear from a connection
                 HttpListenerContext ctx = await listener.GetContextAsync();
-
-                // Peel out the requests and response objects
                 HttpListenerRequest req = ctx.Request;
                 HttpListenerResponse resp = ctx.Response;
 
-                // Print out some info about the request
                 Console.WriteLine("Request #: {0}", ++requestCount);
                 Console.WriteLine(req.Url.ToString());
                 Console.WriteLine(req.HttpMethod);
@@ -44,27 +36,39 @@ namespace HRSystem
                 Console.WriteLine(req.UserAgent);
                 Console.WriteLine();
 
-                // Check the URL requested
-                if (req.Url.AbsolutePath == "/style.css")
+                // Get the requested file path based on the URL
+                string requestedPath = req.Url.AbsolutePath.TrimStart('/'); // Remove leading slash
+                string filePath = Path.Combine(resourcesDirectory, requestedPath); // Combine with the resources directory
+
+                if (File.Exists(filePath))
                 {
-                    // Serve the CSS file
-                    string cssData = File.ReadAllText(Path.Combine(baseDirectory,"Resources/style.css"));
-                    byte[] data = Encoding.UTF8.GetBytes(cssData);
-                    resp.ContentType = "text/css";
-                    resp.ContentEncoding = Encoding.UTF8;
+                    // Serve the requested file
+                    string contentType = GetContentType(filePath);
+                    byte[] data = File.ReadAllBytes(filePath);
+                    resp.ContentType = contentType;
                     resp.ContentLength64 = data.LongLength;
+
+                    // Write out to the response stream
+                    await resp.OutputStream.WriteAsync(data, 0, data.Length);
+                }
+                else if (requestedPath == "Home.html") // Check for specific HTML file
+                {
+                    // Serve the Home.html file with dynamic content
+                    string htmlContent = File.ReadAllText(Path.Combine(resourcesDirectory, "Home.html"))
+                        .Replace("{PermissionLevel}", PermissionLevel);
+                    byte[] data = Encoding.UTF8.GetBytes(htmlContent);
+                    resp.ContentType = "text/html";
+                    resp.ContentLength64 = data.LongLength;
+
+                    // Write out to the response stream
                     await resp.OutputStream.WriteAsync(data, 0, data.Length);
                 }
                 else
                 {
-                    // Serve the Home.html file with dynamic content
-                    string htmlContent = pageData.Replace("{PermissionLevel}", PermissionLevel);
-                    byte[] data = Encoding.UTF8.GetBytes(htmlContent);
-                    resp.ContentType = "text/html";
-                    resp.ContentEncoding = Encoding.UTF8;
-                    resp.ContentLength64 = data.LongLength;
-
-                    // Write out to the response stream (asynchronously), then close it
+                    // File not found - send a 404 response
+                    resp.StatusCode = (int)HttpStatusCode.NotFound;
+                    byte[] data = Encoding.UTF8.GetBytes("404 Not Found");
+                    resp.ContentLength64 = data.Length;
                     await resp.OutputStream.WriteAsync(data, 0, data.Length);
                 }
 
@@ -75,17 +79,14 @@ namespace HRSystem
 
         public static void Main(string[] args)
         {
-            // Create a Http server and start listening for incoming connections
             listener = new HttpListener();
             listener.Prefixes.Add(url);
             listener.Start();
             Console.WriteLine("Listening for connections on {0}", url);
 
-            // Handle requests
             Task listenTask = HandleIncomingConnections();
             listenTask.GetAwaiter().GetResult();
 
-            // Close the listener
             listener.Close();
         }
 
@@ -94,6 +95,23 @@ namespace HRSystem
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             return Directory.GetParent(currentDirectory).Parent.Parent.FullName;
+        }
+
+        // Helper method to determine the content type based on the file extension
+        private static string GetContentType(string filePath)
+        {
+            string extension = Path.GetExtension(filePath).ToLowerInvariant();
+            return extension switch
+            {
+                ".html" => "text/html",
+                ".css" => "text/css",
+                ".jpg" => "image/jpeg",
+                ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".gif" => "image/gif",
+                ".svg" => "image/svg+xml",
+                _ => "application/octet-stream",
+            };
         }
     }
 }
