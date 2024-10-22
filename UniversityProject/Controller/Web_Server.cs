@@ -4,17 +4,19 @@ using System.Text;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace HRSystem 
+namespace HRSystem
 {
     class HttpServer
     {
         public static HttpListener listener;
         public static string url = "http://localhost:8000/";
-        public static int pageViews = 0;
         public static int requestCount = 0;
+        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
         public static string pageData = File.ReadAllText("Home.html");
 
 
+        // For demo purposes, let's assume the permission level is stored in a variable
+        public static string PermissionLevel = "Admin";
 
         public static async Task HandleIncomingConnections()
         {
@@ -38,30 +40,34 @@ namespace HRSystem
                 Console.WriteLine(req.UserAgent);
                 Console.WriteLine();
 
-                // If `shutdown` url requested w/ POST, then shutdown the server after serving the page
-                if ((req.HttpMethod == "POST") && (req.Url.AbsolutePath == "/shutdown"))
+                // Check the URL requested
+                if (req.Url.AbsolutePath == "/style.css")
                 {
-                    Console.WriteLine("Shutdown requested");
-                    runServer = false;
+                    // Serve the CSS file
+                    string cssData = File.ReadAllText("style.css");
+                    byte[] data = Encoding.UTF8.GetBytes(cssData);
+                    resp.ContentType = "text/css";
+                    resp.ContentEncoding = Encoding.UTF8;
+                    resp.ContentLength64 = data.LongLength;
+                    await resp.OutputStream.WriteAsync(data, 0, data.Length);
+                }
+                else
+                {
+                    // Serve the Home.html file with dynamic content
+                    string htmlContent = pageData.Replace("{PermissionLevel}", PermissionLevel);
+                    byte[] data = Encoding.UTF8.GetBytes(htmlContent);
+                    resp.ContentType = "text/html";
+                    resp.ContentEncoding = Encoding.UTF8;
+                    resp.ContentLength64 = data.LongLength;
+
+                    // Write out to the response stream (asynchronously), then close it
+                    await resp.OutputStream.WriteAsync(data, 0, data.Length);
                 }
 
-                // Make sure we don't increment the page views counter if `favicon.ico` is requested
-                if (req.Url.AbsolutePath != "/favicon.ico")
-                    pageViews += 1;
-
-                // Write the response info
-                string disableSubmit = !runServer ? "disabled" : "";
-                byte[] data = Encoding.UTF8.GetBytes(String.Format(pageData, pageViews, disableSubmit));
-                resp.ContentType = "text/html";
-                resp.ContentEncoding = Encoding.UTF8;
-                resp.ContentLength64 = data.LongLength;
-
-                // Write out to the response stream (asynchronously), then close it
-                await resp.OutputStream.WriteAsync(data, 0, data.Length);
+                // Close the response
                 resp.Close();
             }
         }
-
 
         public static void Main(string[] args)
         {
