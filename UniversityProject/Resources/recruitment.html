@@ -3,61 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="recruitment.css">
     <title>Global HR Systems</title>
 </head>
 <body>
-    <header>
+    <header class="headBanner">
         <h1>Global HR Systems</h1>
         <h4>Permission Level = ETC ETC</h4>
-        <ul>
-            <li><a class="active" href="anal.html">Analytics</a></li>
-            <li><a href="recruitment.html">Recruitment</a></li>
-            <li><a href="#contact">Leave Requests</a></li>
-            <li><a href="#about">My Profile</a></li>
-            <li><a href="Home.html">Home</a></li>
-        </ul>
+        <nav>
+            <ul>
+                <li><a href="Home.html">Home</a></li>
+                <li><a class="active" href="anal.html">Analytics</a></li>
+                <li><a href="recruitment.html">Recruitment</a></li>
+                <li><a href="#contact">Leave Requests</a></li>
+                <li><a href="#about">My Profile</a></li>
+            </ul>
+        </nav>
     </header>
-    <form>
 
-        <!-- Keyword search to filter job titles, location ect -->
-        <label for="fname">Keywords:</label><br>
-        <input type="text" id="fname" name="fname"><br>
 
-        <label for="Job Type">Location:</label><br>
-         <select name="jobTypes" id="jobTypes">
-             <option value="jobExample1">jobExample1</option>
-             <option value="jobExample2">jobExample2</option>
-         </select>
+    <div class="content">
+        <!-- Add this wrapper for flex layout -->
+        <div class="recruitmentForm">
+            <form class="jobSearchForm">
+                <div>
+                    <label for="fname">Keywords:</label><br>
+                    <input type="text" id="fname" name="fname">
+                </div>
 
-            <!-- Location downdown to filter locations -->
-            <label for="location">Location:</label>
-            <br>
-            <select name="locations" id="jobLocations">
-                <option value="barnsley">Barnsley</option>
-                <option value="bradford">Bradford</option>
-                <option value="halifax">Halifax</option>
-                <option value="huddersfield">Huddersfield</option>
-                <option value="leeds">Leeds</option>
-                <option value="sheffield">Sheffield</option>
-                <option value="wakefield">Wakefield</option>
-                <option value="york">York</option>
-                <option value="harrogate">Harrogate</option>
-                <option value="scunthorpe">Scunthorpe</option>
-                <option value="doncaster">Doncaster</option>
-                <option value="guisborough">Guisborough</option>
-                <option value="northallerton">Northallerton</option>
-                <option value="filey">Filey</option>
-                <option value="pudsey">Pudsey</option>
-                <option value="selby">Selby</option>
-                <option value="whitby">Whitby</option>
-                <option value="thirsk">Thirsk</option>
-                <option value="knaresborough">Knaresborough</option>
-                <option value="scarborough">Scarborough</option>
-                <option value="tadcaster">Tadcaster</option>
-                <option value="tresham">Tresham</option>
+                <div>
+                    <label for="jobTypes">Job Type:</label><br>
+                    <select name="jobTypes" id="jobTypes">
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                        <option value="jobExample1">jobExample1</option>
+                    </select>
+                </div>
 
-            </select>
-    </form>
+                <div>
+                    <label for="jobLocations">Location:</label><br>
+                    <select name="locations" id="jobLocations">
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                        <option value="barnsley">Barnsley</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
