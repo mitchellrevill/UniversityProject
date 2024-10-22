@@ -9,7 +9,7 @@ namespace HRSystem
     class HttpServer
     {
         public static HttpListener listener;
-        public static string url = "http://localhost:8000/home.html";
+        public static string url = "http://localhost:8000/";
         public static int requestCount = 0;
 
         // Declare baseDirectory as a static field
