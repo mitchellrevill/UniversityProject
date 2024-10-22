@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace UniversityProject.Model
 {
+    //DEPARTMENTID
+    //DEPARTMENT NAME
+    //DESC
     internal class Department
     {
     }

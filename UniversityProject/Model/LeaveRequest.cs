@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace UniversityProject.Model
 {
+    // START DATE
+    // END DATE
+    // HOURS USED
+
     internal class LeaveRequest
     {
     }

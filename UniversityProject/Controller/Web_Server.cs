@@ -3,6 +3,8 @@ using System.IO;
 using System.Text;
 using System.Net;
 using System.Threading.Tasks;
+using UniversityProject.Data;
+using UniversityProject.Model;
 
 namespace HRSystem
 {
@@ -79,11 +81,11 @@ namespace HRSystem
 
         public static void Main(string[] args)
         {
+
             listener = new HttpListener();
             listener.Prefixes.Add(url);
             listener.Start();
             Console.WriteLine("Listening for connections on {0}", url);
-
             Task listenTask = HandleIncomingConnections();
             listenTask.GetAwaiter().GetResult();
 
@@ -115,3 +117,34 @@ namespace HRSystem
         }
     }
 }
+/**
+//string dbPath = Path.Combine(resourcesDirectory, "database.db");
+var employeeDb = new EmployeeDatabase(dbPath);
+
+
+var newEmployee = new Employee
+{
+    EmployeeId = "EMPLOYEE123",
+    FirstName = "Mitchell",
+    LastName = "Revill",
+    CompanyEmail = "123@123.com",
+    PersonalEmail = "321@321.com",
+    PhoneNumber = "07512321321",
+    CountryId = "Country123",
+    DepartmentId = "Department123",
+    ManagerId = "Manager123",
+    RegionId = "Region123",
+    EmploymentType = "FullTime",
+    StartDate = DateTime.Now, // or any specific date
+    Salary = 50000.00m, // example salary
+    Benefits = "Health, Dental, Vision",
+    Status = Employee.EmployeeStatus.FullTime
+};
+
+
+employeeDb.InsertEmployee(newEmployee);
+Console.WriteLine("Employee inserted successfully.");
+
+// Retrieve and display all employees
+employeeDb.GetAllEmployees();
+/**/

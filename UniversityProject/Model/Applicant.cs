@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace UniversityProject.Model
 {
+
+    //FIRSTNAME LASTNAME GENDER COVERLETTER CVPDFCONTENT CVDPFNAME
+
+
     internal class Applicant
     {
     }
