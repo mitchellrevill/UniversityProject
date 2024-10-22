@@ -1,0 +1,33 @@
+body {
+  background-color: #f4f4f4;
+}
+
+h1 {
+  color: #333;
+}
+
+h4 {
+  color: #666;
+}
+
+ul {
+  background-color: #333;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+

@@ -11,9 +11,13 @@ namespace HRSystem
         public static HttpListener listener;
         public static string url = "http://localhost:8000/";
         public static int requestCount = 0;
-        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        public static string pageData = File.ReadAllText("Home.html");
 
+        // Declare baseDirectory and FilePath as static fields
+        private static string baseDirectory = GetBaseDirectory();
+        private static string filePath = Path.Combine(baseDirectory, "Resources/Home.html"); // Corrected the path
+
+        // Read the HTML file data into a static field
+        public static string pageData = File.ReadAllText(filePath);
 
         // For demo purposes, let's assume the permission level is stored in a variable
         public static string PermissionLevel = "Admin";
@@ -83,6 +87,13 @@ namespace HRSystem
 
             // Close the listener
             listener.Close();
+        }
+
+        // Static method to get the base directory
+        private static string GetBaseDirectory()
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            return Directory.GetParent(currentDirectory).Parent.Parent.FullName;
         }
     }
 }
