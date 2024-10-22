@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace UniversityProject.Model
 {
+
+    // TAX 
+    // EXTRA DEDUCTIONS
+    // PayrollID
+    // tax/number code
+    // Base Salary 
+    // THIS PAYCHECK
+    // REoccurance
     internal class Payroll
     {
     }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace UniversityProject.Model
 {
+
+    // REGION NAME
+    // COUNTRY ID
     internal class Region
     {
     }

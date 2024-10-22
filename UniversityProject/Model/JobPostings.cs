@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace UniversityProject.Model
 {
+    //TITLE 
+    //Salary
+    //JOB description/
+    //Jobtype
+    //Hours
+    
+
     internal class JobPostings
     {
     }

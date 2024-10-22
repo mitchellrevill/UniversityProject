@@ -8,12 +8,23 @@ namespace UniversityProject.Model
 {
     public class Employee
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Role { get; set; }
-        public string Location { get; set; }
-        public string Department { get; set; }
+
+        // EMPLOYEE WILL NEED LEAVE HOURS INCLUDED 
+        public string EmployeeId { get; set; } 
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string CompanyEmail { get; set; }
+        public string PersonalEmail { get; set; }
+        public string PhoneNumber { get; set; }
+        public string CountryId { get; set; }
+        public string DepartmentId { get; set; }
+        public string ManagerId { get; set; }
+        public string RegionId { get; set; }
+        public string EmploymentType { get; set; }
+        public DateTime StartDate { get; set; }
+        public decimal Salary { get; set; }
+        public string Benefits { get; set; }
+
         public EmployeeStatus Status { get; set; }
 
         public enum EmployeeStatus
