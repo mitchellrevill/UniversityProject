@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniversityProject.Model;
-namespace UniversityProject.Services
+namespace UniversityProject.Repository
 {
     public class RecruitmentSQL
     {

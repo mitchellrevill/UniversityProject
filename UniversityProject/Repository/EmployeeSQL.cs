@@ -2,7 +2,7 @@
 using System;
 using UniversityProject.Model;
 
-namespace UniversityProject.Data
+namespace UniversityProject.Repository
 {
     public class EmployeeDatabase
     {

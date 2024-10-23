@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniversityProject.Services
+namespace UniversityProject.Repository
 {
-    internal class LeaveRequestService
+    internal class PayrollService
     {
     }
 }
