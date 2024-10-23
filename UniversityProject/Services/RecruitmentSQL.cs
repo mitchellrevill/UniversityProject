@@ -61,8 +61,9 @@ namespace UniversityProject.Services
                 }
             }
         }
-        public void GetAllJobPostings()
+        public List<JobPostings> GetAllJobPostings()
         {
+            var jobs = new List<JobPostings>();
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
@@ -73,7 +74,7 @@ namespace UniversityProject.Services
                 {
                     while (reader.Read())
                     {
-                        var employee = new JobPostings
+                        var job = new JobPostings
                         {
                             postingId = reader.GetString(0),
                             Title = reader.GetString(1),
@@ -83,10 +84,27 @@ namespace UniversityProject.Services
                             Salary = reader.GetString(5)
 
                         };
+                        jobs.Add(job);
                     }
+                }
+            }
+            return jobs;
+        }
+        public void DeleteJob(string postingId)
+        {
+            using (var connection = new SqliteConnection(_connectionString))
+            {
+                connection.Open();
+
+                string deleteQuery = "DELETE FROM JobPostings WHERE postingId = @postingId";
+                using (var command = new SqliteCommand(deleteQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@postingId", postingId);
+                    command.ExecuteNonQuery();
                 }
             }
         }
     }
+
 }
         
