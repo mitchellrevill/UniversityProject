@@ -45,8 +45,12 @@ namespace HRSystem
             await resp.OutputStream.WriteAsync(data, 0, data.Length);
             Console.WriteLine("Reached method end");
         }
-
-
+        private static async Task InsertEmployee(HttpListenerRequest req, HttpListenerResponse resp)
+        {
+            using (var reader = new StreamReader(req.InputStream, req.ContentEncoding))
+            {
+                string json = await reader.ReadToEndAsync();
+                var newEmployee = JsonConvert.DeserializeObject<Employee>(json);
 
 
 
