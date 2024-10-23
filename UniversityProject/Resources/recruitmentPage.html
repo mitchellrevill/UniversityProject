@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="universal_CSS.css"> <!-- Universal styles -->
+    <link rel="stylesheet" href="universal_CSS.css">
     <title>Global HR Systems - Recruitment</title>
 </head>
 <body>
     <div class="wrapper">
-        <!-- Wrapper div for uniform background -->
         <header class="universal_headerBanner">
             <h1 class="universal_h1">Global HR Systems</h1>
             <h4 class="universal_h4">Permission Level = ETC ETC</h4>
@@ -25,14 +24,14 @@
 
         <div class="content">
             <div class="recruitmentForm">
-                <form class="jobSearchForm">
+                <div class="jobSearchForm">
                     <div>
-                        <label for="fname">Keywords:</label><br>
-                        <input type="text" id="fname" name="fname" required>
+                        <label for="keywords">Keywords:</label>
+                        <input type="text" id="keywords" name="keywords" placeholder="Enter job keywords" required>
                     </div>
 
                     <div>
-                        <label for="jobTypes">Job Type:</label><br>
+                        <label for="jobTypes">Job Type:</label>
                         <select name="jobTypes" id="jobTypes" required>
                             <option value="" disabled selected>Select a job type</option>
                             <option value="jobExample1">Job Example 1</option>
@@ -45,7 +44,7 @@
                     </div>
 
                     <div>
-                        <label for="jobLocations">Location:</label><br>
+                        <label for="jobLocations">Location:</label>
                         <select name="locations" id="jobLocations" required>
                             <option value="" disabled selected>Select a location</option>
                             <option value="barnsley">Barnsley</option>
@@ -55,8 +54,9 @@
                             <option value="london">London</option>
                         </select>
                     </div>
-                    <button type="submit">Search</button>
-                </form>
+
+                    <button type="submit" aria-label="Search for jobs">Search</button>
+                </div>
             </div>
         </div>
     </div>
