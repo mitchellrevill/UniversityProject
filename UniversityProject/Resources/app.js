@@ -1,66 +1,53 @@
-async function loadEmployees() {
-    try {
-        const loadEmployeesResponse = await fetch('http://localhost:8000/GetAllEmployees');
+// Load employees from storage when the Employees page loads
+function loadEmployeesFromStorage() {
+    const employeesData = localStorage.getItem('employeesData');
 
-        if (!loadEmployeesResponse.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const employees = await loadEmployeesResponse.json();
-        console.log('Employees fetched:', employees);  
-        displayEmployees(employees);  
-
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-        alert('Failed to load employee data. Please try again later.'); 
+    if (employeesData) {
+        const employees = JSON.parse(employeesData);
+        displayEmployees(employees); // Call the display function with the parsed data
+    } else {
+        console.error('No employee data found in localStorage');
+        alert('Failed to load employee data. Please try again.');
     }
 }
 
 function displayEmployees(employees) {
-
-    // Get reference to the tbody of the table
     const tbody = document.querySelector('#jsonTable tbody');
 
-    console.log('Table body element:', tbody); 
-
-    if (!tbody) { 
+    if (!tbody) {
         console.error('Table body not found');
-        return; 
+        return;
     }
 
-    // Clear any existing rows in the tbody
-    tbody.innerHTML = '';
+    tbody.innerHTML = ''; // Clear any existing rows
 
-    // Loop through each employee and create a table row
     employees.forEach(employee => {
         const tr = document.createElement('tr');
 
-        //EmployeeId
+        // Populate the table row with employee data
         const empIdTd = document.createElement('td');
         empIdTd.innerText = employee.EmployeeId;
         tr.appendChild(empIdTd);
 
-        //FirstName
         const firstNameTd = document.createElement('td');
         firstNameTd.innerText = employee.FirstName;
         tr.appendChild(firstNameTd);
 
-        //LastName
         const lastNameTd = document.createElement('td');
-        lastNameTd.innerText = employee.LastName;  // Corrected field name
+        lastNameTd.innerText = employee.LastName;
         tr.appendChild(lastNameTd);
 
-        //CompanyEmail
         const companyEmailTd = document.createElement('td');
-        companyEmailTd.innerText = employee.CompanyEmail;  // Corrected field name
+        companyEmailTd.innerText = employee.CompanyEmail;
         tr.appendChild(companyEmailTd);
 
-        //PersonalEmail
         const personalEmailTd = document.createElement('td');
-        personalEmailTd.innerText = employee.PersonalEmail;  // Corrected field name
+        personalEmailTd.innerText = employee.PersonalEmail;
         tr.appendChild(personalEmailTd);
 
-        // Append the row to the tbody
         tbody.appendChild(tr);
     });
 }
+
+// Trigger loading of employees when employeesPage loads
+window.addEventListener('load', loadEmployeesFromStorage);
