@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UniversityProject.Model
 {
-
-    // COUUNTRYID
-    //COUNTRY NAME
-    //COUNTRY CURRENCY
-    //ARRAY OF LEGAL REQ, EG TAX MINIMUM WAGE 
-    //MINIMUM LEAVE 
-
-
     internal class Country
     {
+        public int CountryId { get; set; }
+        public string CountryName { get; set; }
+        public string CountryCurrency { get; set; }
+        public List<string> LegalRequirements { get; set; }
+        public int MinimumLeave { get; set; }
+
+        public Country()
+        {
+            LegalRequirements = new List<string>();
+        }
     }
 }

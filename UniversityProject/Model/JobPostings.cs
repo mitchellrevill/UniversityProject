@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UniversityProject.Model
 {
-    //TITLE 
-    //Salary
-    //JOB description/
-    //Jobtype
-    //Hours
-    
-
     internal class JobPostings
     {
+        public string Title { get; set; }
+        public decimal Salary { get; set; }
+        public string JobDescription { get; set; }
+        public string JobType { get; set; }
+        public int Hours { get; set; }
     }
 }
