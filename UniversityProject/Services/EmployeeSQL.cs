@@ -79,8 +79,10 @@ namespace UniversityProject.Data
             }
         }
 
-        public void GetAllEmployees()
+        public List<Employee> GetAllEmployees()
         {
+            var employees = new List<Employee>();
+
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
@@ -110,11 +112,14 @@ namespace UniversityProject.Data
                             Status = (Employee.EmployeeStatus)reader.GetInt32(14)
                         };
 
-                        Console.WriteLine($"ID: {employee.EmployeeId}, Name: {employee.FirstName} {employee.LastName}, Company Email: {employee.CompanyEmail}, Personal Email: {employee.PersonalEmail}, Phone: {employee.PhoneNumber}, Country: {employee.CountryId}, Department: {employee.DepartmentId}, Manager: {employee.ManagerId}, Region: {employee.RegionId}, Employment Type: {employee.EmploymentType}, Start Date: {employee.StartDate}, Salary: {employee.Salary}, Benefits: {employee.Benefits}, Status: {employee.Status}");
+                        employees.Add(employee);
                     }
                 }
             }
+
+            return employees;
         }
+
 
         public Employee GetEmployeeById(string employeeId)
         {

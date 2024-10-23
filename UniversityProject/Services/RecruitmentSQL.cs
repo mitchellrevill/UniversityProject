@@ -61,6 +61,32 @@ namespace UniversityProject.Services
                 }
             }
         }
+        public void GetAllJobPostings()
+        {
+            using (var connection = new SqliteConnection(_connectionString))
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT * FROM JobPostings";
+                using (var command = new SqliteCommand(selectQuery, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var employee = new JobPostings
+                        {
+                            postingId = reader.GetString(0),
+                            Title = reader.GetString(1),
+                            JobDescription = reader.GetString(2),
+                            JobType = reader.GetString(3),
+                            Hours = reader.GetString(4),
+                            Salary = reader.GetString(5)
+
+                        };
+                    }
+                }
+            }
+        }
     }
 }
         
