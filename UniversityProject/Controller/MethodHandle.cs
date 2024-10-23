@@ -14,12 +14,15 @@ namespace HRSystem
         public static async Task HandleRequest(HttpListenerRequest req, HttpListenerResponse resp)
         {
             string requestedPath = req.Url.AbsolutePath.TrimStart('/');
-            if (req.HttpMethod == "POST" && requestedPath == "insertEmployee")
+            Console.WriteLine(requestedPath);
+            if (requestedPath == "insertEmployee" && req.HttpMethod == "POST")
             {
                 await InsertEmployee(req, resp);
-            }else if(req.HttpMethod == "POST" && requestedPath == "GetAllEmployees")
+            }
+            else if (requestedPath == "GetAllEmployees" && req.HttpMethod == "GET")
             {
-                GetAllEmployees(req, resp);
+                Console.WriteLine("Reached method Start");
+                await GetAllEmployees(req, resp);
             }
             else
             {
@@ -27,23 +30,22 @@ namespace HRSystem
             }
         }
 
+
         private static async Task GetAllEmployees(HttpListenerRequest req, HttpListenerResponse resp)
         {
-            using (var reader = new StreamReader(req.InputStream, req.ContentEncoding))
-            {
-                string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
-                var employeeDb = new EmployeeDatabase(dbPath);
-                var employees = employeeDb.GetAllEmployees();
+            string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
+            var employeeDb = new EmployeeDatabase(dbPath);
+            var employees = employeeDb.GetAllEmployees();
 
-                string jsonResponse = JsonConvert.SerializeObject(employees);
+            string jsonResponse = JsonConvert.SerializeObject(employees);
 
-               
-                byte[] data = Encoding.UTF8.GetBytes(jsonResponse);
-                resp.ContentType = "application/json";
-                resp.ContentLength64 = data.Length;
-                await resp.OutputStream.WriteAsync(data, 0, data.Length);
-            }
+            byte[] data = Encoding.UTF8.GetBytes(jsonResponse);
+            resp.ContentType = "application/json";
+            resp.ContentLength64 = data.Length;
+            await resp.OutputStream.WriteAsync(data, 0, data.Length);
+            Console.WriteLine("Reached method end");
         }
+
 
 
 
