@@ -104,7 +104,37 @@ namespace UniversityProject.Repository
                 }
             }
         }
+
+        public void UpdateJobPosting(JobPostings Post)
+        {
+            using (var connection = new SqliteConnection(_connectionString))
+            {
+                connection.Open();
+
+                string updateQuery = @"
+                UPDATE JobPostings
+                SET Title = @Title,
+                    Salary = @Salary,
+                    JobDescription = @JobDescription,
+                    JobType = @JobType,
+                    Hours = @Hours
+                WHERE postingId = @postingId";
+
+
+
+                using (var command = new SqliteCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@postingId", Post.postingId);
+                    command.Parameters.AddWithValue("@Title", Post.Title);
+                    command.Parameters.AddWithValue("@jobdesc", Post.JobDescription);
+                    command.Parameters.AddWithValue("@jobtype", Post.JobType);
+                    command.Parameters.AddWithValue("@hours", Post.Hours);
+                    command.Parameters.AddWithValue("@salary", Post.Salary);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 
 }
-        

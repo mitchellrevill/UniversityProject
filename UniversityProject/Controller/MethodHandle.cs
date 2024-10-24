@@ -10,13 +10,14 @@ public static class MethodHandle
     private static readonly string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
     private static readonly IEmployeeService employeeService = new EmployeeService(dbPath);
 
+    // Get requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _getRoutes =
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>
         {
         { "GetAllEmployees", GetEmployees },
-
         };
 
+    // Post requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _postRoutes =
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>
         {
@@ -24,7 +25,8 @@ public static class MethodHandle
         { "UpdateEmployees", UpdateEmployee },
         { "DeleteEmployee", DeleteEmployee },
         };
-    // 
+    
+
     public static async Task HandleRequest(HttpListenerRequest req, HttpListenerResponse resp)
     {
         string requestedPath = req.Url.AbsolutePath.TrimStart('/');
