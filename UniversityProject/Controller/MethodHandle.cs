@@ -16,6 +16,7 @@ public static class MethodHandle
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>
         {
         { "GetAllEmployees", GetEmployees },
+        { "GetAllJobPostings", GetAllJobPostings}
         };
 
     // Post requests
@@ -25,7 +26,11 @@ public static class MethodHandle
         { "insertEmployee", InsertEmployee },
         { "UpdateEmployees", UpdateEmployee },
         { "DeleteEmployee", DeleteEmployee },
+
+        { "InsertJobPosting", InsertJobPosting },
         };
+
+
     
 
     public static async Task HandleRequest(HttpListenerRequest req, HttpListenerResponse resp)
@@ -124,6 +129,41 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
+
+    private static async Task GetAllJobPostings(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        Console.WriteLine("Method start");
+        try
+        {
+            Console.WriteLine("Entered method");
+            var JobPostings = await jobPostingsService.GetAllJobPostingsAsync();
+            string jsonResponse = JsonConvert.SerializeObject(JobPostings);
+            await SendResponse(resp, jsonResponse, "application/json");
+            Console.WriteLine("Method finished");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task InsertJobPosting(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newJobPosting= await ReadRequestBodyAsync<JobPosting>(req);
+            await jobPostingsService.InsertJobPostingsAsync(newJobPosting);
+            await SendResponse(resp, "Employee inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+
+
+
 
 
 

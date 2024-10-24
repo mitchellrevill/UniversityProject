@@ -8,8 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controller\Resources\NewFolder\" />
-    <Folder Include="NewFolder\" />
+    <Compile Remove="Controller\Resources\**" />
+    <Compile Remove="NewFolder\**" />
+    <EmbeddedResource Remove="Controller\Resources\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="Controller\Resources\**" />
+    <None Remove="NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
