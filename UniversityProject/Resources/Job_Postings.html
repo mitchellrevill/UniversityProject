@@ -11,12 +11,12 @@
     <div class="wrapper">
         <header class="header">
             <h1>Global HR Systems</h1>
-            <h4>Permission Level = ETC ETC</h4>
+            <h4>Permission Level = ETC ETC</h4><br />
             <nav>
                 <ul>
                     <li><a href="Home.html">Home</a></li>
-                    <li><a href="Analytics.html">Analytics</a></li>
-                    <li><a class="active" href="Job_Postings.html">Recruitment</a></li>
+                    <li><a href="#Analytics">Analytics</a></li>
+                    <li><a class="active" href="Job_Postings.html">Jobs</a></li>
                     <li><a href="#contact">Leave Requests</a></li>
                     <li><a href="#about">My Profile</a></li>
                     <li><a href="Employees.html">Employees</a></li>
@@ -27,29 +27,72 @@
         <div class="content">
             <div class="job-form">
                 <h2>Search Jobs</h2>
-                <div>
-                    <label for="keywords">Keywords:</label>
-                    <input type="text" id="keywords" name="keywords" placeholder="Enter job keywords" required>
-                </div>
+                <div class="filter-container">
+                    <div>
+                        <label for="keywords">Keywords:</label>
+                        <input type="text" id="keywords" name="keywords" placeholder="Enter job keywords" required>
+                    </div>
 
-                <div>
-                    <label for="jobTypes">Job Type:</label>
-                    <select name="jobTypes" id="jobTypes" required>
-                        <option value="" disabled selected>Select a job type</option>
-                        <option value="jobExample1">Job Example 1</option>
-                        <option value="jobExample2">Job Example 2</option>
-                    </select>
-                </div>
+                    <div>
+                        <label for="jobTypes">Job Type:</label>
+                        <select name="jobTypes" id="jobTypes" required>
+                            <option value="" disabled selected>Select a job type</option>
+                            <option value="jobExample1">Job Example 1</option>
+                            <option value="jobExample2">Job Example 2</option>
+                        </select>
+                    </div>
 
-                <div>
-                    <label for="jobLocations">Location:</label>
-                    <select name="locations" id="jobLocations" required>
-                        <option value="" disabled selected>Select a location</option>
-                        <option value="sheffield">Sheffield</option>
-                    </select>
-                </div>
+                    <div>
+                        <label for="jobLocations">Location:</label>
+                        <select name="locations" id="jobLocations" required>
+                            <option value="" disabled selected>Select a location</option>
+                            <option value="sheffield">Sheffield</option>
+                        </select>
+                    </div>
 
-                <button type="submit">Search</button>
+                    <div class="filter-btn-container">
+                        <button type="submit">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Results Table -->
+            <div class="job-results">
+                <h2>Available Job Postings</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Job Type</th>
+                            <th>Location</th>
+                            <th>Salary</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Software Developer</td>
+                            <td>Full-Time</td>
+                            <td>Sheffield</td>
+                            <td>£40,000 - £50,000</td>
+                            <td><button>Apply</button></td>
+                        </tr>
+                        <tr>
+                            <td>Project Manager</td>
+                            <td>Contract</td>
+                            <td>Remote</td>
+                            <td>£45,000 - £55,000</td>
+                            <td><button>Apply</button></td>
+                        </tr>
+                        <tr>
+                            <td>Data Analyst</td>
+                            <td>Part-Time</td>
+                            <td>Leeds</td>
+                            <td>£30,000 - £35,000</td>
+                            <td><button>Apply</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="addJobSection">
