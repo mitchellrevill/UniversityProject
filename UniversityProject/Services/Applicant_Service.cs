@@ -2,7 +2,7 @@
 using UniversityProject.Repository;
 using UniversityProject.Interfaces;
 
-public class Applicant_Service : IApplicantService
+public class ApplicantService : IApplicantService
 {
     private readonly ApplicationSQL _applicationDatabase;
 

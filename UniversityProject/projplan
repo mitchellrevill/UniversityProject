@@ -1,31 +1,58 @@
-<!--
-RQMENTS:
-Self Repository WEB portal
+  private static async Task GetAllApplications(HttpListenerRequest req, HttpListenerResponse resp)
+{
+Console.WriteLine("Method start");
+try
+{
+Console.WriteLine("Entered method");
+var Applications = await jobPostingsService.GetAllApplicationsAsync();
+string jsonResponse = JsonConvert.SerializeObject(Applications);
+await SendResponse(resp, jsonResponse, "application/json");
+Console.WriteLine("Method finished");
+}
+catch (Exception ex)
+{
+await HandleError(resp, ex);
+}
+}
+private static async Task UpdateApplication(HttpListenerRequest req, HttpListenerResponse resp)
+{
+try
+{
+var Applications = await ReadRequestBodyAsync<Applications>
+	(req);
+	await jobPostingsService.UpdateApplicationsAsync(Applications);
+	await SendResponse(resp, "Employee inserted successfully.");
+	}
+	catch (Exception ex)
+	{
+	await HandleError(resp, ex);
+	}
+	}
 
--Request Leave 
-- View Payslipos
-- View Job Profile and Contract
-
-
-HR Main Portal:
-
-Calculate Salaries 
-Analytics/Headcount/Analyltics/EmplyoeeTurnover + ANY COOL TOOLS
-
-Employee Headcount with Grouping for:
-
-Employee Function
-Employee Location
-Employee Region
-Employee Team
-
-
-Payroll System accordance with supported countries:
-
-Country Code -
--inherit Country base tax, Tax brackets etc.
-- Extra Tax such as NIC etc be able to be added
-? what will this look like?
- 
-
--->
+	private static async Task DeleteApplication(HttpListenerRequest req, HttpListenerResponse resp)
+	{
+	try
+	{
+	var newEmployee = await ReadRequestBodyAsync<Applications>
+		(req);
+		await jobPostingsService.DeleteApplicationsAsync(newEmployee.postingId);
+		await SendResponse(resp, "Employee inserted successfully.");
+		}
+		catch (Exception ex)
+		{
+		await HandleError(resp, ex);
+		}
+		}
+		private static async Task InsertApplication(HttpListenerRequest req, HttpListenerResponse resp)
+		{
+		try
+		{
+		var newApplication= await ReadRequestBodyAsync<Applications>(req);
+            await jobPostingsService.InsertApplicationsAsync(newApplication);
+            await SendResponse(resp, "Employee inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
