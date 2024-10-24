@@ -4,7 +4,7 @@ namespace UniversityProject.Interfaces
 {
     public interface IJobPostingsService
     {
-        Task<IEnumerable<Employee>> GetAllJobPostingsAsync();
+        Task<IEnumerable<JobPostings>> GetAllJobPostingsAsync();
         Task InsertJobPostingsAsync(JobPostings JobPostings);
         Task UpdateJobPostingsAsync(JobPostings JobPostings);
         Task DeleteJobPostingsAsync(string postingId);

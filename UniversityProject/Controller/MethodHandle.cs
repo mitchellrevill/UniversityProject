@@ -9,6 +9,7 @@ public static class MethodHandle
 {
     private static readonly string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
     private static readonly IEmployeeService employeeService = new EmployeeService(dbPath);
+    private static readonly IJobPostingsService jobPostingsService = new JobPostingsService(dbPath);
 
     // Get requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _getRoutes =
@@ -66,9 +67,6 @@ public static class MethodHandle
         resp.StatusCode = (int)HttpStatusCode.InternalServerError;
         await SendResponse(resp, ex.Message);
     }
-
-
-
 
 
 

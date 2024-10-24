@@ -108,6 +108,45 @@ namespace UniversityProject.Repository
             return applicants;
         }
 
+        public void UpdateApplicant(Applicant applicant)
+        {
+            using (var connection = new SqliteConnection(_connectionString))
+            {
+                connection.Open();
+
+                string updateQuery = @"
+                UPDATE Applicants
+                SET firstName = @firstName,
+                    lastName = @lastName,
+                    coverletter = @coverletter,
+                    Gender = @Gender,
+                    City = @City,
+                    Region = @Region,
+                    Country = @Country,
+                    Phone = @Phone,
+                    CVpdfContent = @CVpdfContent,
+                    CVfileName = @CVfileName
+                WHERE applicantId = @applicantId";
+
+                using (var command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@applicantId", applicant.applicantId);
+                    command.Parameters.AddWithValue("@firstName", applicant.firstName);
+                    command.Parameters.AddWithValue("@lastName", applicant.lastName);
+                    command.Parameters.AddWithValue("@coverletter", applicant.coverletter);
+                    command.Parameters.AddWithValue("@Gender", applicant.Gender);
+                    command.Parameters.AddWithValue("@City", applicant.City);
+                    command.Parameters.AddWithValue("@Region", applicant.Region);
+                    command.Parameters.AddWithValue("@Country", applicant.Country);
+                    command.Parameters.AddWithValue("@Phone", applicant.Phone);
+                    command.Parameters.AddWithValue("@CVpdfContent", applicant.CVpdfContent);
+                    command.Parameters.AddWithValue("@CVfileName", applicant.CVfileName);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void DeleteApplicant(string applicantId)
         {
             using (var connection = new SqliteConnection(_connectionString))
