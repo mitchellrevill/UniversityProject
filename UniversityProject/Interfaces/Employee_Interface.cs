@@ -1,10 +1,4 @@
-﻿// IEmployeeService.cs
-
-// IEmployeeService.cs
-
-// IEmployeeService.cs
-
-// IEmployeeService.cs
+﻿
 using UniversityProject.Model;
 
 namespace UniversityProject.Interfaces
