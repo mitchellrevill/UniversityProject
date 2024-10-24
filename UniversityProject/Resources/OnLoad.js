@@ -1,6 +1,12 @@
 // Preload employee data when the home page loads
 async function preloadEmployees() {
     try {
+        const employeesData = localStorage.getItem('employeesData');
+        if (employeesData) {
+            console.log('Employee data already preloaded');
+            return; // Data already exists, no need to fetch again
+        }
+
         const response = await fetch('http://localhost:8000/GetAllEmployees');
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -14,6 +20,7 @@ async function preloadEmployees() {
 
     } catch (error) {
         console.error('Failed to preload employees:', error);
+        alert('Failed to load employee data. Please check your connection.');
     }
 }
 

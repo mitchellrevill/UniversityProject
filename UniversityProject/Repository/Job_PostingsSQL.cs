@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using UniversityProject.Model;
 namespace UniversityProject.Repository
 {
-    public class RecruitmentSQL
+    public class JobPostingSQL
     {
         private readonly string _connectionString;
-        public RecruitmentSQL(string dbPath)
+        public JobPostingSQL(string dbPath)
         {
             _connectionString = $"Data Source={dbPath}";
             CreateTable();

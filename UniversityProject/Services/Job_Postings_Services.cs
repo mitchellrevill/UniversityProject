@@ -4,11 +4,11 @@ using UniversityProject.Interfaces;
 
 public class JobPostingsService : IJobPostingsService
 {
-	private readonly RecruitmentSQL _RecruitmentDatabase;
+	private readonly JobPostingSQL _RecruitmentDatabase;
 
 	public JobPostingsService(string dbPath)
 	{
-		_RecruitmentDatabase = new RecruitmentSQL(dbPath);
+		_RecruitmentDatabase = new JobPostingSQL(dbPath);
 	}
 
 	public async Task<IEnumerable<JobPostings>> GetAllJobPostingsAsync()

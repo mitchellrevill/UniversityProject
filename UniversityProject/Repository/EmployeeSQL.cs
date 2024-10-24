@@ -4,11 +4,11 @@ using UniversityProject.Model;
 
 namespace UniversityProject.Repository
 {
-    public class EmployeeDatabase
+    public class EmployeeSQL
     {
         private readonly string _connectionString;
 
-        public EmployeeDatabase(string dbPath)
+        public EmployeeSQL(string dbPath)
         {
             _connectionString = $"Data Source={dbPath}";
             CreateTable();

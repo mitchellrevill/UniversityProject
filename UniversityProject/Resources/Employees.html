@@ -3,17 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="universal_CSS.css">
+    <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="app.js" defer></script>
     <title>Global HR Systems - Recruitment</title>
 </head>
 <body>
     <div class="wrapper">
+        <header class="universal_headerBanner">
+            <h1 class="universal_h1">Global HR Systems</h1>
+            <h4 class="universal_h4">Permission Level = ETC ETC</h4>
+            <nav>
+                <ul>
+                    <li><a href="Home.html">Home</a></li>
+                    <li><a class="active" href="Analytics.html">Analytics</a></li>
+                    <li><a href="Job_Postings.html">Recruitment</a></li>
+                    <li><a href="#contact">Leave Requests</a></li>
+                    <li><a href="#about">My Profile</a></li>
+                    <li><a href="Employees.html">Employees</a></li>
+                </ul>
+            </nav>
+        </header>
         <div class="content">
             <div class="recruitmentForm">
                 <div class="jobSearchForm">
                     <div>
-                        <button type="submit" onclick="loadEmployees()" aria-label="Search for jobs">Search</button>
+                        <button type="submit" onclick="loadEmployeesFromStorage()" aria-label="Search for jobs">Search</button>
                         <div class="content">
                             <h2>Employees List</h2>
                             <table id="jsonTable">

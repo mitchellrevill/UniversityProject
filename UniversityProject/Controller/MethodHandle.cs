@@ -8,7 +8,7 @@ using UniversityProject.Model;
 public static class MethodHandle
 {
     private static readonly string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
-    private static readonly IEmployeeService employeeService = new EmployeeService(dbPath);
+    private static readonly IEmployeeService employeeService = new Employee_Service(dbPath);
     private static readonly IJobPostingsService jobPostingsService = new JobPostingsService(dbPath);
 
     // Get requests
