@@ -41,6 +41,7 @@ namespace UniversityProject.Repository
         }
         public void AddJobPost(JobPostings Post)
         {
+            Console.WriteLine("Testing");
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();

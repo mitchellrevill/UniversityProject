@@ -180,14 +180,18 @@ public static class MethodHandle
     }
     private static async Task InsertJobPosting(HttpListenerRequest req, HttpListenerResponse resp)
     {
+     
         try
         {
+            Console.WriteLine("Entered try part 1");
             var newJobPosting= await ReadRequestBodyAsync<JobPostings>(req);
             await jobPostingsService.InsertJobPostingsAsync(newJobPosting);
             await SendResponse(resp, "Employee inserted successfully.");
+            Console.WriteLine("Exited try part 1");
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Failed part 1");
             await HandleError(resp, ex);
         }
     }
