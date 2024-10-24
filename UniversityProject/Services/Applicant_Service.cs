@@ -2,11 +2,11 @@
 using UniversityProject.Repository;
 using UniversityProject.Interfaces;
 
-public class Applicant_Service : IApplicantService
+public class ApplicantService : IApplicantService
 {
     private readonly ApplicationSQL _applicationDatabase;
 
-    public Applicant_Service(string dbPath)
+    public ApplicantService(string dbPath)
     {
         _applicationDatabase = new ApplicationSQL(dbPath);
     }

@@ -10,13 +10,14 @@ public static class MethodHandle
     private static readonly string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
     private static readonly IEmployeeService employeeService = new Employee_Service(dbPath);
     private static readonly IJobPostingsService jobPostingsService = new JobPostingsService(dbPath);
-
+    private static readonly ApplicantService ApplicantService = new ApplicantService(dbPath);
     // Get requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _getRoutes =
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>
         {
         { "GetAllEmployees", GetEmployees },
-        { "GetAllJobPostings", GetAllJobPostings}
+        { "GetAllJobPostings", GetAllJobPostings },
+        { "GetAllApplications", GetAllApplications}
         };
 
     // Post requests
@@ -26,8 +27,12 @@ public static class MethodHandle
         { "insertEmployee", InsertEmployee },
         { "UpdateEmployees", UpdateEmployee },
         { "DeleteEmployee", DeleteEmployee },
-
         { "InsertJobPosting", InsertJobPosting },
+        { "UpdateJobPosting", UpdateJobPosting },
+        { "DeleteJobPosting", DeleteJobPosting },
+        { "InsertApplication", InsertApplication },
+        { "UpdateApplication", UpdateApplication },
+        { "DeleteApplication", DeleteApplication }
         };
 
 
@@ -146,7 +151,33 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
+    private static async Task UpdateJobPosting(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var JobPostings = await ReadRequestBodyAsync<JobPostings>(req);
+            await jobPostingsService.UpdateJobPostingsAsync(JobPostings);
+            await SendResponse(resp, "Employee inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
 
+    private static async Task DeleteJobPosting(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newEmployee = await ReadRequestBodyAsync<JobPostings>(req);
+            await jobPostingsService.DeleteJobPostingsAsync(newEmployee.postingId);
+            await SendResponse(resp, "Employee inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
     private static async Task InsertJobPosting(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
@@ -163,15 +194,64 @@ public static class MethodHandle
 
 
 
+    private static async Task GetAllApplications(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        Console.WriteLine("Method start");
+        try
+        {
+            Console.WriteLine("Entered method");
+            var Applications = await ApplicantService.GetAllApplicantsAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Applications);
+            await SendResponse(resp, jsonResponse, "application/json");
+            Console.WriteLine("Method finished");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task UpdateApplication(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Applications = await ReadRequestBodyAsync<Applicant>
+                (req);
+            await ApplicantService.UpdateApplicantAsync(Applications);
+            await SendResponse(resp, "Employee inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
 
-
-
-
-
-
-
-
-
+    private static async Task DeleteApplication(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newEmployee = await ReadRequestBodyAsync<Applicant>
+                (req);
+            await ApplicantService.DeleteApplicantAsync(newEmployee.applicantId);
+            await SendResponse(resp, "Employee inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task InsertApplication(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newApplication = await ReadRequestBodyAsync<Applicant>(req);
+            await ApplicantService.InsertApplicantAsync(newApplication);
+            await SendResponse(resp, "Employee inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
 
 
 
