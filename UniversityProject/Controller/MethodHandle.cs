@@ -151,7 +151,7 @@ public static class MethodHandle
     {
         try
         {
-            var newJobPosting= await ReadRequestBodyAsync<JobPosting>(req);
+            var newJobPosting= await ReadRequestBodyAsync<JobPostings>(req);
             await jobPostingsService.InsertJobPostingsAsync(newJobPosting);
             await SendResponse(resp, "Employee inserted successfully.");
         }

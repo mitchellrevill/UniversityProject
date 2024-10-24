@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="app.js"></script>
+    <title>Global HR Systems - New Job Posting</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="universal_headerBanner">
+            <h1 class="universal_h1">Global HR Systems</h1>
+            <h4 class="universal_h4">Permission Level = ETC ETC</h4>
+            <nav>
+                <ul>
+                    <li><a href="Home.html">Home</a></li>
+                    <li><a href="Analytics.html">Analytics</a></li>
+                    <li><a class="active" href="Job_Postings.html">Recruitment</a></li>
+                    <li><a href="#contact">Leave Requests</a></li>
+                    <li><a href="#about">My Profile</a></li>
+                    <li><a href="Employees.html">Employees</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="content">
+            <div class="newJobForm">
+                <h2>Add New Job Posting</h2>
+                <div>
+                    <label for="jobTitle">Job Title:</label>
+                    <input type="text" id="jobTitle" name="jobTitle" placeholder="Enter job title" required>
+                </div>
+
+                <div>
+                    <label for="jobDescription">Job Description:</label>
+                    <textarea id="jobDescription" name="jobDescription" placeholder="Enter job description" required></textarea>
+                </div>
+
+                <div>
+                    <label for="jobType">Job Type:</label>
+                    <select id="jobType" name="jobType" required>
+                        <option value="" disabled selected>Select job type</option>
+                        <option value="fullTime">Full-Time</option>
+                        <option value="partTime">Part-Time</option>
+                        <option value="contract">Contract</option>
+                        <option value="temporary">Temporary</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" placeholder="Enter location" required>
+                </div>
+
+                <div>
+                    <label for="salary">Salary Range:</label>
+                    <input type="text" id="salary" name="salary" placeholder="Enter salary range" required>
+                </div>
+
+                <button type="submit" class="newJobBtn">Post New Job</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
