@@ -51,3 +51,73 @@ function displayEmployees(employees) {
 
 // Trigger loading of employees when employeesPage loads
 window.addEventListener('load', loadEmployeesFromStorage);
+
+
+
+function addNewJob() {
+
+    var jobTitle = document.getElementById("jobTitle").value;
+    var salary = document.getElementById("salary").value;
+    var jobDescription = document.getElementById("jobDescription").value;
+    var jobType = document.getElementById("jobType").value;
+    var location = document.getElementById("location").value;
+    var postingId = Math.random().toString(36).substring(2, 9); // Generate a random ID
+
+    // Validate required fields
+    if (!jobTitle || !salary || !jobDescription || !location) {
+        alert("You have not answered all required fields");
+        return;
+    }
+
+    // Define the jobPosting object before using it
+    var jobPosting = {
+        postingId: postingId,
+        Title: jobTitle,
+        Salary: salary,
+        JobDescription: jobDescription,
+        JobType: jobType,
+        Location: location
+    };
+
+    // Use fetch to send the job posting data
+    fetch('http://localhost:8000/InsertJobPosting', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jobPosting)
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.text(); // Success message
+            } else {
+                throw new Error('Error inserting the job posting');
+            }
+        })
+        .then(data => {
+            alert(data); // Show success message
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to insert job posting');
+        });
+}
+
+
+
+    /*
+    public string postingId { get; set; }
+        public string Title { get; set; }
+        public string Salary { get; set; }
+        public string JobDescription { get; set; }
+        public string JobType { get; set; }
+
+        public string Hours { get; set; }
+
+
+
+
+
+
+
+    */
