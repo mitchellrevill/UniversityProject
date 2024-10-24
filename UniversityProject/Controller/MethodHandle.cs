@@ -16,7 +16,7 @@ public static class MethodHandle
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>
         {
         { "GetAllEmployees", GetEmployees },
-        { "GetAllEmployees", GetEmployees },
+        { "GetAllJobPostings", GetAllJobPostings },
         { "GetAllApplications", GetAllApplications}
         };
 
@@ -30,7 +30,7 @@ public static class MethodHandle
         { "InsertJobPosting", InsertJobPosting },
         { "UpdateJobPosting", UpdateJobPosting },
         { "DeleteJobPosting", DeleteJobPosting },
-         { "InsertApplication", InsertApplication },
+        { "InsertApplication", InsertApplication },
         { "UpdateApplication", UpdateApplication },
         { "DeleteApplication", DeleteApplication }
         };
