@@ -9,9 +9,9 @@
 </head>
 <body>
     <div class="wrapper">
-        <header class="universal_headerBanner">
-            <h1 class="universal_h1">Global HR Systems</h1>
-            <h4 class="universal_h4">Permission Level = ETC ETC</h4>
+        <header class="header">
+            <h1>Global HR Systems</h1>
+            <h4>Permission Level = ETC ETC</h4>
             <nav>
                 <ul>
                     <li><a href="Home.html">Home</a></li>
@@ -25,7 +25,7 @@
         </header>
 
         <div class="content">
-            <div class="newJobForm">
+            <div class="job-form">
                 <h2>Add New Job Posting</h2>
                 <div>
                     <label for="jobTitle">Job Title:</label>
@@ -44,13 +44,12 @@
                         <option value="fullTime">Full-Time</option>
                         <option value="partTime">Part-Time</option>
                         <option value="contract">Contract</option>
-                        <option value="temporary">Temporary</option>
                     </select>
                 </div>
 
                 <div>
                     <label for="hours">Hours:</label>
-                    <input type="number" id="hours" name="number" placeholder="Enter hours" required>
+                    <input type="number" id="hours" name="hours" placeholder="Enter hours" required>
                 </div>
 
                 <div>
@@ -58,18 +57,9 @@
                     <input type="number" id="salary" name="salary" placeholder="Enter salary range" required>
                 </div>
 
-                <button type="submit" class="newJobBtn" onclick="addNewJob()">Post New Job</button>
+                <button type="submit" onclick="addNewJob()">Post New Job</button>
             </div>
         </div>
     </div>
 </body>
 </html>
-
-<!--
-public string postingId { get; set; }
-public string Title { get; set; }
-public string Salary { get; set; }
-public string JobDescription { get; set; }
-public string JobType { get; set; }
-
-public string Hours { get; set; }-->

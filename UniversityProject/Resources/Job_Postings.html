@@ -9,14 +9,14 @@
 </head>
 <body>
     <div class="wrapper">
-        <header class="universal_headerBanner">
-            <h1 class="universal_h1">Global HR Systems</h1>
-            <h4 class="universal_h4">Permission Level = ETC ETC</h4>
+        <header class="header">
+            <h1>Global HR Systems</h1>
+            <h4>Permission Level = ETC ETC</h4>
             <nav>
                 <ul>
                     <li><a href="Home.html">Home</a></li>
-                    <li><a class="active" href="Analytics.html">Analytics</a></li>
-                    <li><a href="Job_Postings.html">Recruitment</a></li>
+                    <li><a href="Analytics.html">Analytics</a></li>
+                    <li><a class="active" href="Job_Postings.html">Recruitment</a></li>
                     <li><a href="#contact">Leave Requests</a></li>
                     <li><a href="#about">My Profile</a></li>
                     <li><a href="Employees.html">Employees</a></li>
@@ -25,45 +25,35 @@
         </header>
 
         <div class="content">
-            <div class="recruitmentForm">
-                <div class="jobSearchForm">
-                    <div>
-                        <label for="keywords">Keywords:</label>
-                        <input type="text" id="keywords" name="keywords" placeholder="Enter job keywords" required>
-                    </div>
-
-                    <div>
-                        <label for="jobTypes">Job Type:</label>
-                        <select name="jobTypes" id="jobTypes" required>
-                            <option value="" disabled selected>Select a job type</option>
-                            <option value="jobExample1">Job Example 1</option>
-                            <option value="jobExample2">Job Example 2</option>
-                            <option value="jobExample3">Job Example 3</option>
-                            <option value="jobExample4">Job Example 4</option>
-                            <option value="jobExample5">Job Example 5</option>
-                            <option value="jobExample6">Job Example 6</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="jobLocations">Location:</label>
-                        <select name="locations" id="jobLocations" required>
-                            <option value="" disabled selected>Select a location</option>
-                            <option value="barnsley">Barnsley</option>
-                            <option value="sheffield">Sheffield</option>
-                            <option value="leeds">Leeds</option>
-                            <option value="manchester">Manchester</option>
-                            <option value="london">London</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" aria-label="Search for jobs">Search</button>
+            <div class="job-form">
+                <h2>Search Jobs</h2>
+                <div>
+                    <label for="keywords">Keywords:</label>
+                    <input type="text" id="keywords" name="keywords" placeholder="Enter job keywords" required>
                 </div>
 
-                <!-- Add New Job Button -->
-                <div class="addJobSection">
-                    <button type="button" onclick="window.location.href='New_Job_Form.html'" aria-label="Add new job">Add New Job</button>
+                <div>
+                    <label for="jobTypes">Job Type:</label>
+                    <select name="jobTypes" id="jobTypes" required>
+                        <option value="" disabled selected>Select a job type</option>
+                        <option value="jobExample1">Job Example 1</option>
+                        <option value="jobExample2">Job Example 2</option>
+                    </select>
                 </div>
+
+                <div>
+                    <label for="jobLocations">Location:</label>
+                    <select name="locations" id="jobLocations" required>
+                        <option value="" disabled selected>Select a location</option>
+                        <option value="sheffield">Sheffield</option>
+                    </select>
+                </div>
+
+                <button type="submit">Search</button>
+            </div>
+
+            <div class="addJobSection">
+                <button type="button" onclick="window.location.href='New_Job_Form.html'">Add New Job</button>
             </div>
         </div>
     </div>
