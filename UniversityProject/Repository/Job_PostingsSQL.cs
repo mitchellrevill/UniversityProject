@@ -44,10 +44,9 @@ namespace UniversityProject.Repository
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
-
                 string insertQuery = @"
-                INSERT INTO JobPostings (postingid, Title, jobdesc, jobtype, hours, )
-                VALUES (@postingid, @Title, @jobdesc, @jobtype, @hours,)";
+                INSERT INTO JobPostings (postingid, Title, jobdesc, jobtype, hours, salary)
+                VALUES (@postingid, @Title, @jobdesc, @jobtype, @hours, @salary)";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
