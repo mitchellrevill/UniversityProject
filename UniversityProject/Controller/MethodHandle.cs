@@ -23,16 +23,15 @@ public static class MethodHandle
         { "insertEmployee", InsertEmployee },
         { "UpdateEmployees", UpdateEmployee },
         { "DeleteEmployee", DeleteEmployee },
-
         };
-
+    // 
     public static async Task HandleRequest(HttpListenerRequest req, HttpListenerResponse resp)
     {
         string requestedPath = req.Url.AbsolutePath.TrimStart('/');
 
-        if (req.HttpMethod == "POST" && _postRoutes.TryGetValue(requestedPath, out var postHandler))
+        if (req.HttpMethod == "POST" && _postRoutes.TryGetValue(requestedPath, out var postHandler)) // Is dictionary same as request? if true out value (method) post handler 
         {
-            await postHandler(req, resp);
+            await postHandler(req, resp); // post handler inherits / invokes method that was outed from the dictionary FUCKING HELL THIS WAS PAIN 
         }
         else if (req.HttpMethod == "GET" && _getRoutes.TryGetValue(requestedPath, out var getHandler))
         {
@@ -45,14 +44,14 @@ public static class MethodHandle
     }
 
 
-    private static async Task<T> ReadRequestBodyAsync<T>(HttpListenerRequest req)
+    private static async Task<T> ReadRequestBodyAsync<T>(HttpListenerRequest req) // Repeated code i replaced, just takes the HTTP content and converts it, efficiency???? lmao
     {
         using var reader = new StreamReader(req.InputStream, req.ContentEncoding);
         string json = await reader.ReadToEndAsync();
         return JsonConvert.DeserializeObject<T>(json);
     }
 
-    private static async Task SendResponse(HttpListenerResponse resp, string message, string contentType = "text/plain")
+    private static async Task SendResponse(HttpListenerResponse resp, string message, string contentType = "text/plain") // same deal as ReadRequestBody
     {
         byte[] data = Encoding.UTF8.GetBytes(message);
         resp.ContentType = contentType;
@@ -60,11 +59,16 @@ public static class MethodHandle
         await resp.OutputStream.WriteAsync(data, 0, data.Length);
     }
 
-    private static async Task HandleError(HttpListenerResponse resp, Exception ex)
+    private static async Task HandleError(HttpListenerResponse resp, Exception ex) // error checking 
     {
         resp.StatusCode = (int)HttpStatusCode.InternalServerError;
         await SendResponse(resp, ex.Message);
     }
+
+
+
+
+
 
     private static async Task GetEmployees(HttpListenerRequest req, HttpListenerResponse resp)
     {
@@ -122,6 +126,16 @@ public static class MethodHandle
     }
 
 
+
+
+
+
+
+
+
+
+
+    // STATIC FOR KNOWN FILE TYPES USED FOR STATIC FILES THAT NEED REQUESTING
     private static async Task ServeStaticFile(HttpListenerRequest req, HttpListenerResponse resp, string requestedPath)
     {
         string filePath = Path.Combine(HttpServer.ResourcesDirectory, requestedPath);
