@@ -46,21 +46,22 @@ namespace UniversityProject.Repository
             {
                 connection.Open();
                 string insertQuery = @"
-                INSERT INTO JobPostings (postingid, Title, jobdesc, jobtype, hours, salary)
-                VALUES (@postingid, @Title, @jobdesc, @jobtype, @hours, @salary)";
+        INSERT INTO JobPostings (postingid, Title, jobdesc, jobtype, hours, salary)
+        VALUES (@postingid, @Title, @jobdesc, @jobtype, @hours, @salary)";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@postingId", Post.postingId);
+                    command.Parameters.AddWithValue("@postingid", Post.postingId); 
                     command.Parameters.AddWithValue("@Title", Post.Title);
                     command.Parameters.AddWithValue("@jobdesc", Post.JobDescription);
                     command.Parameters.AddWithValue("@jobtype", Post.JobType);
-                    command.Parameters.AddWithValue("@hours", Post.Hours);
-                    command.Parameters.AddWithValue("@salary", Post.Salary);
+                    command.Parameters.AddWithValue("@hours", Post.Hours); 
+                    command.Parameters.AddWithValue("@salary", Post.Salary); 
                     command.ExecuteNonQuery();
                 }
             }
         }
+
         public List<JobPostings> GetAllJobPostings()
         {
             var jobs = new List<JobPostings>();

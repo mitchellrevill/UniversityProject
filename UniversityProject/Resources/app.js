@@ -70,14 +70,14 @@ function addNewJob() {
     }
 
     // Define the jobPosting object before using it
-    var jobPosting = `{
-            "postingId": "${postingId}",
-            "Title": "${jobTitle}",
-            "JobDescription": "${jobDescription}",
-            "JobType": "${jobType}",
-            "Hours": "${hours}"
-            "Salary": "${salary}",
-        }`;
+    var jobPosting = {
+        "postingId": postingId,
+        "Title": jobTitle,
+        "JobDescription": jobDescription,
+        "JobType": jobType,
+        "Hours": hours,
+        "Salary": salary
+    };
 
     // Use fetch to send the job posting data
     fetch('http://localhost:8000/InsertJobPosting', {
