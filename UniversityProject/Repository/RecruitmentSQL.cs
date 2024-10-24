@@ -122,7 +122,7 @@ namespace UniversityProject.Repository
 
 
 
-                using (var command = new SqliteCommand(insertQuery, connection))
+                using (var command = new SqliteCommand(updateQuery, connection))
                 {
                     command.Parameters.AddWithValue("@postingId", Post.postingId);
                     command.Parameters.AddWithValue("@Title", Post.Title);
