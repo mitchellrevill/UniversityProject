@@ -1,15 +1,9 @@
-* {
+body {
+    background: #8fb0a9;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-}
-
-html, body {
-    height: 100%; /* Allow body to fill the height */
-}
-
-body {
     background-color: #a2c5ac; /* Set background color */
     color: #000000;
     font-size: 16px;
@@ -41,42 +35,47 @@ nav {
     padding-right: 25px;
 }
 
-    nav ul {
-        list-style: none;
-        display: flex;
-        padding: 0;
-        margin: 0; /* Reset margin */
-        height: 100%; /* Ensure nav takes full height of header */
-        white-space: nowrap; /* Prevent wrapping of nav items */
-    }
+nav ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0; /* Reset margin */
+    height: 100%; /* Ensure nav takes full height of header */
+    white-space: nowrap; /* Prevent wrapping of nav items */
+}
 
-        nav ul li {
-            flex: 1; /* Make each item take up equal width */
-            display: flex; /* Make the li a flex container */
-            align-items: center; /* Center items vertically */
-            justify-content: center; /* Center items horizontally */
-            height: 100%; /* Ensure li takes full height of nav */
-        }
+nav ul li {
+    flex: 1; /* Make each item take up equal width */
+    display: flex; /* Make the li a flex container */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    height: 100%; /* Ensure li takes full height of nav */
+}
 
-            nav ul li a {
-                color: #000000; /* Change to black for contrast */
-                text-decoration: none;
-                font-size: 1em;
-                display: block; /* Ensure the entire area is clickable */
-                padding: 10px; /* Padding for clickable area */
-                width: 100%; /* Ensure anchor takes full width */
-                height: 100%; /* Ensure anchor takes full height */
-                box-sizing: border-box; /* Include padding in height calculation */
-                transition: background-color 0.3s ease, color 0.3s ease;
-            }
+nav ul li a {
+    color: #000000; /* Change to black for contrast */
+    text-decoration: none;
+    font-size: 1em;
+    display: block; /* Ensure the entire area is clickable */
+    padding: 10px; /* Padding for clickable area */
+    width: 100%; /* Ensure anchor takes full width */
+    height: 100%; /* Ensure anchor takes full height */
+    box-sizing: border-box; /* Include padding in height calculation */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-                nav ul li a:hover {
-                    background-color: #878e99; /* Change background on hover */
-                }
+nav ul li a:hover {
+    background-color: #878e99; /* Change background on hover */
+}
 
-                nav ul li a.active {
-                    background-color: #878e99; /* Active link background */
-                }
+nav ul li a.active {
+    background-color: #878e99; /* Active link background */
+}
+.Departmentclass{
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
 
 .content {
     background-color: transparent; /* Remove background color from content */
@@ -85,11 +84,62 @@ nav {
     padding: 40px; /* Restore padding for content */
     min-height: calc(100vh - 100px); /* Adjust based on header height */
 }
+
+.table-fixed {
+    margin-left: 25rem;
+    margin-top: 10rem;
+}
+
+.table-fixed thead,
+.table-fixed thead>th {
+    background: #4d7275;
+    color: #fff;
+}
+
+.table-fixed tbody tr td {
+    background: #fff;
+}
+
+.table-fixed>thead>tr>th {
+    border: 0 !important;
+}
+
+.table-fixed>tbody>tr>td:last-child {
+    border-right: 0;
+}
+
+.table-fixed tbody td,
+.table-fixed thead>tr>th {
+    float: left;
+    font-size: 14px;
+    padding-left: 20px !important;
+}
+
+.table-fixed .col {
+    width: 25%;
+}
+
+.table-fixed tbody {
+    display: block;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.table-fixed tr {
+    display:   
+ block;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
     font-size: 16px;
+}
+
+.scrollable-table {
+    overflow-y: auto;
+    height: 200px; /* Adjust the height as needed */
 }
 
 table thead {
@@ -128,20 +178,6 @@ table tr:hover {
 
 .action-buttons button:hover {
     background-color: #00509e;
-}
-
-#container {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.425);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    visibility: hidden;
 }
 
 #container {
