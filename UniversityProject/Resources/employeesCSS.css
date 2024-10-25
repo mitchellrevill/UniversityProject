@@ -112,27 +112,27 @@ nav {
     overflow-x: auto;
 }
 
-#employeeJsonTable {
+#jsonTable {
     width: 100%;
     border-collapse: collapse;
 }
 
-    #employeeJsonTable th,
-    #employeeJsonTable td {
+    #jsonTable th,
+    #jsonTable td {
         padding: 12px;
         text-align: left;
         border: 1px solid #ddd;
     }
 
-    #employeeJsonTable th {
+    #jsonTable th {
         background-color: #a2c5ac;
         color: #000000;
     }
 
-    #employeeJsonTable tr:nth-child(even) {
+    #jsonTable tr:nth-child(even) {
         background-color: #f9f9f9;
     }
 
-    #employeeJsonTable tr:hover {
+    #jsonTable tr:hover {
         background-color: #e0e0e0;
     }
