@@ -22,11 +22,12 @@
             </nav>
         </header>
 
-        <div class="content">
-            <div class="Departmentclass"></div>
+        <div class="Departmentcontent">
+            <div class="Departmentclass">
             <h2>Department</h2>
             <div id="container">
                 <div id="exampleModal" class="reveal-modal">
+                    <a href="#" class="close-modal"><button type="button" class="submit-button"  style="text-align: center;">Back</button></a>
                     <h2>Add New Department</h2>
                     <div class="formContainer">
                         <form id="addDepartmentForm" class="form-container">
@@ -43,7 +44,7 @@
             </div>
             <div id="container2">
                 <div id="exampleModal" class="reveal-modal">
-                    <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment()">Back</button></a>
+                    <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
                     <h2>Add New Department</h2>
                     <div class="formContainer">
                         <form id="addDepartmentForm" class="form-container">
@@ -55,10 +56,21 @@
                             <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment()">Update Department</button></a>
                         </form>
                 </div>
-
                 </div>
             </div>
-            <div style="overflow-y: scroll;  height: 600px;">
+
+            <div id="container3">
+                <div id="exampleModal" class="reveal-modal">
+                    <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                    <h2>Add New Department</h2>
+                    <div class="formContainer">
+                        Are you sure you want to delete this form?
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment()">Update Department</button></a>
+                </div>
+                </div>
+            </div>
+            
+            <div style="overflow-y: scroll;  height: 500px;">
             <table id="itemTable" style="overflow-y: scroll;">
                 <thead>
                     <tr>
@@ -87,125 +99,61 @@
                         <td>Payroll System</td>
                         <td>Handles salary calculations and payments</td>
                     </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
-                        <td>1</td>
-                        <td>Employee Database</td>
-                        <td>Stores all employee records</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
-                        <td>2</td>
-                        <td>Leave Management</td>
-                        <td>Tracks leave requests and approvals</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
-                        <td>3</td>
-                        <td>Payroll System</td>
-                        <td>Handles salary calculations and payments</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
-                        <td>1</td>
-                        <td>Employee Database</td>
-                        <td>Stores all employee records</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
-                        <td>2</td>
-                        <td>Leave Management</td>
-                        <td>Tracks leave requests and approvals</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
-                        <td>3</td>
-                        <td>Payroll System</td>
-                        <td>Handles salary calculations and payments</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
-                        <td>1</td>
-                        <td>Employee Database</td>
-                        <td>Stores all employee records</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
-                        <td>2</td>
-                        <td>Leave Management</td>
-                        <td>Tracks leave requests and approvals</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
-                        <td>3</td>
-                        <td>Payroll System</td>
-                        <td>Handles salary calculations and payments</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
-                        <td>1</td>
-                        <td>Employee Database</td>
-                        <td>Stores all employee records</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
-                        <td>2</td>
-                        <td>Leave Management</td>
-                        <td>Tracks leave requests and approvals</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
-                        <td>3</td>
-                        <td>Payroll System</td>
-                        <td>Handles salary calculations and payments</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
-                        <td>1</td>
-                        <td>Employee Database</td>
-                        <td>Stores all employee records</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
-                        <td>2</td>
-                        <td>Leave Management</td>
-                        <td>Tracks leave requests and approvals</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
-                        <td>3</td>
-                        <td>Payroll System</td>
-                        <td>Handles salary calculations and payments</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
-                        <td>1</td>
-                        <td>Employee Database</td>
-                        <td>Stores all employee records</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
-                        <td>2</td>
-                        <td>Leave Management</td>
-                        <td>Tracks leave requests and approvals</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
-                        <td>3</td>
-                        <td>Payroll System</td>
-                        <td>Handles salary calculations and payments</td>
                     </tr>
                 </tbody>
             </table>
+            
         </div>
             <!-- Action Buttons -->
             <div class="action-buttons">
                 <a href="#container"><button>Add Department</button></a>
                 <a href="#container2"><button>Edit Department</button></a>
-                <button type="button" onclick="deleteSelected()">Delete Selected</button>
+                <a href="#container3"><button>Edit Department</button></a>
             </div>
         </div>
+</div>
 
+<div class="Countrycontent">
+    <div class="Countryclass">
+        <h2>Country</h2>
+        <div id="containerCountry">
+            <div id="exampleModalCountry" class="reveal-modal">
+                <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                <h2>Add New Country</h2>
+                <div class="formContainer">
+                    <form id="addCountryForm" class="form-container">
+                        <label for="countryName">Country Name:</label>
+                        <input type="text" id="countryName" name="countryName" class="form-input" required="">
+                        
+                        <label for="countryDescription">Description:</label>
+                        <textarea id="countryDescription" name="countryDescription" class="form-input" required=""></textarea>
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addCountry()">Add Country</button></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div style="overflow-y: scroll; height: 500px;">
+            <table id="countryTable" style="overflow-y: scroll;">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Add your country entries here -->
+                </tbody>
+            </table>
+            <div class="action-buttons">
+                <a href="#containerCountry"><button>Add Department</button></a>
+                <a href="#containerCountry2"><button>Edit Department</button></a>
+                <a href="#containerCountry3"><button>Edit Department</button></a>
+            </div>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </body>

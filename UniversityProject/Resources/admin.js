@@ -1,31 +1,29 @@
-function addDepartment() {
-  // Get the department name and description from the form
-  const departmentName = document.getElementById("departmentName").value;
-  const departmentDescription = document.getElementById("departmentDescription").value;
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("addDepartmentForm");
+    const container = document.getElementById("container");
+    const openModalLink = document.getElementById("openModal");
 
-  // Send a request to the backend API to add the department
-  fetch('/add-department', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: departmentName,
-      description: departmentDescription
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Handle the response from the server
-    if (data.success) {
-      // Department added successfully, update the table or display a message
-      console.log('Department added successfully');
-    } else {
-      // Handle errors
-      console.error('Error adding department:', data.error);
+    // Function to close the modal
+    function closeModal() {
+        container.style.visibility = "hidden";
+        container.style.display = "none";
     }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-}
+
+    // Function to open the modal
+    function openModal() {
+        container.style.visibility = "visible";
+        container.style.display = "block";
+    }
+
+    // Open the modal when the "Reveal" link is clicked
+    openModalLink.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent default anchor behavior
+        openModal();
+    });
+
+    // Close the modal when the form is submitted
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); 
+        closeModal();
+    });
+});

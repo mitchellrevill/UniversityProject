@@ -72,12 +72,18 @@ nav ul li a.active {
     background-color: #878e99; /* Active link background */
 }
 .Departmentclass{
+    display: inline-block;
     background-color: white;
     border-radius: 5px;
     padding: 10px;
 }
-
-.content {
+.Countryclass{
+    display: inline-block;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+.Departmentcontent {
     background-color: transparent; /* Remove background color from content */
     margin-top: 0; /* Start directly below the header */
     border-radius: 0; /* Remove curves */
@@ -214,7 +220,22 @@ table tr:hover {
 #container:target {
     visibility: visible;
 }
-
+#container3{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+#container3:target {
+    visibility: visible;
+}
 /* Modal styling */
 .reveal-modal {
     background-color: #fff;
@@ -268,4 +289,28 @@ table tr:hover {
 
 .close-modal:hover {
     color: black; /* Change color on hover */
+}
+
+.Countrycontent {
+    background-color: transparent; /* Remove background color from content */
+    margin-top: 0; /* Start directly below the header */
+    border-radius: 0; /* Remove curves */
+    padding: 40px; /* Restore padding for content */
+    min-height: calc(100vh - 100px); /* Adjust based on header height */
+}
+#containerCountry{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+#containerCountry:target {
+    visibility: visible;
 }
