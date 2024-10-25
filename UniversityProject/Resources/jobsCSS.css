@@ -127,6 +127,10 @@ button {
         transform: scale(1.05);
     }
 
+.table-container {
+    overflow-x: auto;
+}
+
 .job-results {
     margin-top: 40px;
 }
