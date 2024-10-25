@@ -45,7 +45,7 @@
             <div id="container2">
                 <div id="exampleModal" class="reveal-modal">
                     <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
-                    <h2>Add New Department</h2>
+                    <h2>Edit Department</h2>
                     <div class="formContainer">
                         <form id="addDepartmentForm" class="form-container">
                             <label for="departmentName">Department Name:</label>
@@ -62,7 +62,7 @@
             <div id="container3">
                 <div id="exampleModal" class="reveal-modal">
                     <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
-                    <h2>Add New Department</h2>
+                    <h2>Delete Department</h2>
                     <div class="formContainer">
                         Are you sure you want to delete this form?
                         <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment()">Update Department</button></a>
@@ -108,12 +108,13 @@
             <div class="action-buttons">
                 <a href="#container"><button>Add Department</button></a>
                 <a href="#container2"><button>Edit Department</button></a>
-                <a href="#container3"><button>Edit Department</button></a>
+                <a href="#container3"><button>Delete Department</button></a>
             </div>
         </div>
 </div>
 
 <div class="Countrycontent">
+    
     <div class="Countryclass">
         <h2>Country</h2>
         <div id="containerCountry">
@@ -121,17 +122,77 @@
                 <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
                 <h2>Add New Country</h2>
                 <div class="formContainer">
-                    <form id="addCountryForm" class="form-container">
+                    <form class="form-container">
+                     
+                        <label for="countryId">Country ID:</label>
+                        <input type="text" id="countryId" name="countryId" class="form-input" required="">
+                    
+                      
                         <label for="countryName">Country Name:</label>
                         <input type="text" id="countryName" name="countryName" class="form-input" required="">
+                    
+                      
+                        <label for="countryCurrency">Country Currency:</label>
+                        <input type="text" id="countryCurrency" name="countryCurrency" class="form-input" required="">
+                    
+                       
+                        <label for="legalRequirements">Legal Requirements:</label>
+                        <input type="text" id="legalRequirements" name="legalRequirements" class="form-input" placeholder="Enter each requirement separated by commas" required="">
+                    
                         
-                        <label for="countryDescription">Description:</label>
-                        <textarea id="countryDescription" name="countryDescription" class="form-input" required=""></textarea>
+                        <label for="minimumLeave">Minimum Leave:</label>
+                        <input type="number" id="minimumLeave" name="minimumLeave" class="form-input" required="">
                         <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addCountry()">Add Country</button></a>
                     </form>
                 </div>
             </div>
         </div>
+        <div id="containerCountry2">
+            <div id="exampleModalCountry" class="reveal-modal">
+                <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                <h2>Edit Country</h2>
+                <div class="formContainer">
+                    <form class="form-container">
+                      
+                        <label for="countryId">Country ID:</label>
+                        <input type="text" id="countryId" name="countryId" class="form-input" required="">
+                    
+                   
+                        <label for="countryName">Country Name:</label>
+                        <input type="text" id="countryName" name="countryName" class="form-input" required="">
+                    
+                       
+                        <label for="countryCurrency">Country Currency:</label>
+                        <input type="text" id="countryCurrency" name="countryCurrency" class="form-input" required="">
+                    
+                       
+                        <label for="legalRequirements">Legal Requirements:</label>
+                        <input type="text" id="legalRequirements" name="legalRequirements" class="form-input" placeholder="Enter each requirement separated by commas" required="">
+                    
+                     
+                        <label for="minimumLeave">Minimum Leave:</label>
+                        <input type="number" id="minimumLeave" name="minimumLeave" class="form-input" required="">
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addCountry()">Add Country</button></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="containerCountry3">
+            <div id="exampleModalCountry" class="reveal-modal">
+                <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                <h2>Add New Country</h2>
+                <div class="formContainer">
+                    <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                    <h2>Delete Country</h2>
+                    <div class="formContainer">
+                        Are you sure you want to delete this form?
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="DeleteCountry()">Add Country</button></a>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        
         <div style="overflow-y: scroll; height: 500px;">
             <table id="countryTable" style="overflow-y: scroll;">
                 <thead>
@@ -143,17 +204,158 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Add your country entries here -->
+                    <tr>
+                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
+                        <td>1</td>
+                        <td>Employee Database</td>
+                        <td>Stores all employee records</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
+                        <td>2</td>
+                        <td>Leave Management</td>
+                        <td>Tracks leave requests and approvals</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
+                        <td>3</td>
+                        <td>Payroll System</td>
+                        <td>Handles salary calculations and payments</td>
+                    </tr>
+                    </tr>
                 </tbody>
-            </table>
-            <div class="action-buttons">
-                <a href="#containerCountry"><button>Add Department</button></a>
-                <a href="#containerCountry2"><button>Edit Department</button></a>
-                <a href="#containerCountry3"><button>Edit Department</button></a>
-            </div>
+            </table>         
+        </div>
+         
+        <div class="action-buttons">
+            <a href="#containerCountry"><button>Add Country</button></a>
+            <a href="#containerCountry2"><button>Edit Country</button></a>
+            <a href="#containerCountry3"><button>Delete Country</button></a>
         </div>
     </div>
 </div>
+
+
+<div class="Regioncontent">
+    <div class="Regionclass">
+        <h2>Region</h2>
+        <div id="containerRegion">
+            <div id="exampleModalRegion" class="reveal-modal">
+                <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                <h2>Add New Region</h2>
+                <div class="formContainer">
+                    <form class="form-container">
+                        <!-- Region ID -->
+                        <label for="regionId">Region ID:</label>
+                        <input type="text" id="regionId" name="regionId" class="form-input" required="">
+                    
+                        <!-- Region Name -->
+                        <label for="regionName">Region Name:</label>
+                        <input type="text" id="regionName" name="regionName" class="form-input" required="">
+                    
+                        <!-- Country ID Dropdown -->
+                        <label for="countryId">Country:</label>
+                        <select id="countryId" name="countryId" class="form-input" required="">
+                            <option value="">Select Country</option>
+                            <!-- Add options for each country here -->
+                            <option value="country1">Country 1</option>
+                            <option value="country2">Country 2</option>
+                            <option value="country3">Country 3</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addRegion()">Add Region</button></a>
+                </div>
+            </div>
+        </div>
+        <div id="containerRegion2">
+            <div id="exampleModalRegion" class="reveal-modal">
+                <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                <h2>Edit Region</h2>
+                <div class="formContainer">
+                    <form class="form-container">
+                        <!-- Region ID -->
+                        <label for="regionId">Region ID:</label>
+                        <input type="text" id="regionId" name="regionId" class="form-input" required="">
+                    
+                        <!-- Region Name -->
+                        <label for="regionName">Region Name:</label>
+                        <input type="text" id="regionName" name="regionName" class="form-input" required="">
+                    
+                        <!-- Country ID Dropdown -->
+                        <label for="countryId">Country:</label>
+                        <select id="countryId" name="countryId" class="form-input" required="">
+                            <option value="">Select Country</option>
+                            <!-- Add options for each country here -->
+                            <option value="country1">Country 1</option>
+                            <option value="country2">Country 2</option>
+                            <option value="country3">Country 3</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="EditRegion()">Add Region</button></a>
+                </div>
+            </div>
+        </div>
+        <div id="containerRegion3">
+            <div id="exampleModalRegion" class="reveal-modal">
+                <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                <h2>Delete Region</h2>
+                <div class="formContainer">
+                    <form id="addRegionForm" class="form-container">
+                        <label for="regionName">Region Name:</label>
+                        <input type="text" id="regionName" name="regionName" class="form-input" required="">
+                        
+                        <label for="regionDescription">Description:</label>
+                        <textarea id="regionDescription" name="regionDescription" class="form-input" required=""></textarea>
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="DeleteRegion()">Add Region</button></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="overflow-y: scroll; height: 500px;">
+            <table id="regionTable" style="overflow-y: scroll;">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
+                        <td>1</td>
+                        <td>Employee Database</td>
+                        <td>Stores all employee records</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
+                        <td>2</td>
+                        <td>Leave Management</td>
+                        <td>Tracks leave requests and approvals</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
+                        <td>3</td>
+                        <td>Payroll System</td>
+                        <td>Handles salary calculations and payments</td>
+                    </tr>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="action-buttons">
+            <a href="#containerRegion"><button>Add Region</button></a>
+            <a href="#containerRegion2"><button>Edit Region</button></a>
+            <a href="#containerRegion3"><button>Delete Region</button></a>
+        </div>
+    </div>
+</div>
+
+
+
         </div>
     </div>
 </body>

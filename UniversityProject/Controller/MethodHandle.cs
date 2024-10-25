@@ -7,17 +7,23 @@ using UniversityProject.Model;
 
 public static class MethodHandle
 {
+
+    // Instance Creation
     private static readonly string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
     private static readonly IEmployeeService employeeService = new Employee_Service(dbPath);
+    private static readonly IDepartmentService departmentService = new DepartmentService(dbPath);
     private static readonly IJobPostingsService jobPostingsService = new JobPostingsService(dbPath);
+    private static readonly IManagerService managerService = new ManagerService(dbPath);
     private static readonly ApplicantService ApplicantService = new ApplicantService(dbPath);
+
     // Get requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _getRoutes =
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>
         {
         { "GetAllEmployees", GetEmployees },
         { "GetAllJobPostings", GetAllJobPostings },
-        { "GetAllApplications", GetAllApplications}
+        { "GetAllApplications", GetAllApplications},
+        { "GetAllDepartments",GetDepartments}
         };
 
     // Post requests
@@ -32,11 +38,13 @@ public static class MethodHandle
         { "DeleteJobPosting", DeleteJobPosting },
         { "InsertApplication", InsertApplication },
         { "UpdateApplication", UpdateApplication },
-        { "DeleteApplication", DeleteApplication }
+        { "DeleteApplication", DeleteApplication },
+        { "InsertDepartment", InsertDepartment},
+        { "UpdateDepartment", UpdateDepartment},
+        { "DeleteDepartment" , DeleteDepartment}
         };
 
 
-    
 
     public static async Task HandleRequest(HttpListenerRequest req, HttpListenerResponse resp)
     {
@@ -250,6 +258,118 @@ public static class MethodHandle
             var newApplication = await ReadRequestBodyAsync<Applicant>(req);
             await ApplicantService.InsertApplicantAsync(newApplication);
             await SendResponse(resp, "Employee inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+
+    private static async Task GetDepartments(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Departments = await departmentService.GetAllDepartmentsAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Departments);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task InsertDepartment(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newDepartment = await ReadRequestBodyAsync<Department>(req);
+            await departmentService.InsertDepartmentAsync(newDepartment);
+            await SendResponse(resp, "Department inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task UpdateDepartment(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newDepartment = await ReadRequestBodyAsync<Department>(req);
+            await departmentService.UpdateDepartmentAsync(newDepartment);
+            await SendResponse(resp, "Department inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task DeleteDepartment(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newDepartment = await ReadRequestBodyAsync<Department>(req);
+            await departmentService.DeleteDepartmentAsync(newDepartment.DepartmentId);
+            await SendResponse(resp, "Department inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+
+    private static async Task GetManagers(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Managers = await managerService.GetAllManagersAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Managers);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task InsertManager(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newManager = await ReadRequestBodyAsync<Manager>(req);
+            await managerService.InsertManagerAsync(newManager);
+            await SendResponse(resp, "Manager inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task UpdateManager(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newManager = await ReadRequestBodyAsync<Manager>(req);
+            await managerService.UpdateManagerAsync(newManager);
+            await SendResponse(resp, "Manager inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task DeleteManager(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newManager = await ReadRequestBodyAsync<Manager>(req);
+            await managerService.DeleteManagerAsync(newManager.ManagerId);
+            await SendResponse(resp, "Manager inserted successfully.");
         }
         catch (Exception ex)
         {

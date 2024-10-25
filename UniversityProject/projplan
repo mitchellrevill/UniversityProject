@@ -1,55 +1,51 @@
-  private static async Task GetAllApplications(HttpListenerRequest req, HttpListenerResponse resp)
-{
-Console.WriteLine("Method start");
-try
-{
-Console.WriteLine("Entered method");
-var Applications = await jobPostingsService.GetAllApplicationsAsync();
-string jsonResponse = JsonConvert.SerializeObject(Applications);
-await SendResponse(resp, jsonResponse, "application/json");
-Console.WriteLine("Method finished");
-}
-catch (Exception ex)
-{
-await HandleError(resp, ex);
-}
-}
-private static async Task UpdateApplication(HttpListenerRequest req, HttpListenerResponse resp)
-{
-try
-{
-var Applications = await ReadRequestBodyAsync<Applications>
-	(req);
-	await jobPostingsService.UpdateApplicationsAsync(Applications);
-	await SendResponse(resp, "Employee inserted successfully.");
-	}
-	catch (Exception ex)
-	{
-	await HandleError(resp, ex);
-	}
-	}
+private static async Task GetManagers(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Managers = await ManagerService.GetAllManagersAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Managers);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
 
-	private static async Task DeleteApplication(HttpListenerRequest req, HttpListenerResponse resp)
-	{
-	try
-	{
-	var newEmployee = await ReadRequestBodyAsync<Applications>
-		(req);
-		await jobPostingsService.DeleteApplicationsAsync(newEmployee.postingId);
-		await SendResponse(resp, "Employee inserted successfully.");
-		}
-		catch (Exception ex)
-		{
-		await HandleError(resp, ex);
-		}
-		}
-		private static async Task InsertApplication(HttpListenerRequest req, HttpListenerResponse resp)
-		{
-		try
-		{
-		var newApplication= await ReadRequestBodyAsync<Applications>(req);
-            await jobPostingsService.InsertApplicationsAsync(newApplication);
-            await SendResponse(resp, "Employee inserted successfully.");
+    private static async Task InsertManager(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newManager = await ReadRequestBodyAsync<Manager>(req);
+            await ManagerService.InsertManagerAsync(newManager);
+            await SendResponse(resp, "Manager inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task UpdateManager(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newManager = await ReadRequestBodyAsync<Manager>(req);
+            await ManagerService.UpdateManagerAsync(newManager);
+            await SendResponse(resp, "Manager inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task DeleteManager(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newManager = await ReadRequestBodyAsync<Manager>(req);
+            await ManagerService.DeleteManagerAsync(newManager.ManagerId);
+            await SendResponse(resp, "Manager inserted successfully.");
         }
         catch (Exception ex)
         {
