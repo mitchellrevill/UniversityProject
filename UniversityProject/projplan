@@ -1,51 +1,10 @@
-private static async Task GetManagers(HttpListenerRequest req, HttpListenerResponse resp)
+    private static async Task GetRegions(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
         {
-            var Managers = await ManagerService.GetAllManagersAsync();
-            string jsonResponse = JsonConvert.SerializeObject(Managers);
+            var Regions = await RegionService.GetAllRegionsAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Regions);
             await SendResponse(resp, jsonResponse, "application/json");
-        }
-        catch (Exception ex)
-        {
-            await HandleError(resp, ex);
-        }
-    }
-
-    private static async Task InsertManager(HttpListenerRequest req, HttpListenerResponse resp)
-    {
-        try
-        {
-            var newManager = await ReadRequestBodyAsync<Manager>(req);
-            await ManagerService.InsertManagerAsync(newManager);
-            await SendResponse(resp, "Manager inserted successfully.");
-        }
-        catch (Exception ex)
-        {
-            await HandleError(resp, ex);
-        }
-    }
-    private static async Task UpdateManager(HttpListenerRequest req, HttpListenerResponse resp)
-    {
-        try
-        {
-            var newManager = await ReadRequestBodyAsync<Manager>(req);
-            await ManagerService.UpdateManagerAsync(newManager);
-            await SendResponse(resp, "Manager inserted successfully.");
-        }
-        catch (Exception ex)
-        {
-            await HandleError(resp, ex);
-        }
-    }
-
-    private static async Task DeleteManager(HttpListenerRequest req, HttpListenerResponse resp)
-    {
-        try
-        {
-            var newManager = await ReadRequestBodyAsync<Manager>(req);
-            await ManagerService.DeleteManagerAsync(newManager.ManagerId);
-            await SendResponse(resp, "Manager inserted successfully.");
         }
         catch (Exception ex)
         {
