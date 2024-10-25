@@ -24,8 +24,8 @@ namespace UniversityProject.Model
         public DateTime StartDate { get; set; }
         public decimal Salary { get; set; }
         public string Benefits { get; set; }
-
         public string password { get; set; }
+        public string Employeetype { get; set; }
         public EmployeeStatus Status { get; set; }
 
         public enum EmployeeStatus

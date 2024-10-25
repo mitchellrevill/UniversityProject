@@ -36,6 +36,7 @@ namespace UniversityProject.Repository
                     StartDate TEXT NOT NULL,
                     Salary REAL NOT NULL,
                     Benefits TEXT,
+                    Employeetype TEXT,
                     Password TEXT,
                     Status INTEGER NOT NULL
                 )";
@@ -54,8 +55,8 @@ namespace UniversityProject.Repository
                 connection.Open();
 
                 string insertQuery = @"
-                INSERT INTO Employees (EmployeeId, FirstName, LastName, CompanyEmail, PersonalEmail, PhoneNumber, CountryId, DepartmentId, ManagerId, RegionId, EmploymentType, StartDate, Salary, Benefits, Password, Status)
-                VALUES (@EmployeeId, @FirstName, @LastName, @CompanyEmail, @PersonalEmail, @PhoneNumber, @CountryId, @DepartmentId, @ManagerId, @RegionId, @EmploymentType, @StartDate, @Salary, @Benefits,@Password, @Status)";
+                INSERT INTO Employees (EmployeeId, FirstName, LastName, CompanyEmail, PersonalEmail, PhoneNumber, CountryId, DepartmentId, ManagerId, RegionId, EmploymentType, StartDate, Salary, Benefits, Employeetype, Password, Status)
+                VALUES (@EmployeeId, @FirstName, @LastName, @CompanyEmail, @PersonalEmail, @PhoneNumber, @CountryId, @DepartmentId, @ManagerId, @RegionId, @EmploymentType, @StartDate, @Salary, @Benefits, @Employeetype, @Password, @Status)";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
@@ -73,6 +74,7 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@StartDate", employee.StartDate.ToString("yyyy-MM-dd"));
                     command.Parameters.AddWithValue("@Salary", employee.Salary);
                     command.Parameters.AddWithValue("@Benefits", employee.Benefits);
+                    command.Parameters.AddWithValue("@Employeetype", employee.Employeetype);
                     command.Parameters.AddWithValue("@Password", employee.password);
                     command.Parameters.AddWithValue("@Status", (int)employee.Status);
                     command.ExecuteNonQuery();
@@ -109,8 +111,9 @@ namespace UniversityProject.Repository
                             StartDate = DateTime.Parse(reader.GetString(11)),
                             Salary = reader.GetDecimal(12),
                             Benefits = reader.GetString(13),
-                            password = reader.GetString(14),
-                            Status = (Employee.EmployeeStatus)reader.GetInt32(15)
+                            Employeetype = reader.GetString(15),
+                            password = reader.GetString(16),
+                            Status = (Employee.EmployeeStatus)reader.GetInt32(16)
                         };
 
                         employees.Add(employee);
@@ -150,8 +153,9 @@ namespace UniversityProject.Repository
                                 StartDate = DateTime.Parse(reader.GetString(11)),
                                 Salary = reader.GetDecimal(12),
                                 Benefits = reader.GetString(13),
-                                password = reader.GetString(14),
-                                Status = (Employee.EmployeeStatus)reader.GetInt32(15)
+                                Employeetype = reader.GetString(15),
+                                password = reader.GetString(16),
+                                Status = (Employee.EmployeeStatus)reader.GetInt32(16)
                             };
                         }
                     }
@@ -181,7 +185,8 @@ namespace UniversityProject.Repository
                     StartDate = @StartDate,
                     Salary = @Salary,
                     Benefits = @Benefits,
-                    Password = @Password
+                    Employeetype = @Employeetype
+                    Password = @Password,
                     Status = @Status
                 WHERE EmployeeId = @EmployeeId";
 
