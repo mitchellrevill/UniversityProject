@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+    height: 100%; /* Allow body to fill the height */
+}
+
+body {
+    background-color: #a2c5ac; /* Set background color */
+    color: #000000;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #a2c5ac; /* Set background color for wrapper */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between; /* Space between title and nav */
+    align-items: center; /* Center vertically */
+    background-color: #ffffff; /* White background */
+    height: 70px; /* Set a fixed height for the header */
+    padding-left: 25px;
+}
+
+.title {
+    font-size: 1.5em; /* Adjust title size */
+    color: #000000; /* Title color */
+}
+
+nav {
+    margin-left: auto; /* Push nav to the right */
+    padding-right: 25px;
+}
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        padding: 0;
+        margin: 0; /* Reset margin */
+        height: 100%; /* Ensure nav takes full height of header */
+        white-space: nowrap; /* Prevent wrapping of nav items */
+    }
+
+        nav ul li {
+            flex: 1; /* Make each item take up equal width */
+            display: flex; /* Make the li a flex container */
+            align-items: center; /* Center items vertically */
+            justify-content: center; /* Center items horizontally */
+            height: 100%; /* Ensure li takes full height of nav */
+        }
+
+            nav ul li a {
+                color: #000000; /* Change to black for contrast */
+                text-decoration: none;
+                font-size: 1em;
+                display: block; /* Ensure the entire area is clickable */
+                padding: 10px; /* Padding for clickable area */
+                width: 100%; /* Ensure anchor takes full width */
+                height: 100%; /* Ensure anchor takes full height */
+                box-sizing: border-box; /* Include padding in height calculation */
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+                nav ul li a:hover {
+                    background-color: #878e99; /* Change background on hover */
+                }
+
+                nav ul li a.active {
+                    background-color: #878e99; /* Active link background */
+                }
+
+.content {
+    background-color: transparent; /* Remove background color from content */
+    margin-top: 0; /* Start directly below the header */
+    border-radius: 0; /* Remove curves */
+    padding: 40px; /* Restore padding for content */
+    min-height: calc(100vh - 100px); /* Adjust based on header height */
+}
+
+
