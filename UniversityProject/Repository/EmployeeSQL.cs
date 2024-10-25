@@ -111,8 +111,8 @@ namespace UniversityProject.Repository
                             StartDate = DateTime.Parse(reader.GetString(11)),
                             Salary = reader.GetDecimal(12),
                             Benefits = reader.GetString(13),
-                            Employeetype = reader.GetString(15),
-                            password = reader.GetString(16),
+                            Employeetype = reader.GetString(14),
+                            password = reader.GetString(15),
                             Status = (Employee.EmployeeStatus)reader.GetInt32(16)
                         };
 
@@ -213,7 +213,7 @@ namespace UniversityProject.Repository
             }
         }
         public void DeleteEmployee(string employeeId)
-        {
+        {   
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
