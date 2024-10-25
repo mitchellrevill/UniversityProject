@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="adminCSS.css">
+    <script type="text/javascript" src="admin.js" defer></script>
     <title>Global HR Systems - Administration</title>
 </head>
 <body>
@@ -22,7 +23,48 @@
         </header>
 
         <div class="content">
-            <p>Welcome to the Global HR Analytics Page!</p>
+            <h2>Department</h2>
+            <div id="container">
+                <div id="exampleModal" class="reveal-modal">
+                    <h2>Add New Department</h2>
+                    <div class="formContainer">
+                        <form id="addDepartmentForm" class="form-container">
+                            <label for="departmentName">Department Name:</label>
+                            <input type="text" id="departmentName" name="departmentName" class="form-input" required="">
+                            
+                            <label for="departmentDescription">Description:</label>
+                            <textarea id="departmentDescription" name="departmentDescription" class="form-input" required=""></textarea>
+                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addDepartment()">Add Department</button></a>
+                        </form>
+                </div>
+
+                </div>
+            </div>
+
+            <!-- Table for Displaying Items -->
+            <table id="itemTable">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+    
+                
+                </tbody>
+            </table>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="#container"><button>Add Department</button></a>
+                <button type="button" onclick="editSelected()">Edit Selected</button>
+                <button type="button" onclick="deleteSelected()">Delete Selected</button>
+            </div>
+        </div>
+
         </div>
     </div>
 </body>
