@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="employeesCSS.css">
-    <script type="text/javascript" src="app.js" defer></script>
+    <script type="text/javascript" src="app2.js" defer></script>
     <title>Global HR Systems - Employees</title>
 </head>
 <body>
@@ -25,10 +25,10 @@
         <div class="content">
             <div class="job-form">
                 <h2>Employees List</h2>
-                <button type="button" class="refresh-button" onclick="loadEmployeesFromStorage()">Refresh Employees</button>
+                <button type="button" id="loadEmployeesButton" onclick="loadEmployees('http://localhost:8000/GetAllEmployees', '#employeeJsonTable')">Load Employees</button>
 
                 <div class="table-container">
-                    <table id="jsonTable">
+                    <table id="employeeJsonTable">
                         <thead>
                             <tr>
                                 <th>Employee ID</th>

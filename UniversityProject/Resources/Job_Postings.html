@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css"> <!-- Common styles -->
-    <link rel="stylesheet" href="jobsCSS.css"> <!-- Job Postings styles -->
+    <link rel="stylesheet" href="jobsCSS.css">
     <script type="text/javascript" src="app.js" defer></script>
     <title>Global HR Systems - Job Postings</title>
 </head>
@@ -58,46 +57,31 @@
             <!-- Job Results Table -->
             <div class="job-results">
                 <h2>Available Job Postings</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Job Title</th>
-                            <th>Job Type</th>
-                            <th>Location</th>
-                            <th>Salary</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Software Developer</td>
-                            <td>Full-Time</td>
-                            <td>Sheffield</td>
-                            <td>£40,000 - £50,000</td>
-                            <td><button>Apply</button></td>
-                        </tr>
-                        <tr>
-                            <td>Project Manager</td>
-                            <td>Contract</td>
-                            <td>Remote</td>
-                            <td>£45,000 - £55,000</td>
-                            <td><button>Apply</button></td>
-                        </tr>
-                        <tr>
-                            <td>Data Analyst</td>
-                            <td>Part-Time</td>
-                            <td>Leeds</td>
-                            <td>£30,000 - £35,000</td>
-                            <td><button>Apply</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <button type="button" class="refresh-button" onclick="loadJobsFromStorage()">Refresh Jobs</button>
 
-            <div class="addJobSection">
-                <button type="button" onclick="window.location.href='New_Job_Form.html'">Add New Job</button>
+                <div class="table-container">
+                    <table id="job-results">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Job Title</th>
+                                <th>Job Description</th>
+                                <th>Job type</th>
+                                <th>Hours</th>
+                                <th>Wage</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be dynamically inserted -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="addJobSection">
+                    <button type="button" onclick="window.location.href='New_Job_Form.html'">Add New Job</button>
+                </div>
             </div>
-        </div>
     </div>
 </body>
 </html>
