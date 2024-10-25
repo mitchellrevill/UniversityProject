@@ -23,7 +23,7 @@
         </header>
 
         <div class="content">
-            <div class="Departmentclass">
+            <div class="Departmentclass"></div>
             <h2>Department</h2>
             <div id="container">
                 <div id="exampleModal" class="reveal-modal">
@@ -41,7 +41,23 @@
 
                 </div>
             </div>
+            <div id="container2">
+                <div id="exampleModal" class="reveal-modal">
+                    <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment()">Back</button></a>
+                    <h2>Add New Department</h2>
+                    <div class="formContainer">
+                        <form id="addDepartmentForm" class="form-container">
+                            <label for="departmentName">Department Name:</label>
+                            <input type="text" id="departmentName" name="departmentName" class="form-input" required="">
+                            
+                            <label for="departmentDescription">Description:</label>
+                            <textarea id="departmentDescription" name="departmentDescription" class="form-input" required=""></textarea>
+                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment()">Update Department</button></a>
+                        </form>
+                </div>
 
+                </div>
+            </div>
             <div style="overflow-y: scroll;  height: 600px;">
             <table id="itemTable" style="overflow-y: scroll;">
                 <thead>
@@ -182,13 +198,15 @@
                 </tbody>
             </table>
         </div>
-         <!-- Action Buttons -->
-         <div class="action-buttons">
-            <a href="#container"><button>Add Department</button></a>
-            <button type="button" onclick="editSelected()">Edit Selected</button>
-            <button type="button" onclick="deleteSelected()">Delete Selected</button>
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="#container"><button>Add Department</button></a>
+                <a href="#container2"><button>Edit Department</button></a>
+                <button type="button" onclick="deleteSelected()">Delete Selected</button>
+            </div>
         </div>
-    </div>
+
+        </div>
     </div>
 </body>
 </html>
