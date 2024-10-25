@@ -36,6 +36,7 @@ namespace UniversityProject.Repository
                     StartDate TEXT NOT NULL,
                     Salary REAL NOT NULL,
                     Benefits TEXT,
+                    Password TEXT,
                     Status INTEGER NOT NULL
                 )";
 
@@ -53,8 +54,8 @@ namespace UniversityProject.Repository
                 connection.Open();
 
                 string insertQuery = @"
-                INSERT INTO Employees (EmployeeId, FirstName, LastName, CompanyEmail, PersonalEmail, PhoneNumber, CountryId, DepartmentId, ManagerId, RegionId, EmploymentType, StartDate, Salary, Benefits, Status)
-                VALUES (@EmployeeId, @FirstName, @LastName, @CompanyEmail, @PersonalEmail, @PhoneNumber, @CountryId, @DepartmentId, @ManagerId, @RegionId, @EmploymentType, @StartDate, @Salary, @Benefits, @Status)";
+                INSERT INTO Employees (EmployeeId, FirstName, LastName, CompanyEmail, PersonalEmail, PhoneNumber, CountryId, DepartmentId, ManagerId, RegionId, EmploymentType, StartDate, Salary, Benefits, Password, Status)
+                VALUES (@EmployeeId, @FirstName, @LastName, @CompanyEmail, @PersonalEmail, @PhoneNumber, @CountryId, @DepartmentId, @ManagerId, @RegionId, @EmploymentType, @StartDate, @Salary, @Benefits,@Password, @Status)";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
@@ -72,13 +73,12 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@StartDate", employee.StartDate.ToString("yyyy-MM-dd"));
                     command.Parameters.AddWithValue("@Salary", employee.Salary);
                     command.Parameters.AddWithValue("@Benefits", employee.Benefits);
+                    command.Parameters.AddWithValue("@Password", employee.password);
                     command.Parameters.AddWithValue("@Status", (int)employee.Status);
-
                     command.ExecuteNonQuery();
                 }
             }
         }
-
         public List<Employee> GetAllEmployees()
         {
             var employees = new List<Employee>();
@@ -109,18 +109,16 @@ namespace UniversityProject.Repository
                             StartDate = DateTime.Parse(reader.GetString(11)),
                             Salary = reader.GetDecimal(12),
                             Benefits = reader.GetString(13),
-                            Status = (Employee.EmployeeStatus)reader.GetInt32(14)
+                            password = reader.GetString(14),
+                            Status = (Employee.EmployeeStatus)reader.GetInt32(15)
                         };
 
                         employees.Add(employee);
                     }
                 }
             }
-
             return employees;
         }
-
-
         public Employee GetEmployeeById(string employeeId)
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -152,7 +150,8 @@ namespace UniversityProject.Repository
                                 StartDate = DateTime.Parse(reader.GetString(11)),
                                 Salary = reader.GetDecimal(12),
                                 Benefits = reader.GetString(13),
-                                Status = (Employee.EmployeeStatus)reader.GetInt32(14)
+                                password = reader.GetString(14),
+                                Status = (Employee.EmployeeStatus)reader.GetInt32(15)
                             };
                         }
                     }
@@ -182,6 +181,7 @@ namespace UniversityProject.Repository
                     StartDate = @StartDate,
                     Salary = @Salary,
                     Benefits = @Benefits,
+                    Password = @Password
                     Status = @Status
                 WHERE EmployeeId = @EmployeeId";
 
@@ -201,13 +201,12 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@StartDate", employee.StartDate.ToString("yyyy-MM-dd"));
                     command.Parameters.AddWithValue("@Salary", employee.Salary);
                     command.Parameters.AddWithValue("@Benefits", employee.Benefits);
+                    command.Parameters.AddWithValue("@Password", employee.password);
                     command.Parameters.AddWithValue("@Status", (int)employee.Status);
-
                     command.ExecuteNonQuery();
                 }
             }
         }
-
         public void DeleteEmployee(string employeeId)
         {
             using (var connection = new SqliteConnection(_connectionString))

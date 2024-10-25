@@ -23,7 +23,7 @@ public class Employee_Service : IEmployeeService
 
     public async Task UpdateEmployeeAsync(Employee employee)
     {
-        // Ensure you have this method implemented in EmployeeSQL
+
         await Task.Run(() => _EmployeeSQL.UpdateEmployee(employee));
     }
 
