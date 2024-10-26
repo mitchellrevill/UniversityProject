@@ -1,55 +1,10 @@
-  private static async Task GetAllApplications(HttpListenerRequest req, HttpListenerResponse resp)
-{
-Console.WriteLine("Method start");
-try
-{
-Console.WriteLine("Entered method");
-var Applications = await jobPostingsService.GetAllApplicationsAsync();
-string jsonResponse = JsonConvert.SerializeObject(Applications);
-await SendResponse(resp, jsonResponse, "application/json");
-Console.WriteLine("Method finished");
-}
-catch (Exception ex)
-{
-await HandleError(resp, ex);
-}
-}
-private static async Task UpdateApplication(HttpListenerRequest req, HttpListenerResponse resp)
-{
-try
-{
-var Applications = await ReadRequestBodyAsync<Applications>
-	(req);
-	await jobPostingsService.UpdateApplicationsAsync(Applications);
-	await SendResponse(resp, "Employee inserted successfully.");
-	}
-	catch (Exception ex)
-	{
-	await HandleError(resp, ex);
-	}
-	}
-
-	private static async Task DeleteApplication(HttpListenerRequest req, HttpListenerResponse resp)
-	{
-	try
-	{
-	var newEmployee = await ReadRequestBodyAsync<Applications>
-		(req);
-		await jobPostingsService.DeleteApplicationsAsync(newEmployee.postingId);
-		await SendResponse(resp, "Employee inserted successfully.");
-		}
-		catch (Exception ex)
-		{
-		await HandleError(resp, ex);
-		}
-		}
-		private static async Task InsertApplication(HttpListenerRequest req, HttpListenerResponse resp)
-		{
-		try
-		{
-		var newApplication= await ReadRequestBodyAsync<Applications>(req);
-            await jobPostingsService.InsertApplicationsAsync(newApplication);
-            await SendResponse(resp, "Employee inserted successfully.");
+    private static async Task GetRegions(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Regions = await RegionService.GetAllRegionsAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Regions);
+            await SendResponse(resp, jsonResponse, "application/json");
         }
         catch (Exception ex)
         {

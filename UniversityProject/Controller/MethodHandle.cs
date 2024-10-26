@@ -7,17 +7,27 @@ using UniversityProject.Model;
 
 public static class MethodHandle
 {
+
+    // Instance Creation
     private static readonly string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
     private static readonly IEmployeeService employeeService = new Employee_Service(dbPath);
+    private static readonly IDepartmentService departmentService = new DepartmentService(dbPath);
     private static readonly IJobPostingsService jobPostingsService = new JobPostingsService(dbPath);
+    private static readonly IManagerService managerService = new ManagerService(dbPath);
+    private static readonly ICountryService countryService = new CountryService(dbPath);
+    private static readonly IRegionService regionService = new RegionService(dbPath);
     private static readonly ApplicantService ApplicantService = new ApplicantService(dbPath);
+
     // Get requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _getRoutes =
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>
         {
         { "GetAllEmployees", GetEmployees },
         { "GetAllJobPostings", GetAllJobPostings },
-        { "GetAllApplications", GetAllApplications}
+        { "GetAllApplications", GetAllApplications},
+        { "GetAllDepartments",GetDepartments},
+        { "GetCountries", GetCountries },
+        { "GetAllRegions", GetAllRegions }
         };
 
     // Post requests
@@ -32,11 +42,19 @@ public static class MethodHandle
         { "DeleteJobPosting", DeleteJobPosting },
         { "InsertApplication", InsertApplication },
         { "UpdateApplication", UpdateApplication },
-        { "DeleteApplication", DeleteApplication }
+        { "DeleteApplication", DeleteApplication },
+        { "InsertDepartment", InsertDepartment},
+        { "UpdateDepartment", UpdateDepartment},
+        { "DeleteDepartment" , DeleteDepartment},
+        { "InsertRegion" , InsertRegion},
+        {" UpdateRegion", UpdateRegion },
+        {" DeleteRegion", DeleteRegion },
+        { "InsertCountry", InsertCountry },
+        { "UpdateCountry", UpdateCountry },
+        { "DeleteRegion", DeleteRegion}
         };
 
 
-    
 
     public static async Task HandleRequest(HttpListenerRequest req, HttpListenerResponse resp)
     {
@@ -79,7 +97,7 @@ public static class MethodHandle
     }
 
 
-
+    // EMPLOYEE
     private static async Task GetEmployees(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
@@ -135,6 +153,7 @@ public static class MethodHandle
         }
     }
 
+    // JOB POSTING
     private static async Task GetAllJobPostings(HttpListenerRequest req, HttpListenerResponse resp)
     {
         Console.WriteLine("Method start");
@@ -196,7 +215,7 @@ public static class MethodHandle
         }
     }
 
-
+   // APPLICATION
 
     private static async Task GetAllApplications(HttpListenerRequest req, HttpListenerResponse resp)
     {
@@ -257,7 +276,228 @@ public static class MethodHandle
         }
     }
 
+    // DEPARTMENTS
+    private static async Task GetDepartments(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Departments = await departmentService.GetAllDepartmentsAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Departments);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
 
+    private static async Task InsertDepartment(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newDepartment = await ReadRequestBodyAsync<Department>(req);
+            await departmentService.InsertDepartmentAsync(newDepartment);
+            await SendResponse(resp, "Department inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task UpdateDepartment(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newDepartment = await ReadRequestBodyAsync<Department>(req);
+            await departmentService.UpdateDepartmentAsync(newDepartment);
+            await SendResponse(resp, "Department inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task DeleteDepartment(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newDepartment = await ReadRequestBodyAsync<Department>(req);
+            await departmentService.DeleteDepartmentAsync(newDepartment.DepartmentId);
+            await SendResponse(resp, "Department inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    // MANAGERS
+    private static async Task GetManagers(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Managers = await managerService.GetAllManagersAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Managers);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task InsertManager(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newManager = await ReadRequestBodyAsync<Manager>(req);
+            await managerService.InsertManagerAsync(newManager);
+            await SendResponse(resp, "Manager inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task UpdateManager(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newManager = await ReadRequestBodyAsync<Manager>(req);
+            await managerService.UpdateManagerAsync(newManager);
+            await SendResponse(resp, "Manager inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task DeleteManager(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newManager = await ReadRequestBodyAsync<Manager>(req);
+            await managerService.DeleteManagerAsync(newManager.ManagerId);
+            await SendResponse(resp, "Manager inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    // COUNTRY
+    private static async Task GetCountries(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Countrys = await countryService.GetAllCountriesAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Countrys);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task InsertCountry(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newCountry = await ReadRequestBodyAsync<Country>(req);
+            await countryService.InsertCountryAsync(newCountry);
+            await SendResponse(resp, "Country inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task UpdateCountry(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newCountry = await ReadRequestBodyAsync<Country>(req);
+            await countryService.UpdateCountryAsync(newCountry);
+            await SendResponse(resp, "Country inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task DeleteCountry(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newCountry = await ReadRequestBodyAsync<Country>(req);
+            await countryService.DeleteCountryAsync(newCountry.CountryId);
+            await SendResponse(resp, "Country inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    // Region
+    private static async Task GetAllRegions(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Regions = await regionService.GetAllRegionsAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Regions);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task InsertRegion(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newRegion = await ReadRequestBodyAsync<Region>(req);
+            await regionService.InsertRegionAsync(newRegion);
+            await SendResponse(resp, "Region inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    private static async Task UpdateRegion(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newRegion = await ReadRequestBodyAsync<Region>(req);
+            await regionService.UpdateRegionAsync(newRegion);
+            await SendResponse(resp, "Region inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task DeleteRegion(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newRegion = await ReadRequestBodyAsync<Region>(req);
+            await regionService.DeleteRegionAsync(newRegion.RegionId);
+            await SendResponse(resp, "Region inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
 
     // STATIC FOR KNOWN FILE TYPES USED FOR STATIC FILES THAT NEED REQUESTING
     private static async Task ServeStaticFile(HttpListenerRequest req, HttpListenerResponse resp, string requestedPath)
