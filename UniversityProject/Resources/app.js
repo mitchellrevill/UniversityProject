@@ -81,11 +81,11 @@ function displayJobs(jobs) {
         tr.appendChild(TitleTd);
 
         const jobdescTd = document.createElement('td');
-        jobdescTd.innerText = job.jobdesc;
+        jobdescTd.innerText = job.JobDescription;
         tr.appendChild(jobdescTd);
 
         const jobtypeTd = document.createElement('td');
-        jobtypeTd.innerText = job.jobtype;
+        jobtypeTd.innerText = job.JobType;
         tr.appendChild(jobtypeTd);
 
         const personalEmailTd = document.createElement('td');
@@ -93,11 +93,11 @@ function displayJobs(jobs) {
         tr.appendChild(personalEmailTd);
 
         const hoursTd = document.createElement('td');
-        hoursTd.innerText = job.hours;
+        hoursTd.innerText = job.Hours;
         tr.appendChild(hoursTd);
 
         const salaryTd = document.createElement('td');
-        salaryTd.innerText = job.salary;
+        salaryTd.innerText = job.Salary;
         tr.appendChild(salaryTd);
 
         tbody.appendChild(tr);
