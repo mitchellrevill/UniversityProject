@@ -28,7 +28,7 @@ public class RegionService : IRegionService
         await Task.Run(() => _regionDatabase.UpdateRegion(region));
     }
 
-    public async Task DeleteRegionAsync(int regionId)
+    public async Task DeleteRegionAsync(string regionId)
     {
         await Task.Run(() => _regionDatabase.DeleteRegion(regionId));
     }

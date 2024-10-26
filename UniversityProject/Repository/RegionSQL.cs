@@ -137,7 +137,7 @@ namespace UniversityProject.Repository
             }
         }
 
-        public void DeleteRegion(int regionId)
+        public void DeleteRegion(string regionId)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {

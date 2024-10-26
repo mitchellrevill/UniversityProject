@@ -449,7 +449,7 @@ public static class MethodHandle
     {
         try
         {
-            var Regions = await RegionService.GetAllRegionsAsync();
+            var Regions = await regionService.GetAllRegionsAsync();
             string jsonResponse = JsonConvert.SerializeObject(Regions);
             await SendResponse(resp, jsonResponse, "application/json");
         }

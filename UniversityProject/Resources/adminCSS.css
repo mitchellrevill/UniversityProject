@@ -1,33 +1,54 @@
 body {
-    background: #8fb0a9;
+    background: #b08f8f;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    background-color: #a2c5ac; /* Set background color */
+    background-color: #ffffff; /* Set background color */
     color: #000000;
     font-size: 16px;
     line-height: 1.6;
 }
 
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  li a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+  
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+  }
+
+
 .wrapper {
+
     max-width: 100%;
-    margin: 0 auto;
-    background-color: #a2c5ac; /* Set background color for wrapper */
+    background-color: #ffffff; /* Set background color for wrapper */
 }
 
 .header {
+    
     display: flex;
-    justify-content: space-between; /* Space between title and nav */
-    align-items: center; /* Center vertically */
-    background-color: #ffffff; /* White background */
-    height: 70px; /* Set a fixed height for the header */
+    justify-content: space-between; 
+    align-items: center; 
+    background-color: white;
+    height: 70px; 
     padding-left: 25px;
+    margin-left: 15%;
+    width: 85%;
+    padding-right: 0;
 }
 
 .title {
-    font-size: 1.5em; /* Adjust title size */
-    color: #000000; /* Title color */
+    font-size: 1.5em; 
+    color: #000000; 
 }
 
 nav {
@@ -36,6 +57,7 @@ nav {
 }
 
 nav ul {
+    background-color: #ffffff;
     list-style: none;
     display: flex;
     padding: 0;
@@ -72,7 +94,10 @@ nav ul li a.active {
     background-color: #878e99; /* Active link background */
 }
 
-
+.tableColour{
+    background-color: white;
+    border-radius: 25px;
+}
 .table-fixed {
     margin-left: 25rem;
     margin-top: 10rem;
@@ -131,8 +156,8 @@ table {
 }
 
 table thead {
-    background-color: #003366;
-    color: white;
+    background-color: #1f2421;
+    color: rgb(255, 255, 255);
 }
 
 table th, table td {
@@ -145,9 +170,6 @@ table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-table tr:hover {
-    background-color: #e0f0ff;
-}
 
 .action-buttons {
     display: flex;
@@ -159,7 +181,7 @@ table tr:hover {
     padding: 10px 20px;
     font-size: 16px;
     background-color: #003366;
-    color: white;
+    color: rgb(255, 255, 255);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -226,22 +248,67 @@ table tr:hover {
 }
 
 
-.Departmentclass{
+.department-applications{
     background-color: white;
-    border-radius: 5px;
-    padding: 10px;
+    height: 70%;
+    margin: 25px;
+    border-radius: 25px;
+    filter: drop-shadow(4px 6px 10px #e6e6e6);
+
+}
+.department-applications ul{
+   margin: 10px;
+    overflow-y: scroll;
+    height: inherit;
+}
+.department-applications p{
+    margin-bottom: 0px;
+    margin-left: 10px;
+    padding-top: 25px;
+    font-size: large;
+    font-weight: 700;
+}
+
+.Departmentclass{
+    display: inline-block;
+    background-color: white;
+    border-radius: 25px;
+    padding: 25px;
+    width: 50%;
+    margin-left: 25px;
 }
 .Departmentcontent {
-    background-color: transparent; 
+    display: flex;
+    padding-top: 10px;
+    margin-left: 15%;
+    background-color: #e9e9e9; 
     margin-top: 0; 
-    border-radius: 0; 
-    padding: 40px; 
+    border-radius: 0;  
     min-height: calc(100vh - 100px); 
 }
-
-
-
-
+.DepartmentAnal, .Departmentclass {
+    flex: 1;
+    height: 650px;
+    background-color: white;
+    border-radius: 25px;
+    margin-left: 10px;
+    padding: 25px;
+    margin-right: 25px;
+    
+}
+.departmentNumber{
+    background-color: #F19180;
+    height: 20%;
+    border-radius: 25px;
+}
+.departmentNumber p{
+   color: rgb(0, 0, 0);
+   margin: 25px;
+   padding-top: 10px;
+   font-size: large;
+   font-weight: 700;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 /* Modal styling */
 .reveal-modal {
     background-color: #fff;
@@ -305,16 +372,31 @@ table tr:hover {
 
 /* Country */
 .Countryclass{
+    display: inline-block;
     background-color: white;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 25px;
+    padding: 25px;
+    width: 50%;
+    margin-left: 25px;
 }
+.countryAnal, .Countryclass {
+    flex: 1;
+    height: 650px;
+    background-color: white;
+    border-radius: 25px;
+    margin-left: 10px;
+    padding: 25px;
+    margin-right: 25px;
+    
+  }
 .Countrycontent {
-    background-color: transparent; /* Remove background color from content */
-    margin-top: 0; /* Start directly below the header */
-    border-radius: 0; /* Remove curves */
-    padding: 40px; /* Restore padding for content */
-    min-height: calc(100vh - 100px); /* Adjust based on header height */
+    display: flex;
+    padding-top: 10px;
+    margin-left: 15%;
+    background-color: #e9e9e9; 
+    margin-top: 0; 
+    border-radius: 0;  
+    min-height: calc(100vh - 100px)
 }
 #containerCountry{
     width: 100%;
@@ -332,7 +414,31 @@ table tr:hover {
 #containerCountry:target {
     visibility: visible;
 }
-
+.country-applications{
+    background-color: white;
+    height: 70%;
+    margin: 25px;
+    border-radius: 25px;
+    filter: drop-shadow(4px 6px 10px #e6e6e6);
+  
+  }
+  .country-applications ul{
+   margin: 10px;
+    overflow-y: scroll;
+    height: inherit;
+  }
+  .country-applications p{
+    margin-bottom: 0px;
+    margin-left: 10px;
+    padding-top: 25px;
+    font-size: large;
+    font-weight: 700;
+  }
+.countryNumber{
+    background-color: #F19180;
+    height: 20%;
+    border-radius: 25px;
+}
 #containerCountry2{
     width: 100%;
     height: 100%;
@@ -367,9 +473,26 @@ table tr:hover {
 }
 
 
-
-
-
+.country-applications{
+    background-color: white;
+    height: 70%;
+    margin: 25px;
+    border-radius: 25px;
+    filter: drop-shadow(4px 6px 10px #e6e6e6);
+  
+  }
+  .country-applications ul{
+   margin: 10px;
+    overflow-y: scroll;
+    height: inherit;
+  }
+  .country-applications p{
+    margin-bottom: 0px;
+    margin-left: 10px;
+    padding-top: 25px;
+    font-size: large;
+    font-weight: 700;
+  }
 
 
 
@@ -378,18 +501,32 @@ table tr:hover {
 
 /*region */
 .Regioncontent {
-    background-color: transparent; /* Remove background color from content */
-    margin-top: 0; /* Start directly below the header */
-    border-radius: 0; /* Remove curves */
-    padding: 40px; /* Restore padding for content */
-    min-height: calc(100vh - 100px); /* Adjust based on header height */
+    display: flex;
+    padding-top: 10px;
+    margin-left: 15%;
+    background-color: #e9e9e9; 
+    margin-top: 0; 
+    border-radius: 0;  
+    min-height: calc(100vh - 100px)
 }
 .Regionclass{
+    display: inline-block;
     background-color: white;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 25px;
+    padding: 25px;
+    width: 50%;
+    margin-left: 25px;
 }
-
+.regionAnal, .Regionclass {
+    flex: 1;
+    height: 650px;
+    background-color: white;
+    border-radius: 25px;
+    margin-left: 10px;
+    padding: 25px;
+    margin-right: 25px;
+    
+  }
 #containerRegion{
     width: 100%;
     height: 100%;
@@ -439,3 +576,55 @@ table tr:hover {
 #containerRegion3:target {
     visibility: visible;
 }
+.region-applications{
+    background-color: white;
+    height: 70%;
+    margin: 25px;
+    border-radius: 25px;
+    filter: drop-shadow(4px 6px 10px #e6e6e6);
+  
+  }
+  .region-applications ul{
+   margin: 10px;
+    overflow-y: scroll;
+    height: inherit;
+  }
+  .region-applications p{
+    margin-bottom: 0px;
+    margin-left: 10px;
+    padding-top: 25px;
+    font-size: large;
+    font-weight: 700;
+  }
+  .regionNumber{
+    background-color: #F19180;
+    height: 20%;
+    border-radius: 25px;
+  }
+
+
+
+
+/* Side bar */ 
+.sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+    width: 15%;
+    background-color: #1f2421;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    margin-top: 0;
+  }
+  
+  .sidebar-menu-item a {
+    display: block;
+    color: #ffffff;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin-left: 5px;
+    font-family: 'Roboto', sans-serif;
+  }
+  .sidebar-menu-postion{
+    margin-top: 0%;
+  }
