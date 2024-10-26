@@ -3,13 +3,19 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+    height: 100%;
 }
 
 body {
     display: flex;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #a2c5ac;
+    color: #000000;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 /* Sidebar styling */
@@ -40,11 +46,12 @@ body {
                 background-color: #34495e;
             }
 
-/* Main content styling */
+/* Main content wrapper */
 .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
+    background-color: #a2c5ac;
 }
 
 /* Header styling */
@@ -52,42 +59,59 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
     background-color: #ffffff;
-    border-bottom: 1px solid #ddd;
+    height: 70px;
+    padding-left: 25px;
 }
 
-    .header h1 {
-        font-size: 1.8em;
-        color: #333;
+    .header .title {
+        font-size: 1.5em;
+        color: #000000;
     }
 
-.nav-bar {
-    display: flex;
-    gap: 15px;
-}
-
-    .nav-bar a {
-        text-decoration: none;
-        color: #3498db;
-        font-size: 1em;
-        padding: 5px 10px;
-        border-radius: 5px;
+    .header nav {
+        margin-left: auto;
+        padding-right: 25px;
     }
 
-        .nav-bar a:hover {
-            background-color: #3498db;
-            color: white;
+        .header nav ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            white-space: nowrap;
         }
 
-/* Body styling */
+            .header nav ul li {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+            }
+
+                .header nav ul li a {
+                    color: #000000;
+                    text-decoration: none;
+                    font-size: 1em;
+                    display: block;
+                    padding: 10px;
+                    transition: background-color 0.3s ease, color 0.3s ease;
+                }
+
+                    .header nav ul li a:hover,
+                    .header nav ul li a.active {
+                        background-color: #878e99;
+                    }
+
+/* Body styling with responsive grid for graph containers */
 .body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 20px;
     padding: 20px;
-    height: calc(100vh - 80px); /* Adjust for header */
+    height: calc(100vh - 90px); /* Adjusted height to account for header */
     overflow-y: auto;
 }
 
@@ -100,5 +124,5 @@ body {
     justify-content: center;
     font-size: 1.2em;
     color: #555;
-    height: 100%;
+    height: 100%; /* Ensures each container fills its grid cell */
 }
