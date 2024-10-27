@@ -93,7 +93,7 @@
                         </tr>
                     </thead>
                     <tbody id="departmentTableBody">
-                        <!-- Dynamic rows will be inserted here -->
+                        
                     </tbody>
                 </table>
             </div>
@@ -209,7 +209,9 @@
                         <th></th>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Description</th>
+                        <th>Currency</th>
+                        <th>Legal Requirements</th>
+                        <th>Minimum Leave</th>
                     </tr>
                 </thead>
                 <tbody id="countryTableBody">
@@ -253,21 +255,21 @@
 
                         <label for="regionId">Region ID:</label>
                         <input type="text" id="regionId" name="regionId" class="form-input" required="">
-                    
+
                         <label for="regionName">Region Name:</label>
                         <input type="text" id="regionName" name="regionName" class="form-input" required="">
-                    
 
-                        <label for="countryId">Country:</label>
-                        <select id="countryId" name="countryId" class="form-input" required="">
-                            <option value="">Select Country</option>
-                            <option value="country1">Country 1</option>
-                            <option value="country2">Country 2</option>
-                            <option value="country3">Country 3</option>
- 
+
+                        <label for="cars">Choose a car:</label>
+                        <select name="cars" id="cars">
+                            <option value="1">Volvo</option>
+                            <option value="1">Saab</option>
+                            <option value="1">Opel</option>
+                            <option value="1">Audi</option>
                         </select>
-                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addNewRegion()">Add Region</button></a>
-                </div>
+                        <br><br>
+                        <a href="#region" class="close-modal"><button type="button" class="submit-button" onclick="addNewRegion()">Add Region</button></a>
+</div>
             </div>
         </div>
         <div id="containerRegion2">
@@ -277,25 +279,21 @@
                 <div class="formContainer">
                     <form class="form-container">
 
-                        <label for="regionId">Region ID:</label>
-                        <input type="text" id="regionNameUpdate" name="regionNameUpdate" class="form-input" required="">
-                    
-
                         <label for="regionName">Region Name:</label>
                         <input type="text" id="regionNameUpdate" name="regionNameUpdate" class="form-input" required="">
-                    
 
-                        <label for="countryId">Country:</label>
-                        <select id="countryId" name="countryId" class="form-input" required="">
-                            <option value="">Select Country</option>
 
-                            <option value="country1">Country 1</option>
-                            <option value="country2">Country 2</option>
-                            <option value="country3">Country 3</option>
-
+                        <label for="cars">Choose a car:</label>
+                        <select name="cars" id="cars">
+                            <option value="1">Volvo</option>
+                            <option value="2">Saab</option>
+                            <option value="3">Opel</option>
+                            <option value="4">Audi</option>
                         </select>
+                        <br><br>
+                        <input type="submit" value="Submit">
                         <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateRegion()">Add Region</button></a>
-                </div>
+</div>
             </div>
         </div>
         <div id="containerRegion3">
@@ -331,8 +329,8 @@
             </table>
         </div>
         <div class="action-buttons">
-            <a href="#containerRegion"><button style="background-color: #6290c8">Add country</button></a>
-                <a href="#containerRegion2"><button style="background-color: #829cbc">Edit country</button></a>
+            <a href="#containerRegion"><button style="background-color: #6290c8">Add Region</button></a>
+                <a href="#containerRegion2"><button style="background-color: #829cbc">Edit Region</button></a>
                 <a href="#containerRegion3"><button style="background-color: #F19180">Delete country</button></a>
         </div>
     </div>

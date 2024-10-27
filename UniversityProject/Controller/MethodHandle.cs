@@ -65,6 +65,7 @@ public static class MethodHandle
         else if (req.HttpMethod == "GET" && _getRoutes.TryGetValue(requestedPath, out var getHandler))
         {
             await getHandler(req, resp);
+            Console.WriteLine("Entered GET Handler");
         }
         else
         {
@@ -447,6 +448,7 @@ public static class MethodHandle
     {
         try
         {
+            Console.WriteLine("Entered Regions");
             var Regions = await regionService.GetAllRegionsAsync();
             string jsonResponse = JsonConvert.SerializeObject(Regions);
             await SendResponse(resp, jsonResponse, "application/json");

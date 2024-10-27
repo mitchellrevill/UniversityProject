@@ -1,32 +1,47 @@
+const host = `${window.location.protocol}//${window.location.host}`;
 
-const departmentData = [
-    { DepartmentId: 1, DepartmentName: "Human Resources", Description: "Manages employee relations and resources." },
-    { DepartmentId: 2, DepartmentName: "Finance", Description: "Handles budgeting, accounting, and investments." },
-    { DepartmentId: 3, DepartmentName: "IT Support", Description: "Provides technical support and infrastructure management." }
-];
-populateDepartmentTable(departmentData)
-function populateDepartmentTable(data) {
-    const tbody = document.getElementById('departmentTableBody'); // Ensure you have the correct ID for the tbody
-    tbody.innerHTML = ''; // Clear existing rows
+populateDepartmentTable();
+populateCountryTable();
+populateRegionTable();
+populateDepartmentTable()
+async function populateDepartmentTable() {
+    try {
+        const Departments = await FetchRequestGET('GetAllDepartments'); 
+        if (!Array.isArray(Departments)) {
+            throw new Error('Expected an array from FetchRequestGET.');
+        }
+        console.log(Departments)
 
-    data.forEach(item => {
-        const row = document.createElement('tr');
+        const tbody = document.getElementById('departmentTableBody'); 
+        tbody.innerHTML = ''; 
+     
+        Departments.forEach(item => {
+            console.log("Entered Loop")
+            const row = document.createElement('tr');
 
-        row.innerHTML = `
-            <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.DepartmentId}" data-name="${item.DepartmentName}" data-description="${item.Description}"></td>
-            <td>${item.DepartmentId}</td>
-            <td>${item.DepartmentName}</td>
-            <td>${item.Description}</td>
-        `;
+            row.innerHTML = `
+                <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.DepartmentId}" data-name="${item.DepartmentName}" data-description="${item.Description}"></td>
+                <td>${item.DepartmentId}</td>
+                <td>${item.DepartmentName}</td>
+                <td>${item.Description}</td>
+            `;
 
-        tbody.appendChild(row);
-    });
+            tbody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error populating department table:', error);
+    }
 }
-function populateRegionTable(data) {
-    const tbody = document.getElementById('regionTableBody'); // Ensure you have the correct ID for the tbody
-    tbody.innerHTML = ''; // Clear existing rows
 
-    data.forEach(item => {
+async function populateRegionTable() {
+    Regions = await FetchRequestGET('GetAllRegions')
+    const tbody = document.getElementById('regionTableBody'); 
+    tbody.innerHTML = ''; 
+    if (!Array.isArray(Regions)) {
+        throw new Error('Expected an array from FetchRequestGET.');
+    }
+
+    Regions.forEach(item => {
         const row = document.createElement('tr');
 
         row.innerHTML = `
@@ -40,25 +55,32 @@ function populateRegionTable(data) {
     });
 }
 
-function populateCountryTable(data) {
+async function populateCountryTable() {
+
+    Countries = await FetchRequestGET('GetCountries');
+
+
+   console.log(Countries)
+
+    
     const tbody = document.getElementById('countryTableBody');
-    tbody.innerHTML = ''; 
+    tbody.innerHTML = '';
+    console.log(typeof Countries)
 
-    data.forEach(item => {
+    Countries.forEach(item => {
         const row = document.createElement('tr');
-
         row.innerHTML = `
             <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.CountryId}" data-name="${item.CountryName}" data-currency="${item.CountryCurrency}" data-minimum-leave="${item.MinimumLeave}"></td>
             <td>${item.CountryId}</td>
             <td>${item.CountryName}</td>
             <td>${item.CountryCurrency}</td>
-            <td>${item.MinimumLeave}</td>
-            <td>${item.LegalRequirements.join(", ")}</td>
-        `;
-
+            <td>${Array.isArray(item.LegalRequirements) ? item.LegalRequirements.join(", ") : ""}</td>
+            <td>${item.MinimumLeave}</td>        
+          `;
         tbody.appendChild(row);
     });
 }
+
 function getSelectedIds() {
     const selectedIds = [];
     document.querySelectorAll(".dynamic-checkbox-item:checked").forEach((checkbox) => {
@@ -66,8 +88,6 @@ function getSelectedIds() {
     });
     return selectedIds;
 }
-
-const host = `${window.location.protocol}//${window.location.host}`;
 
 function addNewDepartment() {
     console.log("Method Start");
@@ -152,7 +172,7 @@ function addNewCountry() {
     var Country = {
         "CountryId": CountryId,
         "CountryName": CountryName,
-        "Currency": CountryCurrency,
+        "CountryCurrency": CountryCurrency,
         "LegalRequirements": LegalRequirements.split(',').map(item => item.trim()), // Convert to array
         "MinimumLeave": MinimumLeave
     };
@@ -207,18 +227,20 @@ async function DeleteCountry() {
 
         FetchRequest('DeleteCountry', CountryPosting);
     });
-}
+}cars
 
 function addNewRegion() {
     console.log("Method Start");
     var RegionId = document.getElementById("regionId").value;
     var RegionName = document.getElementById("regionName").value;
-    var CountryId = document.getElementById("countryId").value;
+    var CountryId = document.getElementById('cars').value;
 
-    if (!RegionId || !RegionName || !CountryId) {
-        alert("You have not answered all required fields");
-        return;
-    }
+
+    console.log(CountryId)
+    console.log(RegionName)
+    console.log(RegionId)
+
+
 
     var Region = {
         "RegionId": RegionId,
@@ -276,7 +298,8 @@ async function DeleteRegion() {
     });
 }
 
-async function FetchRequest(uri, DepartmentModel) {
+
+async function FetchRequest(uri, model) {
     console.log("Req sent")
     try {
         const response = await fetch(host + '/' + uri, {
@@ -284,12 +307,33 @@ async function FetchRequest(uri, DepartmentModel) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(DepartmentModel)
+            body: JSON.stringify(model)
         });
 
         if (response.ok) {
             const data = await response.text();
             alert(data);
+        } else {
+            throw new Error('Error performing operation on the Department');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to perform the operation on the Department');
+    }
+}
+
+async function FetchRequestGET(uri) {
+    try {
+        const response = await fetch(host + '/' + uri, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data
         } else {
             throw new Error('Error performing operation on the Department');
         }

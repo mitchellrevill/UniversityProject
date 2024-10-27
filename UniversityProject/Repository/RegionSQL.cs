@@ -26,7 +26,7 @@ namespace UniversityProject.Repository
                     RegionId INTEGER PRIMARY KEY AUTOINCREMENT,
                     RegionName TEXT NOT NULL,
                     CountryId INTEGER NOT NULL,
-                    FOREIGN KEY (CountryId) REFERENCES Countries(CountryId) ON DELETE CASCADE
+                    FOREIGN KEY (CountryId) REFERENCES Country(CountryId) ON DELETE CASCADE
                 );";
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
