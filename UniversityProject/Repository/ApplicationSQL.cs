@@ -26,19 +26,21 @@ namespace UniversityProject.Repository
                 connection.Open();
 
                 string createTableQuery = @"
-                    CREATE TABLE IF NOT EXISTS Applicant (
+                CREATE TABLE IF NOT EXISTS Applicant (
                     ApplicantId TEXT PRIMARY KEY,
                     FirstName TEXT NOT NULL,
                     LastName TEXT NOT NULL,
                     CoverLetter TEXT,
                     Gender TEXT,
                     City TEXT,
-                    Region TEXT,
-                    Country TEXT,
+                    RegionId TEXT,
+                    CountryId TEXT,
                     Phone TEXT,
                     CVpdfContent TEXT,
-                    CVfileName TEXT
-                    )";
+                    CVfileName TEXT,
+                    FOREIGN KEY (RegionId) REFERENCES Regions(RegionId) ON DELETE SET NULL,
+                    FOREIGN KEY (CountryId) REFERENCES Countries(CountryId) ON DELETE SET NULL
+                );";
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
                 {
@@ -121,8 +123,8 @@ namespace UniversityProject.Repository
                     coverletter = @coverletter,
                     Gender = @Gender,
                     City = @City,
-                    Region = @Region,
-                    Country = @Country,
+                    RegionId = @Region,
+                    CountryId = @Country,
                     Phone = @Phone,
                     CVpdfContent = @CVpdfContent,
                     CVfileName = @CVfileName

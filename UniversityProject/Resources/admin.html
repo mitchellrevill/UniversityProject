@@ -48,7 +48,7 @@
                             
                             <label for="departmentDescription">Description:</label>
                             <textarea id="departmentDescription" name="departmentDescription" class="form-input" required=""></textarea>
-                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addDepartment()">Add Department</button></a>
+                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addNewDepartment('InsertDepartment')">Add Department</button></a>
                         </form>
                 </div>
 
@@ -65,12 +65,12 @@
                             
                             <label for="departmentDescription">Description:</label>
                             <textarea id="departmentDescription" name="departmentDescription" class="form-input" required=""></textarea>
-                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment()">Update Department</button></a>
+                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment('UpdateDepartment')">Update Department</button></a>
                         </form>
                 </div>
                 </div>
             </div>
-
+            
             <div id="container3">
                 <div id="exampleModal" class="reveal-modal">
                     <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
@@ -94,19 +94,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
+                        <td><input type="checkbox" class="dynamic-checkbox-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
                         <td>1</td>
                         <td>Employee Database</td>
                         <td>Stores all employee records</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
+                        <td><input type="checkbox" class="dynamic-checkbox-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
                         <td>2</td>
                         <td>Leave Management</td>
                         <td>Tracks leave requests and approvals</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
+                        <td><input type="checkbox" class="dynamic-checkbox-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
                         <td>3</td>
                         <td>Payroll System</td>
                         <td>Handles salary calculations and payments</td>

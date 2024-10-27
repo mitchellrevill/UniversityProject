@@ -7,7 +7,6 @@ using UniversityProject.Model;
 
 public static class MethodHandle
 {
-
     // Instance Creation
     private static readonly string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
     private static readonly IEmployeeService employeeService = new Employee_Service(dbPath);
@@ -29,7 +28,6 @@ public static class MethodHandle
         { "GetCountries", GetCountries },
         { "GetAllRegions", GetAllRegions }
         };
-
     // Post requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _postRoutes =
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>

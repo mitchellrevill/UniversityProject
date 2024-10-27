@@ -23,10 +23,11 @@ namespace UniversityProject.Repository
 
                 string createTableQuery = @"
                 CREATE TABLE IF NOT EXISTS Managers (
-                    EmployeeId TEXT PRIMARY KEY,
+                    EmployeeId TEXT NOT NULL,
                     ManagerArea TEXT NOT NULL,
-                    ManagerId TEXT NOT NULL
-                )";
+                    ManagerId TEXT PRIMARY KEY,
+                    FOREIGN KEY (EmployeeId) REFERENCES Employees(EmployeeId) ON DELETE CASCADE
+                );";
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
                 {
