@@ -1,3 +1,64 @@
+
+const departmentData = [
+    { DepartmentId: 1, DepartmentName: "Human Resources", Description: "Manages employee relations and resources." },
+    { DepartmentId: 2, DepartmentName: "Finance", Description: "Handles budgeting, accounting, and investments." },
+    { DepartmentId: 3, DepartmentName: "IT Support", Description: "Provides technical support and infrastructure management." }
+];
+populateDepartmentTable(departmentData)
+function populateDepartmentTable(data) {
+    const tbody = document.getElementById('departmentTableBody'); // Ensure you have the correct ID for the tbody
+    tbody.innerHTML = ''; // Clear existing rows
+
+    data.forEach(item => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.DepartmentId}" data-name="${item.DepartmentName}" data-description="${item.Description}"></td>
+            <td>${item.DepartmentId}</td>
+            <td>${item.DepartmentName}</td>
+            <td>${item.Description}</td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}
+function populateRegionTable(data) {
+    const tbody = document.getElementById('regionTableBody'); // Ensure you have the correct ID for the tbody
+    tbody.innerHTML = ''; // Clear existing rows
+
+    data.forEach(item => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.RegionId}" data-name="${item.RegionName}" data-country-id="${item.CountryId}"></td>
+            <td>${item.RegionId}</td>
+            <td>${item.RegionName}</td>
+            <td>${item.CountryId}</td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}
+
+function populateCountryTable(data) {
+    const tbody = document.getElementById('countryTableBody');
+    tbody.innerHTML = ''; 
+
+    data.forEach(item => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.CountryId}" data-name="${item.CountryName}" data-currency="${item.CountryCurrency}" data-minimum-leave="${item.MinimumLeave}"></td>
+            <td>${item.CountryId}</td>
+            <td>${item.CountryName}</td>
+            <td>${item.CountryCurrency}</td>
+            <td>${item.MinimumLeave}</td>
+            <td>${item.LegalRequirements.join(", ")}</td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}
 function getSelectedIds() {
     const selectedIds = [];
     document.querySelectorAll(".dynamic-checkbox-item:checked").forEach((checkbox) => {
@@ -14,6 +75,7 @@ function addNewDepartment() {
     var DepartmentTitle = document.getElementById("departmentName").value;
     var DepartmentDescription = document.getElementById("DepartmentDescription").value;
 
+    console.log(DepartmentId)
     if (!DepartmentTitle || !DepartmentDescription) {
         alert("You have not answered all required fields");
         return;

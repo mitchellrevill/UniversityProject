@@ -82,40 +82,21 @@
                 </div>
             </div>
             
-            <div class="tableColour" style="overflow-y: scroll;  height: 500px;">
-            <table id="itemTable" style="overflow-y: scroll;">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="dynamic-checkbox-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
-                        <td>1</td>
-                        <td>Employee Database</td>
-                        <td>Stores all employee records</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="dynamic-checkbox-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
-                        <td>2</td>
-                        <td>Leave Management</td>
-                        <td>Tracks leave requests and approvals</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="dynamic-checkbox-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
-                        <td>3</td>
-                        <td>Payroll System</td>
-                        <td>Handles salary calculations and payments</td>
-                    </tr>
-                    </tr>
-                </tbody>
-            </table>
-            
-        </div>
+            <div class="tableColour" style="overflow-y: scroll; height: 500px;">
+                <table id="departmentTable" style="overflow-y: scroll;">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Department ID</th>
+                            <th>Department Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="departmentTableBody">
+                        <!-- Dynamic rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
             <!-- Action Buttons -->
             <div class="action-buttons">
                 <a href="#container"><button style="background-color: #6290c8">Add Department</button></a>
@@ -222,38 +203,20 @@
         </div>
         
         <div class="tableColour" style="overflow-y: scroll; height: 500px;">
-            <table id="countryTable" style="overflow-y: scroll;">
+            <table id="itemTable2" style="overflow-y: scroll;">
                 <thead>
                     <tr>
-                        <th>Select</th>
+                        <th></th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Description</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
-                        <td>1</td>
-                        <td>Employee Database</td>
-                        <td>Stores all employee records</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
-                        <td>2</td>
-                        <td>Leave Management</td>
-                        <td>Tracks leave requests and approvals</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
-                        <td>3</td>
-                        <td>Payroll System</td>
-                        <td>Handles salary calculations and payments</td>
-                    </tr>
-                    </tr>
+                <tbody id="countryTableBody">
+                    <!-- Dynamic rows will be inserted here -->
                 </tbody>
-            </table>         
-        </div>    
+            </table>
+        </div>   
         <div class="action-buttons">
             <a href="#containerCountry"><button style="background-color: #6290c8">Add country</button></a>
                 <a href="#containerCountry2"><button style="background-color: #829cbc">Edit country</button></a>
@@ -352,7 +315,6 @@
             </div>
         </div>
 
-
         <div class="tableColour" style="overflow-y: scroll; height: 500px;">
             <table id="regionTable" style="overflow-y: scroll;">
                 <thead>
@@ -363,26 +325,8 @@
                         <th>Description</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="1" data-name="Employee Database" data-description="Stores all employee records"></td>
-                        <td>1</td>
-                        <td>Employee Database</td>
-                        <td>Stores all employee records</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="2" data-name="Leave Management" data-description="Tracks leave requests and approvals"></td>
-                        <td>2</td>
-                        <td>Leave Management</td>
-                        <td>Tracks leave requests and approvals</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item" data-id="3" data-name="Payroll System" data-description="Handles salary calculations and payments"></td>
-                        <td>3</td>
-                        <td>Payroll System</td>
-                        <td>Handles salary calculations and payments</td>
-                    </tr>
-                    </tr>
+                <tbody id="regionTableBody">
+                    <!-- Dynamic rows will be inserted here -->
                 </tbody>
             </table>
         </div>
