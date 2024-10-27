@@ -45,11 +45,11 @@ public static class MethodHandle
         { "UpdateDepartment", UpdateDepartment},
         { "DeleteDepartment" , DeleteDepartment},
         { "InsertRegion" , InsertRegion},
-        {" UpdateRegion", UpdateRegion },
-        {" DeleteRegion", DeleteRegion },
+        { "UpdateRegion", UpdateRegion },
+        { "DeleteRegion", DeleteRegion },
         { "InsertCountry", InsertCountry },
         { "UpdateCountry", UpdateCountry },
-        { "DeleteRegion", DeleteRegion}
+        { "DeleteCountry", DeleteCountry }
         };
 
 

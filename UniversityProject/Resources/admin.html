@@ -47,8 +47,8 @@
                             <input type="text" id="departmentName" name="departmentName" class="form-input" required="">
                             
                             <label for="departmentDescription">Description:</label>
-                            <textarea id="departmentDescription" name="departmentDescription" class="form-input" required=""></textarea>
-                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addNewDepartment('InsertDepartment')">Add Department</button></a>
+                            <textarea id="DepartmentDescription" name="DepartmentDescription" class="form-input" required=""></textarea>
+                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addNewDepartment()">Add Department</button></a>
                         </form>
                 </div>
 
@@ -61,11 +61,11 @@
                     <div class="formContainer">
                         <form id="addDepartmentForm" class="form-container">
                             <label for="departmentName">Department Name:</label>
-                            <input type="text" id="departmentName" name="departmentName" class="form-input" required="">
+                            <input type="text" id="departmentNameUpdate" name="departmentNameUpdate" class="form-input" required="">
                             
                             <label for="departmentDescription">Description:</label>
-                            <textarea id="departmentDescription" name="departmentDescription" class="form-input" required=""></textarea>
-                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment('UpdateDepartment')">Update Department</button></a>
+                            <textarea id="departmentDescriptionUpdate" name="departmentDescriptionUpdate" class="form-input" required=""></textarea>
+                            <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateDepartment()">Update Department</button></a>
                         </form>
                 </div>
                 </div>
@@ -77,7 +77,7 @@
                     <h2>Delete Department</h2>
                     <div class="formContainer">
                         Are you sure you want to delete this form?
-                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="DeleteDepartment()">Update Department</button></a>
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="DeleteDepartment()">Delete Department</button></a>
                 </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@
                         
                         <label for="minimumLeave">Minimum Leave:</label>
                         <input type="number" id="minimumLeave" name="minimumLeave" class="form-input" required="">
-                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="fetchApiRequest('http://localhost:8000/GetAllEmployees','displayEmployees')">Add Country</button></a>
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addNewCountry()">Add Country</button></a>
                     </form>
                 </div>
             </div>
@@ -200,7 +200,7 @@
                      
                         <label for="minimumLeave">Minimum Leave:</label>
                         <input type="number" id="minimumLeave" name="minimumLeave" class="form-input" required="">
-                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="EditCountry()">Add Country</button></a>
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateCountry()">Add Country</button></a>
                     </form>
                 </div>
             </div>
@@ -287,25 +287,23 @@
                 <h2>Add New Region</h2>
                 <div class="formContainer">
                     <form class="form-container">
-                        <!-- Region ID -->
+
                         <label for="regionId">Region ID:</label>
                         <input type="text" id="regionId" name="regionId" class="form-input" required="">
                     
-                        <!-- Region Name -->
                         <label for="regionName">Region Name:</label>
                         <input type="text" id="regionName" name="regionName" class="form-input" required="">
                     
-                        <!-- Country ID Dropdown -->
+
                         <label for="countryId">Country:</label>
                         <select id="countryId" name="countryId" class="form-input" required="">
                             <option value="">Select Country</option>
-                            <!-- Add options for each country here -->
                             <option value="country1">Country 1</option>
                             <option value="country2">Country 2</option>
                             <option value="country3">Country 3</option>
-                            <!-- Add more options as needed -->
+ 
                         </select>
-                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addRegion()">Add Region</button></a>
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="addNewRegion()">Add Region</button></a>
                 </div>
             </div>
         </div>
@@ -315,25 +313,25 @@
                 <h2>Edit Region</h2>
                 <div class="formContainer">
                     <form class="form-container">
-                        <!-- Region ID -->
+
                         <label for="regionId">Region ID:</label>
-                        <input type="text" id="regionId" name="regionId" class="form-input" required="">
+                        <input type="text" id="regionNameUpdate" name="regionNameUpdate" class="form-input" required="">
                     
-                        <!-- Region Name -->
+
                         <label for="regionName">Region Name:</label>
-                        <input type="text" id="regionName" name="regionName" class="form-input" required="">
+                        <input type="text" id="regionNameUpdate" name="regionNameUpdate" class="form-input" required="">
                     
-                        <!-- Country ID Dropdown -->
+
                         <label for="countryId">Country:</label>
                         <select id="countryId" name="countryId" class="form-input" required="">
                             <option value="">Select Country</option>
-                            <!-- Add options for each country here -->
+
                             <option value="country1">Country 1</option>
                             <option value="country2">Country 2</option>
                             <option value="country3">Country 3</option>
-                            <!-- Add more options as needed -->
+
                         </select>
-                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="EditRegion()">Add Region</button></a>
+                        <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="updateRegion()">Add Region</button></a>
                 </div>
             </div>
         </div>
