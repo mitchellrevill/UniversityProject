@@ -45,9 +45,15 @@ namespace UniversityProject.Repository
                 connection.Open();
 
                 string insertQuery = @"
-                INSERT INTO Country (CountryName, CountryCurrency, LegalRequirements, MinimumLeave)
-                VALUES (@CountryName, @CountryCurrency, @LegalRequirements, @MinimumLeave)";
+        INSERT INTO Country (CountryName, CountryCurrency, LegalRequirements, MinimumLeave)
+        VALUES (@CountryName, @CountryCurrency, @LegalRequirements, @MinimumLeave)";
 
+
+                Console.WriteLine("Inserting Country:");
+                Console.WriteLine($"CountryName: {country.CountryName}");
+                Console.WriteLine($"CountryCurrency: {country.CountryCurrency}");
+                Console.WriteLine($"LegalRequirements: {string.Join(",", country.LegalRequirements)}");
+                Console.WriteLine($"MinimumLeave: {country.MinimumLeave}");
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
                     command.Parameters.AddWithValue("@CountryName", country.CountryName);
@@ -59,6 +65,8 @@ namespace UniversityProject.Repository
                 }
             }
         }
+
+
 
         public List<Country> GetAllCountries()
         {

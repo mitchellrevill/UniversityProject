@@ -9,6 +9,6 @@ namespace UniversityProject.Interfaces
         Task<IEnumerable<Region>> GetAllRegionsAsync();
         Task InsertRegionAsync(Region region);
         Task UpdateRegionAsync(Region region);
-        Task DeleteRegionAsync(int regionId);
+        Task DeleteRegionAsync(string regionId);
     }
 }

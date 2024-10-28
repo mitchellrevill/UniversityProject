@@ -5,11 +5,11 @@ using UniversityProject.Model;
 
 namespace UniversityProject.Repository
 {
-    public class RegionSQL
+    public class ManagerSQL
     {
         private readonly string _connectionString;
 
-        public RegionSQL(string dbPath)
+        public ManagerSQL(string dbPath)
         {
             _connectionString = $"Data Source={dbPath}";
             CreateTable();
@@ -22,11 +22,11 @@ namespace UniversityProject.Repository
                 connection.Open();
 
                 string createTableQuery = @"
-                CREATE TABLE IF NOT EXISTS Regions (
-                    RegionId INTEGER PRIMARY KEY AUTOINCREMENT,
-                    RegionName TEXT NOT NULL,
-                    CountryId INTEGER NOT NULL,
-                    FOREIGN KEY (CountryId) REFERENCES Country(CountryId) ON DELETE CASCADE
+                CREATE TABLE IF NOT EXISTS Managers (
+                    EmployeeId TEXT NOT NULL,
+                    ManagerArea TEXT NOT NULL,
+                    ManagerId TEXT PRIMARY KEY,
+                    FOREIGN KEY (EmployeeId) REFERENCES Employees(EmployeeId) ON DELETE CASCADE
                 );";
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
@@ -36,117 +36,112 @@ namespace UniversityProject.Repository
             }
         }
 
-        public void InsertRegion(Region region)
+        public void InsertManager(Manager manager)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
 
                 string insertQuery = @"
-                INSERT INTO Regions (RegionName, CountryId)
-                VALUES (@RegionName, @CountryId)";
+                INSERT INTO Managers (EmployeeId, ManagerArea, ManagerId)
+                VALUES (@EmployeeId, @ManagerArea, @ManagerId)";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@RegionName", region.RegionName);
-                    command.Parameters.AddWithValue("@CountryId", region.CountryId);
-
+                    command.Parameters.AddWithValue("@EmployeeId", manager.EmployeeId);
+                    command.Parameters.AddWithValue("@ManagerArea", manager.ManagerArea);
+                    command.Parameters.AddWithValue("@ManagerId", manager.ManagerId);
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public List<Region> GetAllRegions()
+        public List<Manager> GetAllManagers()
         {
-            var regions = new List<Region>();
+            var managers = new List<Manager>();
 
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
 
-                string selectQuery = "SELECT * FROM Regions";
+                string selectQuery = "SELECT * FROM Managers";
                 using (var command = new SqliteCommand(selectQuery, connection))
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        var region = new Region
+                        managers.Add(new Manager
                         {
-                            RegionId = reader.GetString(0),
-                            RegionName = reader.GetString(1),
-                            CountryId = reader.GetString(2)
-                        };
-
-                        regions.Add(region);
+                            EmployeeId = reader.GetString(0),
+                            ManagerArea = reader.GetString(1),
+                            ManagerId = reader.GetString(2)
+                        });
                     }
                 }
             }
-
-            return regions;
+            return managers;
         }
 
-        public Region GetRegionById(int regionId)
+        public Manager GetManagerById(string employeeId)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
 
-                string selectQuery = "SELECT * FROM Regions WHERE RegionId = @RegionId";
+                string selectQuery = "SELECT * FROM Managers WHERE EmployeeId = @EmployeeId";
                 using (var command = new SqliteCommand(selectQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@RegionId", regionId);
+                    command.Parameters.AddWithValue("@EmployeeId", employeeId);
 
                     using (var reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            return new Region
+                            return new Manager
                             {
-                                RegionId = reader.GetString(0),
-                                RegionName = reader.GetString(1),
-                                CountryId = reader.GetString(2)
+                                EmployeeId = reader.GetString(0),
+                                ManagerArea = reader.GetString(1),
+                                ManagerId = reader.GetString(2)
                             };
                         }
                     }
                 }
             }
-
             return null;
         }
 
-        public void UpdateRegion(Region region)
+        public void UpdateManager(Manager manager)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
 
                 string updateQuery = @"
-                UPDATE Regions
-                SET RegionName = @RegionName,
-                    CountryId = @CountryId
-                WHERE RegionId = @RegionId";
+                UPDATE Managers
+                SET ManagerArea = @ManagerArea,
+                    ManagerId = @ManagerId
+                WHERE EmployeeId = @EmployeeId";
 
                 using (var command = new SqliteCommand(updateQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@RegionId", region.RegionId);
-                    command.Parameters.AddWithValue("@RegionName", region.RegionName);
-                    command.Parameters.AddWithValue("@CountryId", region.CountryId);
-
+                    command.Parameters.AddWithValue("@EmployeeId", manager.EmployeeId);
+                    command.Parameters.AddWithValue("@ManagerArea", manager.ManagerArea);
+                    command.Parameters.AddWithValue("@ManagerId", manager.ManagerId);
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public void DeleteRegion(string regionId)
+        public void DeleteManager(string employeeId)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
 
-                string deleteQuery = "DELETE FROM Regions WHERE RegionId = @RegionId";
+                string deleteQuery = "DELETE FROM Managers WHERE EmployeeId = @EmployeeId";
                 using (var command = new SqliteCommand(deleteQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@RegionId", regionId);
+                    command.Parameters.AddWithValue("@EmployeeId", employeeId);
                     command.ExecuteNonQuery();
                 }
             }

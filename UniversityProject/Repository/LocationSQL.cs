@@ -31,7 +31,7 @@ namespace UniversityProject.Repository
                     LocationName TEXT NOT NULL,
                     FOREIGN KEY (RegionId) REFERENCES Regions(RegionId) ON DELETE CASCADE,
                     FOREIGN KEY (CountryId) REFERENCES Countries(CountryId) ON DELETE CASCADE
-                )";
+                );";
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
                 {

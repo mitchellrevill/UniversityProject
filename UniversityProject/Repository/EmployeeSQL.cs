@@ -38,8 +38,12 @@ namespace UniversityProject.Repository
                     Benefits TEXT,
                     Employeetype TEXT,
                     Password TEXT,
-                    Status INTEGER NOT NULL
-                )";
+                    Status INTEGER NOT NULL,
+                    FOREIGN KEY (CountryId) REFERENCES Countries(CountryId) ON DELETE CASCADE,
+                    FOREIGN KEY (DepartmentId) REFERENCES Departments(DepartmentId) ON DELETE SET NULL,
+                    FOREIGN KEY (ManagerId) REFERENCES Managers(ManagerId) ON DELETE SET NULL,
+                    FOREIGN KEY (RegionId) REFERENCES Regions(RegionId) ON DELETE SET NULL
+                );";
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
                 {
