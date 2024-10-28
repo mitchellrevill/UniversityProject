@@ -203,7 +203,7 @@ table tr:nth-child(even) {
 
 
 .JobClass{
-    display: inline-block;
+    display: flex;
     background-color: white;
     border-radius: 25px;
     padding: 25px;
@@ -213,12 +213,34 @@ table tr:nth-child(even) {
 }
 
 
+.job-form input,
+.job-form select,
+.job-form textarea {
+    width: 80%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.job-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
 
 
+.job-form {
+    display: inline-block;
+    height: 500px;
+    width: 20%;  
+    margin: 15px;
+    margin-top: 0;
+}
 
-
-
-
+.tableButtonContainer {
+    width: 80%;
+    display: inline-block;
+}
 
 #container {
     width: 100%;
@@ -307,7 +329,9 @@ table tr:nth-child(even) {
     margin-left: 5px;
     font-family: 'Roboto', sans-serif;
 }
-
+.job-form{
+    display: inline-block;
+}
 .sidebar-menu-postion {
     margin-top: 0%;
 }
