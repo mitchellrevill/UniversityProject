@@ -36,30 +36,6 @@ function displayEmployees(employees) {
     tbody.innerHTML = ''; // Clear any existing rows
 
     employees.forEach(employee => {
-        const tr = document.createElement('tr');
-
-        // Populate the table row with employee data
-        const empIdTd = document.createElement('td');
-        empIdTd.innerText = employee.EmployeeId;
-        tr.appendChild(empIdTd);
-
-        const firstNameTd = document.createElement('td');
-        firstNameTd.innerText = employee.FirstName;
-        tr.appendChild(firstNameTd);
-
-        const lastNameTd = document.createElement('td');
-        lastNameTd.innerText = employee.LastName;
-        tr.appendChild(lastNameTd);
-
-        const companyEmailTd = document.createElement('td');
-        companyEmailTd.innerText = employee.CompanyEmail;
-        tr.appendChild(companyEmailTd);
-
-        const personalEmailTd = document.createElement('td');
-        personalEmailTd.innerText = employee.PersonalEmail;
-        tr.appendChild(personalEmailTd);
-
-
         const row = document.createElement('tr');
 
         row.innerHTML = `
@@ -68,14 +44,8 @@ function displayEmployees(employees) {
             <td>${employee.LastName}</td>
             <td>${employee.CompanyEmail}</td>
             <td>${employee.PersonalEmail}</td>
-            <td>${job.PersonalEmail}</td>
-            <td>${job.Hours}</td>
-            <td>${job.Salary}</td>
         `;
-
         tbody.appendChild(row);
-
-        tbody.appendChild(tr);
     });
 }
 
@@ -93,21 +63,17 @@ function displayJobs(jobs) {
         const row = document.createElement('tr');
 
         row.innerHTML = `
-            <td>${job.postingId}</td>
             <td>${job.Title}</td>
             <td>${job.JobDescription}</td>
-            <td>${job.JobDescription}</td>
             <td>${job.JobType}</td>
-            <td>${job.PersonalEmail}</td>
-            <td>${job.Hours}</td>
             <td>${job.Salary}</td>
+            <td>${job.Hours}</td>
+            <td><button type="button">Click Me!</button></td>
         `;
 
         tbody.appendChild(row);
     });
 }
-
-
 
 
 function addNewJob() {
@@ -116,11 +82,11 @@ function addNewJob() {
     var jobTitle = document.getElementById("jobTitle").value;
     var jobDescription = document.getElementById("jobDescription").value;
     var jobType = document.getElementById("jobType").value;
-    var hours = document.getElementById("hours").value;
-    var salary = document.getElementById("salary").value;
+    var salary = document.getElementById("jobSalary").value;
+    var hours = document.getElementById("jobHours").value;
 
     // Validate required fields
-    if (!jobTitle || !salary || !jobDescription) {
+    if (!jobTitle || !jobTitle || !jobDescription || !jobType || !salary || !hours) {
         alert("You have not answered all required fields");
         return;
     }
@@ -157,4 +123,9 @@ function addNewJob() {
             console.error('Error:', error);
             alert('Failed to insert job posting');
         });
+}
+
+
+function newJobContainerVisible() {
+    document.getElementById("addJobForm").style.display = "block";
 }
