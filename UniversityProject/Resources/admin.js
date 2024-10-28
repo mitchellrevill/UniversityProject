@@ -216,6 +216,7 @@ async function DeleteCountry() {
         alert("No countries selected for deletion.");
         return;
     }
+    }
 
     selectedIds.forEach(element => {
         var CountryId = element;
