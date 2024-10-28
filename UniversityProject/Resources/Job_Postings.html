@@ -36,55 +36,6 @@
         </header>
         <div class="wrapper">
             <div class="JobContent">
-                <div class="job-form">
-                    <h2>Search Jobs</h2>
-                    <div class="filter-container">
-                        <div>
-                            <label for="keywords">Keywords:</label>
-                            <input type="text" id="keywords" name="keywords" placeholder="Enter job keywords" required>
-                        </div>
-
-                        <div>
-                            <label for="jobTypes">Job Type:</label>
-                            <select name="jobTypes" id="jobTypes" required>
-                                <option value="" disabled selected>Select a job type</option>
-                                <option value="jobExample1">Job Example 1</option>
-                                <option value="jobExample2">Job Example 2</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label for="jobLocations">Location:</label>
-                            <select name="locations" id="jobLocations" required>
-                                <option value="" disabled selected>Select a location</option>
-                                <option value="sheffield">Sheffield</option>
-                            </select>
-                        </div>
-
-                        <div class="filter-btn-container">
-                            <button type="submit">Search</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="JobClass">
-                    <div class="tableColour" style="overflow-y: scroll; height: 500px;">
-                        <table id="jobPostingsTable" style="overflow-y: scroll;">
-                            <thead>
-                                <tr>
-                                    <th>Select</th>
-                                    <th>Posting ID</th>
-                                    <th>Title</th>
-                                    <th>Salary</th>
-                                    <th>Job Description</th>
-                                    <th>Job Type</th>
-                                    <th>Hours</th>
-                                </tr>
-                            </thead>
-                            <tbody id="jobPostingsTableBody">
-                                <!-- Table rows will go here -->
-                            </tbody>
-                        </table>
-
                         <div id="container">
                             <div id="exampleModal" class="reveal-modal">
                                 <h2>Add New Job</h2><br />
@@ -111,6 +62,36 @@
                             </div>
                         </div>
                         <div class="JobClass">
+                            <div class="job-form">
+                                <h2>Search Jobs</h2>
+                                <div class="filter-container">
+                                    <div>
+                                        <label for="keywords">Keywords:</label>
+                                        <input type="text" id="keywords" name="keywords" placeholder="Enter job keywords" required>
+                                    </div>
+            
+                                    <div>
+                                        <label for="jobTypes">Job Type:</label>
+                                        <select name="jobTypes" id="jobTypes" required>
+                                            <option value="" disabled selected>Select a job type</option>
+                                            <option value="jobExample1">Job Example 1</option>
+                                            <option value="jobExample2">Job Example 2</option>
+                                        </select>
+                                    </div>
+            
+                                    <div>
+                                        <label for="jobLocations">Location:</label>
+                                        <select name="locations" id="jobLocations" required>
+                                            <option value="" disabled selected>Select a location</option>
+                                            <option value="sheffield">Sheffield</option>
+                                        </select>
+                                    </div>
+            
+                                    <div class="filter-btn-container">
+                                        <button type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="tableColour" style="overflow-y: scroll; height: 500px;">
                                 <table id="jobPostingsTable" style="overflow-y: scroll;">
                                     <thead>
@@ -134,30 +115,12 @@
                                 <a href="#editJobPostingContainer"><button style="background-color: #829cbc">Edit Job Posting</button></a>
                                 <a href="#deleteJobPostingContainer"><button style="background-color: #F19180">Delete Job Posting</button></a>
                             </div>
-                            >>>>>>> 7a19ffa7a11d922b7776f40d3c4ec25315fad7f2
                         </div>
-                        <div class="action-buttons">
-                            <a href="#addJobPostingContainer">
-                                <button style="background-color: #6290c8">Add Job Posting</button>
-                            </a>
-                            <a href="#editJobPostingContainer">
-                                <button style="background-color: #829cbc">Edit Job Posting</button>
-                            </a>
-                            <a href="#deleteJobPostingContainer">
-                                <button style="background-color: #F19180">Delete Job Posting</button>
-                            </a>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
     </article>
-=======
-
-</article>
-        </div>
-    </div>
->>>>>>> 7a19ffa7a11d922b7776f40d3c4ec25315fad7f2
 </body>
 
 </html>
