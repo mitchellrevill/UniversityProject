@@ -53,7 +53,7 @@ function displayEmployees(employees) {
 }
 
 function displayJobs(jobs) {
-    const tbody = document.querySelector('#jobPostingsTable tbody');
+    const tbody = document.querySelector('#jobPostingsTableBody');
 
     console.log('Jobs data:', jobs);
 
@@ -78,7 +78,6 @@ function displayJobs(jobs) {
             <td>${job.JobDescription}</td>
             <td>${job.JobType}</td>
             <td>${job.Hours}</td>
-            <td><button type="button">Click Me!</button></td>
         `;
 
         tbody.appendChild(row);
