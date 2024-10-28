@@ -54,6 +54,7 @@ li a:hover:not(.active) {
 nav {
     margin-left: auto; /* Push nav to the right */
     padding-right: 25px;
+    padding-left: 25px;
 }
 
 nav ul {
