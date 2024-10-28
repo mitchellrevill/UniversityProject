@@ -9,6 +9,9 @@ async function fetchApiRequest(functionName) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
+
+        console.log(response);
+
         var jsonResponse = await response.json();
         console.log('apiRequest function successful:', jsonResponse);
         switch (functionName) {
@@ -50,12 +53,17 @@ function displayEmployees(employees) {
 }
 
 function displayJobs(jobs) {
-    const tbody = document.querySelector('#jsonTable tbody');
+    const tbody = document.querySelector('#jobPostingsTable tbody');
+
+    console.log('Jobs data:', jobs);
+
 
     if (!tbody) {
         console.error('Table body not found');
         return;
     }
+
+    console.log(jobs);
 
     tbody.innerHTML = ''; // Clear any existing rows
 
@@ -63,10 +71,12 @@ function displayJobs(jobs) {
         const row = document.createElement('tr');
 
         row.innerHTML = `
+            <td><input type="checkbox"></td> <!-- Select column -->
+            <td>${job.postingId}</td>
             <td>${job.Title}</td>
+            <td>${job.Salary}</td>
             <td>${job.JobDescription}</td>
             <td>${job.JobType}</td>
-            <td>${job.Salary}</td>
             <td>${job.Hours}</td>
             <td><button type="button">Click Me!</button></td>
         `;
