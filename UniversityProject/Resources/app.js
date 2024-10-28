@@ -1,16 +1,21 @@
-async function fetchApiRequest(uri, functionName) {
+const host = `${window.location.protocol}//${window.location.host}`;
+
+fetchApiRequest('GetAllEmployees');
+fetchApiRequest('GetAllJobPostings');
+
+async function fetchApiRequest(functionName) {
     try {
-        var response = await fetch(uri);
+        var response = await fetch(host + '/' + functionName);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         var jsonResponse = await response.json();
         console.log('apiRequest function successful:', jsonResponse);
         switch (functionName) {
-            case "displayEmployees":
+            case "GetAllEmployees":
                 displayEmployees(jsonResponse);
                 break;
-            case "displayJobs":
+            case "GetAllJobPostings":
                 displayJobs(jsonResponse);
         }
 
@@ -54,6 +59,22 @@ function displayEmployees(employees) {
         personalEmailTd.innerText = employee.PersonalEmail;
         tr.appendChild(personalEmailTd);
 
+
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${employee.EmployeeId}</td>
+            <td>${employee.FirstName}</td>
+            <td>${employee.LastName}</td>
+            <td>${employee.CompanyEmail}</td>
+            <td>${employee.PersonalEmail}</td>
+            <td>${job.PersonalEmail}</td>
+            <td>${job.Hours}</td>
+            <td>${job.Salary}</td>
+        `;
+
+        tbody.appendChild(row);
+
         tbody.appendChild(tr);
     });
 }
@@ -69,173 +90,23 @@ function displayJobs(jobs) {
     tbody.innerHTML = ''; // Clear any existing rows
 
     jobs.forEach(job => {
-        const tr = document.createElement('tr');
+        const row = document.createElement('tr');
 
-        // Populate the table row with employee data
-        const postingIdTd = document.createElement('td');
-        postingIdTd.innerText = job.postingId;
-        tr.appendChild(postingIdTd);
+        row.innerHTML = `
+            <td>${job.postingId}</td>
+            <td>${job.Title}</td>
+            <td>${job.JobDescription}</td>
+            <td>${job.JobDescription}</td>
+            <td>${job.JobType}</td>
+            <td>${job.PersonalEmail}</td>
+            <td>${job.Hours}</td>
+            <td>${job.Salary}</td>
+        `;
 
-        const TitleTd = document.createElement('td');
-        TitleTd.innerText = job.Title;
-        tr.appendChild(TitleTd);
-
-        const jobdescTd = document.createElement('td');
-        jobdescTd.innerText = job.JobDescription;
-        tr.appendChild(jobdescTd);
-
-        const jobtypeTd = document.createElement('td');
-        jobtypeTd.innerText = job.JobType;
-        tr.appendChild(jobtypeTd);
-
-        const personalEmailTd = document.createElement('td');
-        personalEmailTd.innerText = job.PersonalEmail;
-        tr.appendChild(personalEmailTd);
-
-        const hoursTd = document.createElement('td');
-        hoursTd.innerText = job.Hours;
-        tr.appendChild(hoursTd);
-
-        const salaryTd = document.createElement('td');
-        salaryTd.innerText = job.Salary;
-        tr.appendChild(salaryTd);
-
-        tbody.appendChild(tr);
+        tbody.appendChild(row);
     });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-// Load employees from storage when the Employees page loads
-function loadEmployeesFromStorage() {
-    const employeesData = localStorage.getItem('employeesData');
-
-    if (employeesData) {
-        const employees = JSON.parse(employeesData);
-        displayEmployees(employees); // Call the display function with the parsed data
-    } else {
-        console.error('No employee data found in localStorage');
-        alert('Failed to load employee data. Please try again.');
-    }
-}
-
-function displayEmployees(employees) {
-    const tbody = document.querySelector('#jsonTable tbody');
-
-    if (!tbody) {
-        console.error('Table body not found');
-        return;
-    }
-
-    tbody.innerHTML = ''; // Clear any existing rows
-
-    employees.forEach(employee => {
-        const tr = document.createElement('tr');
-
-        // Populate the table row with employee data
-        const empIdTd = document.createElement('td');
-        empIdTd.innerText = employee.EmployeeId;
-        tr.appendChild(empIdTd);
-
-        const firstNameTd = document.createElement('td');
-        firstNameTd.innerText = employee.FirstName;
-        tr.appendChild(firstNameTd);
-
-        const lastNameTd = document.createElement('td');
-        lastNameTd.innerText = employee.LastName;
-        tr.appendChild(lastNameTd);
-
-        const companyEmailTd = document.createElement('td');
-        companyEmailTd.innerText = employee.CompanyEmail;
-        tr.appendChild(companyEmailTd);
-
-        const personalEmailTd = document.createElement('td');
-        personalEmailTd.innerText = employee.PersonalEmail;
-        tr.appendChild(personalEmailTd);
-
-        tbody.appendChild(tr);
-    });
-}
-
-// Trigger loading of employees when employeesPage loads
-window.addEventListener('load', loadEmployeesFromStorage);
 
 
 
@@ -249,7 +120,7 @@ function addNewJob() {
     var salary = document.getElementById("salary").value;
 
     // Validate required fields
-    if (!jobTitle || !salary || !jobDescription || !location) {
+    if (!jobTitle || !salary || !jobDescription) {
         alert("You have not answered all required fields");
         return;
     }
@@ -287,5 +158,3 @@ function addNewJob() {
             alert('Failed to insert job posting');
         });
 }
-
-*/

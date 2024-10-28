@@ -3,7 +3,10 @@ const host = `${window.location.protocol}//${window.location.host}`;
 populateDepartmentTable();
 populateCountryTable();
 populateRegionTable();
-populateDepartmentTable()
+populateDepartmentTable();
+
+
+
 async function populateDepartmentTable() {
     try {
         const Departments = await FetchRequestGET('GetAllDepartments'); 
