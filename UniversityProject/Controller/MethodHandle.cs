@@ -124,6 +124,7 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
+
     private static async Task UpdateEmployee(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
@@ -213,8 +214,24 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
+    private static async Task GetJobPostingById(HttpListenerRequest req, HttpListenerResponse resp)
+    {
 
-   // APPLICATION
+        try
+        {
+            Console.WriteLine("Entered try part 1");
+            var newJobPosting = await ReadRequestBodyAsync<JobPostings>(req);
+            await jobPostingsService.GetJobPostingByIdAsync(newJobPosting.postingId);
+            await SendResponse(resp, "Employee inserted successfully.");
+            Console.WriteLine("Exited try part 1");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Failed part 1");
+            await HandleError(resp, ex);
+        }
+    }
+    // APPLICATION
 
     private static async Task GetAllApplications(HttpListenerRequest req, HttpListenerResponse resp)
     {

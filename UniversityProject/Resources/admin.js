@@ -231,7 +231,6 @@ async function DeleteCountry() {
 
         FetchRequest('DeleteCountry', CountryPosting);
     });
-}cars
 
 function addNewRegion() {
     console.log("Method Start");

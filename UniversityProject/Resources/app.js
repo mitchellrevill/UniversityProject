@@ -69,20 +69,25 @@ function displayJobs(jobs) {
 
     jobs.forEach(job => {
         const row = document.createElement('tr');
-
         row.innerHTML = `
-            <td><input type="checkbox"></td> <!-- Select column -->
+            <td><a href="#container2"><button type="button" class="submit-button" onclick="AddNewApplicant(${job.postingId})">Add Job</button></a></td>
             <td>${job.postingId}</td>
             <td>${job.Title}</td>
             <td>${job.Salary}</td>
-            <td>${job.JobDescription}</td>
             <td>${job.JobType}</td>
             <td>${job.Hours}</td>
+            <td>${job.JobDescription}</td>
         `;
 
         tbody.appendChild(row);
     });
 }
+
+async function AddNewApplicant(postingId){
+    post = await FetchRequestGET('GetJobPostByID')
+   // HERE FUTURE ME // ADD TO METHOD HANDLER TO GET BY ID ONCE GOTTEN BY ID MAKE LOOP TO POPULATE APPLICATION PLEASE 
+}
+
 
 
 function addNewJob() {
@@ -137,4 +142,24 @@ function addNewJob() {
 
 function newJobContainerVisible() {
     document.getElementById("addJobForm").style.display = "block";
+}
+async function FetchRequestGET(uri) {
+    try {
+        const response = await fetch(host + '/' + uri, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data
+        } else {
+            throw new Error('Error performing operation on the Department');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to perform the operation on the Department');
+    }
 }

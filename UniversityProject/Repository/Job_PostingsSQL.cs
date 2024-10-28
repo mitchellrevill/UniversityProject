@@ -105,7 +105,36 @@ namespace UniversityProject.Repository
                 }
             }
         }
+        public JobPostings GetJobPostingById(string postingId)
+        {
+            using (var connection = new SqliteConnection(_connectionString))
+            {
+                connection.Open();
 
+                string selectQuery = "SELECT * FROM JobPostings WHERE postingId = @PostingId";
+                using (var command = new SqliteCommand(selectQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@postingId", postingId);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new JobPostings
+                            {
+                                postingId = reader.GetString(0),
+                                Title = reader.GetString(1),
+                                Salary = reader.GetString(2),
+                                JobDescription = reader.GetString(3),
+                                JobType = reader.GetString(4),
+                                Hours = reader.GetString(5)
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
         public void UpdateJobPosting(JobPostings Post)
         {
             using (var connection = new SqliteConnection(_connectionString))

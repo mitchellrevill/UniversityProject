@@ -35,11 +35,13 @@ namespace UniversityProject.Repository
                     City TEXT,
                     RegionId TEXT,
                     CountryId TEXT,
+                    PostingId TEXT,
                     Phone TEXT,
                     CVpdfContent TEXT,
                     CVfileName TEXT,
                     FOREIGN KEY (RegionId) REFERENCES Regions(RegionId) ON DELETE SET NULL,
-                    FOREIGN KEY (CountryId) REFERENCES Countries(CountryId) ON DELETE SET NULL
+                    FOREIGN KEY (CountryId) REFERENCES Countries(CountryId) ON DELETE SET NULL,
+                    FOREIGN KEY (PostingId) REFERENCES Posting(PostingId) ON DELETE SET NULL
                 );";
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
@@ -48,6 +50,7 @@ namespace UniversityProject.Repository
                 }
             }
         }
+
         public void AddApplicant(Applicant applicant)
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -55,8 +58,8 @@ namespace UniversityProject.Repository
                 connection.Open();
 
                 string insertQuery = @"
-                INSERT INTO Applicant (ApplicantId, FirstName, LastName, CoverLetter, Gender, City, Region, Country, Phone, CVpdfContent, CVfileName)
-                VALUES (@ApplicantId, @FirstName, @LastName, @CoverLetter, @Gender, @City, @Region, @Country, @Phone, @CVpdfContent, @CVfileName)";
+                INSERT INTO Applicant (ApplicantId, FirstName, LastName, CoverLetter, Gender, City, RegionId, CountryId, PostingId, Phone, CVpdfContent, CVfileName)
+                VALUES (@ApplicantId, @FirstName, @LastName, @CoverLetter, @Gender, @City, @Region, @Country, @PostingId, @Phone, @CVpdfContent, @CVfileName)";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
@@ -68,6 +71,7 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@City", applicant.City);
                     command.Parameters.AddWithValue("@Region", applicant.Region);
                     command.Parameters.AddWithValue("@Country", applicant.Country);
+                    command.Parameters.AddWithValue("@PostingId", applicant.postingId);
                     command.Parameters.AddWithValue("@Phone", applicant.Phone);
                     command.Parameters.AddWithValue("@CVpdfContent", applicant.CVpdfContent);
                     command.Parameters.AddWithValue("@CVfileName", applicant.CVfileName);
@@ -75,6 +79,7 @@ namespace UniversityProject.Repository
                 }
             }
         }
+
 
         public List<Applicant> GetAllApplicants()
         {
@@ -99,9 +104,10 @@ namespace UniversityProject.Repository
                             City = reader.GetString(5),
                             Region = reader.GetString(6),
                             Country = reader.GetString(7),
-                            Phone = reader.GetString(8),
-                            CVpdfContent = reader.GetString(9),
-                            CVfileName = reader.GetString(10)
+                            postingId = reader.GetString(8),
+                            Phone = reader.GetString(9),
+                            CVpdfContent = reader.GetString(10),
+                            CVfileName = reader.GetString(11)
                         };
                         applicants.Add(applicant);
                     }
@@ -110,6 +116,7 @@ namespace UniversityProject.Repository
             return applicants;
         }
 
+
         public void UpdateApplicant(Applicant applicant)
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -117,18 +124,19 @@ namespace UniversityProject.Repository
                 connection.Open();
 
                 string updateQuery = @"
-                UPDATE Applicants
-                SET firstName = @firstName,
-                    lastName = @lastName,
-                    coverletter = @coverletter,
-                    Gender = @Gender,
-                    City = @City,
-                    RegionId = @Region,
-                    CountryId = @Country,
-                    Phone = @Phone,
-                    CVpdfContent = @CVpdfContent,
-                    CVfileName = @CVfileName
-                WHERE applicantId = @applicantId";
+            UPDATE Applicant
+            SET firstName = @firstName,
+                lastName = @lastName,
+                coverletter = @coverletter,
+                Gender = @Gender,
+                City = @City,
+                RegionId = @Region,
+                CountryId = @Country,
+                PostingId = @PostingId,
+                Phone = @Phone,
+                CVpdfContent = @CVpdfContent,
+                CVfileName = @CVfileName
+            WHERE applicantId = @applicantId";
 
                 using (var command = new SqliteCommand(updateQuery, connection))
                 {
@@ -140,6 +148,7 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@City", applicant.City);
                     command.Parameters.AddWithValue("@Region", applicant.Region);
                     command.Parameters.AddWithValue("@Country", applicant.Country);
+                    command.Parameters.AddWithValue("@PostingId", applicant.postingId);
                     command.Parameters.AddWithValue("@Phone", applicant.Phone);
                     command.Parameters.AddWithValue("@CVpdfContent", applicant.CVpdfContent);
                     command.Parameters.AddWithValue("@CVfileName", applicant.CVfileName);
@@ -148,6 +157,7 @@ namespace UniversityProject.Repository
                 }
             }
         }
+
 
         public void DeleteApplicant(string applicantId)
         {

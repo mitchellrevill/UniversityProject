@@ -104,11 +104,9 @@ nav ul li a.active {
     min-height: calc(100vh - 100px)
 }
 
-.tableColour {
+.tableColour{
     background-color: white;
-    border-radius: 5px;
-    border-bottom: 0.5px solid gray;
-    
+    border-radius: 25px;
 }
 .table-fixed {
     margin-left: 25rem;
@@ -181,16 +179,32 @@ table th, table td {
 table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-
-
+.submit-apply{
+    background-color: #6290c8;
+    color: white;
+    border-radius: 25px;
+    padding: 10px;
+    border: transparent;
+}
+.submit-apply:hover{
+    background-color: #6290c8ac;
+}
 .action-buttons {
     display: flex;
     gap: 10px;
     padding: 10px;
-    margin-top:20px;
-    
 }
-
+.filter-btn-container button{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+.tableColour{
+    border-bottom: 1px solid black;
+}
 .action-buttons button {
     padding: 10px 20px;
     font-size: 16px;
@@ -244,7 +258,6 @@ table tr:nth-child(even) {
 .tableButtonContainer {
     width: 80%;
     display: inline-block;
-    border: 2px black;
 }
 
 #container {
@@ -263,16 +276,34 @@ table tr:nth-child(even) {
 #container:target {
     visibility: visible;
 }
+
+#container2 {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+
+#container2:target {
+    visibility: visible;
+}
+
+
 /* Modal styling */
 .reveal-modal {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    max-width: 500px;
-    width: 90%;
-    margin: 0 auto;
-    position: relative;
+    max-height: 90%; /* Limit height */
+    width: 60%; /* You can adjust this width as needed */
+    background: white; /* Background for the modal content */
+    overflow-y: auto; /* Enable vertical scrolling if content is too tall */
+    border-radius: 8px; /* Optional: rounded corners */
+    padding: 20px; /* Optional: padding for content */
 }
 
 .form-container {
