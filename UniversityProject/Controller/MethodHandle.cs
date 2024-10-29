@@ -49,7 +49,8 @@ public static class MethodHandle
         { "DeleteRegion", DeleteRegion },
         { "InsertCountry", InsertCountry },
         { "UpdateCountry", UpdateCountry },
-        { "DeleteCountry", DeleteCountry }
+        { "DeleteCountry", DeleteCountry },
+        { "GetJobPostingById", GetJobPostingById }
         };
 
 
@@ -432,6 +433,7 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
+    
     private static async Task UpdateCountry(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
