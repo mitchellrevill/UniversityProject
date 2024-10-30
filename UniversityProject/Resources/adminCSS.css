@@ -98,6 +98,7 @@ nav ul li a.active {
 .tableColour{
     background-color: white;
     border-radius: 25px;
+    filter: drop-shadow(4px 6px 10px #e6e6e6);
 }
 .table-fixed {
     margin-left: 25rem;
@@ -175,7 +176,7 @@ table tr:nth-child(even) {
 .action-buttons {
     display: flex;
     gap: 10px;
-    padding: 10px;
+    padding: 25px;
 }
 
 .action-buttons button {
@@ -192,6 +193,24 @@ table tr:nth-child(even) {
     background-color: #00509e;
 }
 
+.modal-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+
+/* Use `:target` selector for all containers */
+.modal-container:target {
+    visibility: visible;
+}
 
 /*Department */
 #container {
@@ -361,7 +380,55 @@ table tr:nth-child(even) {
     color: black;
 }
 
+#containerManager{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+#containerManager:target {
+    visibility: visible;
+}
 
+#containerManager2{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+#containerManager2:target {
+    visibility: visible;
+}
+#containerManager3{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+#containerManager3:target {
+    visibility: visible;
+}
 
 
 
@@ -491,6 +558,59 @@ table tr:nth-child(even) {
     font-weight: 700;
   }
 
+#containerLocation {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+
+    #containerLocation:target {
+        visibility: visible;
+    }
+
+#containerLocation2 {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+
+    #containerLocation2:target {
+        visibility: visible;
+    }
+
+#containerLocation3 {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+
+#containerLocation3:target {
+    visibility: visible;
+}
 
 
 

@@ -1,13 +1,21 @@
-    private static async Task GetRegions(HttpListenerRequest req, HttpListenerResponse resp)
-    {
-        try
-        {
-            var Regions = await RegionService.GetAllRegionsAsync();
-            string jsonResponse = JsonConvert.SerializeObject(Regions);
-            await SendResponse(resp, jsonResponse, "application/json");
-        }
-        catch (Exception ex)
-        {
-            await HandleError(resp, ex);
-        }
+async function populateLocationTable() {
+    Locations = await FetchRequestGET('GetAllLocations')
+    const tbody = document.getElementById('LocationTableBody');
+    tbody.innerHTML = '';
+    if (!Array.isArray(Locations)) {
+        throw new Error('Expected an array from FetchRequestGET.');
     }
+
+    Locations.forEach(item => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.LocationId}" data-name="${item.LocationName}" data-country-id="${item.CountryId}"></td>
+            <td>${item.LocationId}</td>
+            <td>${item.LocationName}</td>
+            <td>${item.CountryId}</td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}

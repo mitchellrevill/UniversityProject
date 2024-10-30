@@ -25,9 +25,9 @@ public class JobPostingsService : IJobPostingsService
 	{
 		await Task.Run(() => _RecruitmentDatabase.UpdateJobPosting(JobPostings));
 	}
-    public async Task GetJobPostingByIdAsync(string postingId )
+    public async Task<JobPostings> GetJobPostingByIdAsync(string postingId )
     {
-        await Task.Run(() => _RecruitmentDatabase.GetJobPostingById(postingId));
+        return await Task.Run(() => _RecruitmentDatabase.GetJobPostingById(postingId));
     }
     public async Task DeleteJobPostingsAsync(string postingId)
 	{

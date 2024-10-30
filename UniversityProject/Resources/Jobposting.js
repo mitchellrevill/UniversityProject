@@ -26,26 +26,22 @@ async function fetchApiRequest(functionName) {
     }
 }
 
-
 function displayJobs(jobs) {
     const tbody = document.querySelector('#jobPostingsTableBody');
 
     console.log('Jobs data:', jobs);
-
 
     if (!tbody) {
         console.error('Table body not found');
         return;
     }
 
-    console.log(jobs);
-
     tbody.innerHTML = ''; // Clear any existing rows
 
     jobs.forEach(job => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><a href="#container2"><button type="button" class="submit-button" onclick="AddNewApplicant(${job.postingId})">Add Job</button></a></td>
+            <td><a href="#container2"><button type="button" class="submit-button" onclick="AddNewApplicant('${job.postingId}')">Add Job</button></a></td>
             <td>${job.postingId}</td>
             <td>${job.Title}</td>
             <td>${job.Salary}</td>
@@ -59,14 +55,11 @@ function displayJobs(jobs) {
 }
 
 async function AddNewApplicant(postingId) {
-    post = await FetchRequestGET('GetJobPostByID')
-    // HERE FUTURE ME // ADD TO METHOD HANDLER TO GET BY ID ONCE GOTTEN BY ID MAKE LOOP TO POPULATE APPLICATION PLEASE 
+    const post = await FetchRequestGET(`GetJobPostByID/${postingId}`);
+    console.log('Selected job post:', post);
 }
 
-
-
 function addNewJob() {
-
     var postingId = Math.random().toString(36).substring(2, 9); // Generate a random ID
     var jobTitle = document.getElementById("jobTitle").value;
     var jobDescription = document.getElementById("jobDescription").value;
@@ -75,12 +68,11 @@ function addNewJob() {
     var hours = document.getElementById("jobHours").value;
 
     // Validate required fields
-    if (!jobTitle || !jobTitle || !jobDescription || !jobType || !salary || !hours) {
+    if (!jobTitle || !jobDescription || !jobType || !salary || !hours) {
         alert("You have not answered all required fields");
         return;
     }
 
-    // Define the jobPosting object before using it
     var jobPosting = {
         "postingId": postingId,
         "Title": jobTitle,
@@ -90,7 +82,6 @@ function addNewJob() {
         "Salary": salary
     };
 
-    // Use fetch to send the job posting data
     fetch('http://localhost:8000/InsertJobPosting', {
         method: 'POST',
         headers: {
@@ -117,24 +108,16 @@ function addNewJob() {
 function filterJobTable() {
     var input, filter, table, tr, td, i, txtValue;
 
-    
     input = document.getElementById("jobTypes");
     filter = input.value.toUpperCase();
     table = document.getElementById("jobPostingsTable");
     tr = table.getElementsByTagName("tr");
 
-    console.log("triggerd");
-
-
     for (i = 1; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[4];
-        
-        if (td) {
-            console.log("entered loop");
-            txtValue = td.innerText;
 
-            console.log(txtValue);
-            console.log(filter);
+        if (td) {
+            txtValue = td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
                 tr[i].style.display = "";
             } else {
@@ -147,6 +130,7 @@ function filterJobTable() {
 function newJobContainerVisible() {
     document.getElementById("addJobForm").style.display = "block";
 }
+
 async function FetchRequestGET(uri) {
     try {
         const response = await fetch(host + '/' + uri, {
@@ -158,7 +142,7 @@ async function FetchRequestGET(uri) {
 
         if (response.ok) {
             const data = await response.json();
-            return data
+            return data;
         } else {
             throw new Error('Error performing operation on the Department');
         }
@@ -167,4 +151,3 @@ async function FetchRequestGET(uri) {
         alert('Failed to perform the operation on the Department');
     }
 }
-

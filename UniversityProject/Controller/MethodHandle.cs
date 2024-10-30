@@ -15,8 +15,8 @@ public static class MethodHandle
     private static readonly IManagerService managerService = new ManagerService(dbPath);
     private static readonly ICountryService countryService = new CountryService(dbPath);
     private static readonly IRegionService regionService = new RegionService(dbPath);
-    private static readonly ApplicantService ApplicantService = new ApplicantService(dbPath);
-
+    private static readonly IApplicantService ApplicantService = new ApplicantService(dbPath);
+    private static readonly ILocationService LocationService = new LocationService(dbPath);
     // Get requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _getRoutes =
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>
@@ -26,7 +26,9 @@ public static class MethodHandle
         { "GetAllApplications", GetAllApplications},
         { "GetAllDepartments",GetDepartments},
         { "GetCountries", GetCountries },
-        { "GetAllRegions", GetAllRegions }
+        { "GetAllRegions", GetAllRegions },
+        { "GetManagers",  GetManagers },
+        { "GetLocations", GetLocations }
         };
     // Post requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _postRoutes =
@@ -50,6 +52,12 @@ public static class MethodHandle
         { "InsertCountry", InsertCountry },
         { "UpdateCountry", UpdateCountry },
         { "DeleteCountry", DeleteCountry },
+        { "InsertManager", InsertManager },
+        { "UpdateManager", UpdateManager },
+        { "DeleteManager", DeleteManager },
+        { "InsertLocation", InsertLocation },
+        { "UpdateLocation", UpdateLocation },
+        { "DeleteLocation", DeleteLocation },
         { "GetJobPostingById", GetJobPostingById }
         };
 
@@ -517,6 +525,65 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
+
+    private static async Task GetLocations(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var Locations = await LocationService.GetAllLocationsAsync();
+            string jsonResponse = JsonConvert.SerializeObject(Locations);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task InsertLocation(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newLocation = await ReadRequestBodyAsync<Location>(req);
+            await LocationService.InsertLocationAsync(newLocation);
+            await SendResponse(resp, "Location inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task UpdateLocation(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newLocation = await ReadRequestBodyAsync<Location>(req);
+            await LocationService.UpdateLocationAsync(newLocation);
+            await SendResponse(resp, "Location inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task DeleteLocation(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newLocation = await ReadRequestBodyAsync<Location>(req);
+            await LocationService.DeleteLocationAsync(newLocation.LocationId);
+            await SendResponse(resp, "Location inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+
+
 
     // STATIC FOR KNOWN FILE TYPES USED FOR STATIC FILES THAT NEED REQUESTING
     private static async Task ServeStaticFile(HttpListenerRequest req, HttpListenerResponse resp, string requestedPath)

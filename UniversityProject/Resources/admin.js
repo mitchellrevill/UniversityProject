@@ -1,23 +1,36 @@
 const host = `${window.location.protocol}//${window.location.host}`;
 
+function getSelectedIds() {
+    const selectedIds = [];
+    document.querySelectorAll(".dynamic-checkbox-item:checked").forEach((checkbox) => {
+        selectedIds.push(checkbox.dataset.id); // Collect selected IDs
+    });
+    return selectedIds;
+}
+
 populateDepartmentTable();
 populateCountryTable();
 populateRegionTable();
 populateDepartmentTable();
+populateLocationTable()
+populateRegionsOptions()
+populateCountryOptionsEdit()
+// CountryOptions
+// employeeIdEdit
 
 
 
 async function populateDepartmentTable() {
     try {
-        const Departments = await FetchRequestGET('GetAllDepartments'); 
+        const Departments = await FetchRequestGET('GetAllDepartments');
         if (!Array.isArray(Departments)) {
             throw new Error('Expected an array from FetchRequestGET.');
         }
         console.log(Departments)
 
-        const tbody = document.getElementById('departmentTableBody'); 
-        tbody.innerHTML = ''; 
-     
+        const tbody = document.getElementById('departmentTableBody');
+        tbody.innerHTML = '';
+
         Departments.forEach(item => {
             console.log("Entered Loop")
             const row = document.createElement('tr');
@@ -38,8 +51,8 @@ async function populateDepartmentTable() {
 
 async function populateRegionTable() {
     Regions = await FetchRequestGET('GetAllRegions')
-    const tbody = document.getElementById('regionTableBody'); 
-    tbody.innerHTML = ''; 
+    const tbody = document.getElementById('regionTableBody');
+    tbody.innerHTML = '';
     if (!Array.isArray(Regions)) {
         throw new Error('Expected an array from FetchRequestGET.');
     }
@@ -58,14 +71,51 @@ async function populateRegionTable() {
     });
 }
 
+    async function populateLocationTable() {
+        try {
+            const Locations = await FetchRequestGET('GetLocations');
+            const tbody = document.getElementById('LocationTableBody');
+            tbody.innerHTML = ''; 
+
+            if (!Array.isArray(Locations)) {
+                throw new Error('Expected an array from FetchRequestGET.');
+            }
+
+            if (Locations.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4">No locations available.</td></tr>'; 
+                return;
+            }
+
+            Locations.forEach(item => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+            <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.LocationId}" data-name="${item.LocationName}" data-country-id="${item.CountryId}" aria-label="Select ${item.LocationName}"></td>
+            <td>${item.LocationId}</td>
+            <td>${item.LocationName}</td>
+            <td>${item.CountryId}</td>
+            `;
+
+                tbody.appendChild(row);
+            });
+        } catch (error) {
+            console.error('Error populating location table:', error);
+
+        }
+    }
+
+
 async function populateCountryTable() {
 
     Countries = await FetchRequestGET('GetCountries');
 
 
-   console.log(Countries)
+    console.log(Countries)
+    if (countr.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4">No locations available.</td></tr>';
+        return;
+    }
 
-    
     const tbody = document.getElementById('countryTableBody');
     tbody.innerHTML = '';
     console.log(typeof Countries)
@@ -83,14 +133,221 @@ async function populateCountryTable() {
         tbody.appendChild(row);
     });
 }
+    async function populateCountryTable() {
 
-function getSelectedIds() {
-    const selectedIds = [];
-    document.querySelectorAll(".dynamic-checkbox-item:checked").forEach((checkbox) => {
-        selectedIds.push(checkbox.dataset.id);  // Collect selected IDs
+        Countries = await FetchRequestGET('GetCountries');
+
+
+        console.log(Countries)
+
+
+        const tbody = document.getElementById('countryTableBody');
+        tbody.innerHTML = '';
+        console.log(typeof Countries)
+
+        Countries.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.CountryId}" data-name="${item.CountryName}" data-currency="${item.CountryCurrency}" data-minimum-leave="${item.MinimumLeave}"></td>
+            <td>${item.CountryId}</td>
+            <td>${item.CountryName}</td>
+            <td>${item.CountryCurrency}</td>
+            <td>${Array.isArray(item.LegalRequirements) ? item.LegalRequirements.join(", ") : ""}</td>
+            <td>${item.MinimumLeave}</td>        
+          `;
+            tbody.appendChild(row);
+        });
+    }
+
+
+async function populateCountryOptionsEdit() {
+    const Countries = await FetchRequestGET('GetCountries');
+    const selectElements = document.querySelectorAll('.country-options');
+
+    selectElements.forEach(select => {
+
+        select.innerHTML = ''; 
+
+        Countries.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.CountryId;
+            option.textContent = item.CountryName;
+
+            select.appendChild(option);
+        });
     });
-    return selectedIds;
 }
+
+async function populateRegionsOptions() {
+    const Countries = await FetchRequestGET('GetAllRegions');
+    const selectElements = document.querySelectorAll('.Region-options');
+
+    console.log(selectElements)
+    selectElements.forEach(select => {
+
+        select.innerHTML = '';
+
+        Countries.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.regionId;
+            option.textContent = item.RegionName;
+
+            select.appendChild(option);
+        });
+    });
+}
+
+
+// MANAGER BUTTONS
+function addNewManager() {
+    console.log("Method Start");
+
+    var managerId = Math.floor(Math.random() * 1000) + 1;
+    var employeeId = document.getElementById("employeeIdAdd").value;
+    var managerArea = document.getElementById("managerAreaAdd").value;
+
+    if (!employeeId || !managerArea) {
+        alert("You have not answered all required fields");
+        return;
+    }
+
+    var manager = {
+        "ManagerId": managerId,
+        "EmployeeId": employeeId,
+        "ManagerArea": managerArea
+    };
+
+    FetchRequest('InsertManager', manager);
+}
+
+function updateManager() {
+    console.log("Request received for updating manager");
+
+    const employeeId = document.getElementById("employeeIdEdit").value;
+    const managerArea = document.getElementById("managerAreaEdit").value;
+    const managerId = document.getElementById("managerIdEdit").value;
+
+    if (!employeeId || !managerArea || !managerId) {
+        alert("You have not answered all required fields");
+        return;
+    }
+
+    var managerPosting = {
+        "ManagerId": managerId,
+        "EmployeeId": employeeId,
+        "ManagerArea": managerArea
+    };
+
+    FetchRequest('UpdateManager', managerPosting);
+}
+
+function deleteManager() {
+    console.log("Request received for deleting manager");
+
+    const managerId = document.getElementById("managerIdEdit").value;
+
+    if (!managerId) {
+        alert("No manager selected for deletion.");
+        return;
+    }
+
+    var managerPosting = {
+        "ManagerId": managerId,
+        "EmployeeId": "NULL",
+        "ManagerArea": "NULL"
+    };
+
+    FetchRequest('DeleteManager', managerPosting);
+}
+
+// Location
+
+function addNewLocation() {
+    console.log("Method Start");
+
+
+    var LocationId = Math.floor(Math.random() * 1000) + 1;
+
+
+    var locationName = document.getElementById("locationName").value;
+    var regionId = document.getElementById("RegionOptions").value;
+    var countryId = document.getElementById("CountryOptions").value;
+    var latitude = document.getElementById("latitude").value;
+    var longitude = document.getElementById("longitude").value;
+
+
+    if (!locationName || !regionId || !countryId || !latitude || !longitude) {
+        alert("You have not answered all required fields");
+        return;
+    }
+
+    var Location = {
+        "LocationId": LocationId,
+        "LocationName": locationName,
+        "RegionId": regionId,
+        "CountryId": countryId,
+        "Latitude": parseFloat(latitude),
+        "Longitude": parseFloat(longitude)
+    };
+
+    FetchRequest('InsertLocation', Location);
+}
+
+function updateLocation() {
+    console.log("Request received for updating Location");
+
+    const locationId = document.getElementById("locationId").value;
+    const locationName = document.getElementById("locationNameEdit").value;
+    const regionId = document.getElementById("RegionOptionsEdit").value;
+    const countryId = document.getElementById("CountryOptionsEdit").value;
+    const latitude = document.getElementById("latitudeEdit").value;
+    const longitude = document.getElementById("longitudeEdit").value;
+
+    
+    if (!locationId || !locationName || !regionId || !countryId || !latitude || !longitude) {
+        alert("You have not answered all required fields");
+        return;
+    }
+
+    var LocationPosting = {
+        "LocationId": locationId,
+        "LocationName": locationName,
+        "RegionId": regionId,
+        "CountryId": countryId,
+        "Latitude": parseFloat(latitude),
+        "Longitude": parseFloat(longitude)
+    };
+
+
+    FetchRequest('UpdateLocation', LocationPosting);
+}
+
+function deleteLocation() {
+    console.log("Request received for deleting Location");
+
+
+    const locationId = document.getElementById("locationIdDelete").value;
+
+
+    if (!locationId) {
+        alert("No Location selected for deletion.");
+        return;
+    }
+
+
+    var LocationPosting = {
+        "LocationId": locationId,
+        "LocationName": "NULL",
+        "RegionId": "NULL",
+        "CountryId": "NULL",
+        "Latitude": "NULL",
+        "Longitude": "NULL"
+    };
+
+
+    FetchRequest('DeleteLocation', LocationPosting);
+}
+
 
 function addNewDepartment() {
     console.log("Method Start");
@@ -159,6 +416,7 @@ async function DeleteDepartment() {
 
 
 
+// Country BUTTONS
 function addNewCountry() {
     console.log("Method Start");
     var CountryId = document.getElementById("countryId").value;
@@ -182,6 +440,7 @@ function addNewCountry() {
 
     FetchRequest('InsertCountry', Country);
 }
+
 function updateCountry() {
     console.log("Request Received");
     const selectedIds = getSelectedIds();
@@ -203,7 +462,7 @@ function updateCountry() {
             "CountryId": CountryId,
             "CountryName": CountryName,
             "Currency": CountryCurrency,
-            "LegalRequirements": LegalRequirements.split(',').map(item => item.trim()), 
+            "LegalRequirements": LegalRequirements.split(',').map(item => item.trim()),
             "MinimumLeave": MinimumLeave
         };
         console.log(CountryPosting);
@@ -216,22 +475,25 @@ async function DeleteCountry() {
         alert("No countries selected for deletion.");
         return;
     }
-    }
+}
 
-    selectedIds.forEach(element => {
-        var CountryId = element;
+selectedIds.forEach(element => {
+    var CountryId = element;
 
-        var CountryPosting = {
-            "CountryId": CountryId,
-            "CountryName": "NULL",
-            "Currency": "NULL",
-            "LegalRequirements": [],
-            "MinimumLeave": 0
-        };
+    var CountryPosting = {
+        "CountryId": CountryId,
+        "CountryName": "NULL",
+        "Currency": "NULL",
+        "LegalRequirements": [],
+        "MinimumLeave": 0
+    };
 
-        FetchRequest('DeleteCountry', CountryPosting);
-    });
+    FetchRequest('DeleteCountry', CountryPosting);
+});
 
+
+
+// Regions BUTTONS
 function addNewRegion() {
     console.log("Method Start");
     var RegionId = document.getElementById("regionId").value;
@@ -253,9 +515,6 @@ function addNewRegion() {
 
     FetchRequest('InsertRegion', Region);
 }
-
-
-
 
 function updateRegion() {
     console.log("Request Received");
@@ -302,6 +561,8 @@ async function DeleteRegion() {
 }
 
 
+
+// STATIC CALLS PLEASE DONT MOVE
 async function FetchRequest(uri, model) {
     console.log("Req sent")
     try {
