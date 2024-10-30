@@ -11,5 +11,6 @@ namespace UniversityProject.Model
         public string JobType { get; set; }
 
         public string Hours { get; set; }
+        public string LocationId { get; set; }
     }
 }

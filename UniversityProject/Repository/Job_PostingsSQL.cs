@@ -1,15 +1,14 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UniversityProject.Model;
+
 namespace UniversityProject.Repository
 {
     public class JobPostingSQL
     {
         private readonly string _connectionString;
+
         public JobPostingSQL(string dbPath)
         {
             _connectionString = $"Data Source={dbPath}";
@@ -29,34 +28,36 @@ namespace UniversityProject.Repository
                     jobdesc TEXT NOT NULL,
                     jobtype TEXT NOT NULL,
                     hours TEXT NOT NULL,
-                    salary TEXT NOT NULL
+                    salary TEXT NOT NULL,
+                    LocationId TEXT NOT NULL,
+                    FOREIGN KEY (LocationId) REFERENCES Locations(LocationId)
                 )";
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
                 {
                     command.ExecuteNonQuery();
                 }
-
             }
         }
+
         public void AddJobPost(JobPostings Post)
         {
-            Console.WriteLine("Testing");
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
                 string insertQuery = @"
-        INSERT INTO JobPostings (postingid, Title, jobdesc, jobtype, hours, salary)
-        VALUES (@postingid, @Title, @jobdesc, @jobtype, @hours, @salary)";
+                INSERT INTO JobPostings (postingId, Title, jobdesc, jobtype, hours, salary, LocationId)
+                VALUES (@postingId, @Title, @jobdesc, @jobtype, @hours, @salary, @LocationId)";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@postingid", Post.postingId); 
+                    command.Parameters.AddWithValue("@postingId", Post.postingId);
                     command.Parameters.AddWithValue("@Title", Post.Title);
                     command.Parameters.AddWithValue("@jobdesc", Post.JobDescription);
                     command.Parameters.AddWithValue("@jobtype", Post.JobType);
-                    command.Parameters.AddWithValue("@hours", Post.Hours); 
-                    command.Parameters.AddWithValue("@salary", Post.Salary); 
+                    command.Parameters.AddWithValue("@hours", Post.Hours);
+                    command.Parameters.AddWithValue("@salary", Post.Salary);
+                    command.Parameters.AddWithValue("@LocationId", Post.LocationId); 
                     command.ExecuteNonQuery();
                 }
             }
@@ -82,8 +83,8 @@ namespace UniversityProject.Repository
                             JobDescription = reader.GetString(2),
                             JobType = reader.GetString(3),
                             Hours = reader.GetString(4),
-                            Salary = reader.GetString(5)
-
+                            Salary = reader.GetString(5),
+                            LocationId = reader.GetString(6) 
                         };
                         jobs.Add(job);
                     }
@@ -91,6 +92,7 @@ namespace UniversityProject.Repository
             }
             return jobs;
         }
+
         public void DeleteJob(string postingId)
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -105,6 +107,7 @@ namespace UniversityProject.Repository
                 }
             }
         }
+
         public JobPostings GetJobPostingById(string postingId)
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -114,7 +117,7 @@ namespace UniversityProject.Repository
                 string selectQuery = "SELECT * FROM JobPostings WHERE postingId = @PostingId";
                 using (var command = new SqliteCommand(selectQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@postingId", postingId);
+                    command.Parameters.AddWithValue("@PostingId", postingId);
 
                     using (var reader = command.ExecuteReader())
                     {
@@ -124,10 +127,11 @@ namespace UniversityProject.Repository
                             {
                                 postingId = reader.GetString(0),
                                 Title = reader.GetString(1),
-                                Salary = reader.GetString(2),
-                                JobDescription = reader.GetString(3),
-                                JobType = reader.GetString(4),
-                                Hours = reader.GetString(5)
+                                JobDescription = reader.GetString(2),
+                                JobType = reader.GetString(3),
+                                Hours = reader.GetString(4),
+                                Salary = reader.GetString(5),
+                                LocationId = reader.GetString(6) 
                             };
                         }
                     }
@@ -135,6 +139,7 @@ namespace UniversityProject.Repository
             }
             return null;
         }
+
         public void UpdateJobPosting(JobPostings Post)
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -147,10 +152,9 @@ namespace UniversityProject.Repository
                     Salary = @Salary,
                     JobDescription = @JobDescription,
                     JobType = @JobType,
-                    Hours = @Hours
+                    Hours = @Hours,
+                    LocationId = @LocationId
                 WHERE postingId = @postingId";
-
-
 
                 using (var command = new SqliteCommand(updateQuery, connection))
                 {
@@ -160,11 +164,10 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@jobtype", Post.JobType);
                     command.Parameters.AddWithValue("@hours", Post.Hours);
                     command.Parameters.AddWithValue("@salary", Post.Salary);
+                    command.Parameters.AddWithValue("@LocationId", Post.LocationId); // New field
                     command.ExecuteNonQuery();
                 }
             }
         }
-
     }
-
 }

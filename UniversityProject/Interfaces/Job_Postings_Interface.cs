@@ -8,7 +8,7 @@ namespace UniversityProject.Interfaces
         Task InsertJobPostingsAsync(JobPostings JobPostings);
         Task UpdateJobPostingsAsync(JobPostings JobPostings);
         Task DeleteJobPostingsAsync(string postingId);
-        Task GetJobPostingByIdAsync(string postingId);
+        Task<JobPostings> GetJobPostingByIdAsync(string postingId);
 
     }
 
