@@ -212,7 +212,10 @@ public static class MethodHandle
         try
         {
             Console.WriteLine("Entered try part 1");
+
             var newJobPosting= await ReadRequestBodyAsync<JobPostings>(req);
+
+            Console.WriteLine("Entered try part 1.5");
             await jobPostingsService.InsertJobPostingsAsync(newJobPosting);
             await SendResponse(resp, "Employee inserted successfully.");
             Console.WriteLine("Exited try part 1");

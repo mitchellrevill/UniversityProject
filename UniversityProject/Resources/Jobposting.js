@@ -48,6 +48,7 @@ function displayJobs(jobs) {
             <td>${job.JobType}</td>
             <td>${job.Hours}</td>
             <td>${job.JobDescription}</td>
+            <td>${job.JobDescription}</td>
         `;
 
         tbody.appendChild(row);
@@ -66,43 +67,48 @@ function addNewJob() {
     var jobType = document.getElementById("jobType").value;
     var salary = document.getElementById("jobSalary").value;
     var hours = document.getElementById("jobHours").value;
+    var location = document.getElementById("jobLocation").value;
 
     // Validate required fields
-    if (!jobTitle || !jobDescription || !jobType || !salary || !hours) {
+    if (!jobTitle || !jobDescription || !jobType || !salary || !hours || !location) {
         alert("You have not answered all required fields");
         return;
+    } else {
+
+        var jobPosting = {
+            "postingId": postingId,
+            "Title": jobTitle,
+            "Salary": salary,
+            "JobDescription": jobDescription,
+            "JobType": jobType,
+            "Hours": hours,
+            "LocationId": location
+        };
+
+        fetch('http://localhost:8000/InsertJobPosting', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jobPosting)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Success message
+                } else {
+                    throw new Error('Error inserting the job posting');
+                }
+            })
+            .then(data => {
+                alert(data); // Show success message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to insert job postingawdwadwa');
+            });
     }
 
-    var jobPosting = {
-        "postingId": postingId,
-        "Title": jobTitle,
-        "JobDescription": jobDescription,
-        "JobType": jobType,
-        "Hours": hours,
-        "Salary": salary
-    };
-
-    fetch('http://localhost:8000/InsertJobPosting', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(jobPosting)
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.text(); // Success message
-            } else {
-                throw new Error('Error inserting the job posting');
-            }
-        })
-        .then(data => {
-            alert(data); // Show success message
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Failed to insert job posting');
-        });
+    
 }
 
 function filterJobTable() {

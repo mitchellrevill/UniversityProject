@@ -57,7 +57,7 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@jobtype", Post.JobType);
                     command.Parameters.AddWithValue("@hours", Post.Hours);
                     command.Parameters.AddWithValue("@salary", Post.Salary);
-                    command.Parameters.AddWithValue("@LocationId", Post.LocationId); 
+                    command.Parameters.AddWithValue("@locationId", Post.LocationId); 
                     command.ExecuteNonQuery();
                 }
             }
