@@ -11,7 +11,6 @@ function getSelectedIds() {
 populateDepartmentTable();
 populateCountryTable();
 populateRegionTable();
-populateDepartmentTable();
 populateLocationTable()
 populateRegionsOptions()
 populateCountryOptionsEdit()
@@ -224,6 +223,7 @@ function addNewManager() {
     };
 
     FetchRequest('InsertManager', manager);
+    alert('Successful')
 }
 
 function updateManager() {
@@ -245,6 +245,7 @@ function updateManager() {
     };
 
     FetchRequest('UpdateManager', managerPosting);
+    alert('Successful')
 }
 
 function deleteManager() {
@@ -264,6 +265,7 @@ function deleteManager() {
     };
 
     FetchRequest('DeleteManager', managerPosting);
+    alert('Successful')
 }
 
 // Location
@@ -299,6 +301,8 @@ function addNewLocation() {
     console.log("Location object:", Location);
 
     FetchRequest('InsertLocation', Location);
+    alert('Successful')
+    populateLocationTable()
 }
 
 function updateLocation() {
@@ -328,6 +332,8 @@ function updateLocation() {
 
 
     FetchRequest('UpdateLocation', LocationPosting);
+    alert('Successful')
+    populateLocationTable()
 }
 
 function deleteLocation() {
@@ -354,6 +360,8 @@ function deleteLocation() {
 
 
     FetchRequest('DeleteLocation', LocationPosting);
+    alert('Successful')
+    populateLocationTable()
 }
 
 // Departments
@@ -375,6 +383,8 @@ function addNewDepartment() {
         "Description": DepartmentDescription,
     };
     FetchRequest('InsertDepartment', Department);
+    alert('Successful')
+    populateDepartmentTable();
 }
 
 function updateDepartment() {
@@ -399,6 +409,8 @@ function updateDepartment() {
         };
         console.log(DepartmentPosting)
         FetchRequest('UpdateDepartment', DepartmentPosting);
+        alert('Successful')
+        populateDepartmentTable();
     });
 }
 
@@ -419,6 +431,8 @@ async function DeleteDepartment() {
         };
 
         FetchRequest('DeleteDepartment', DepartmentPosting);
+        alert('Successful')
+        populateDepartmentTable();
     });
 }
 
@@ -447,6 +461,8 @@ function addNewCountry() {
     };
 
     FetchRequest('InsertCountry', Country);
+    alert('Successful')
+    populateCountryTable();
 }
 
 function updateCountry() {
@@ -475,9 +491,11 @@ function updateCountry() {
         };
         console.log(CountryPosting);
         FetchRequest('UpdateCountry', CountryPosting);
+        alert('Successful')
+        populateCountryTable();
     });
 }
-async function DeleteCountry() {
+function DeleteCountry() {
     const selectedIds = getSelectedIds();
     if (selectedIds.length === 0) {
         alert("No countries selected for deletion.");
@@ -497,6 +515,7 @@ selectedIds.forEach(element => {
     };
 
     FetchRequest('DeleteCountry', CountryPosting);
+    populateCountryTable();
 });
 
 
@@ -523,6 +542,8 @@ function addNewRegion() {
 
     console.log(Region)
     FetchRequest('InsertRegion', Region);
+    alert('Successful')
+    populateRegionTable();
 }
 
 function updateRegion() {
@@ -547,9 +568,11 @@ function updateRegion() {
         };
         console.log(RegionPosting);
         FetchRequest('UpdateRegion', RegionPosting);
+        alert('Successful')
+        populateRegionTable();
     });
 }
-async function DeleteRegion() {
+function DeleteRegion() {
     const selectedIds = getSelectedIds();
     if (selectedIds.length === 0) {
         alert("No regions selected for deletion.");
@@ -566,6 +589,8 @@ async function DeleteRegion() {
         };
 
         FetchRequest('DeleteRegion', RegionPosting);
+        alert('Successful')
+        populateRegionTable();
     });
 }
 
@@ -585,13 +610,12 @@ async function FetchRequest(uri, model) {
 
         if (response.ok) {
             const data = await response.text();
-            alert(data);
         } else {
-            throw new Error('Error performing operation on the Department');
+            throw new Error('Error performing operation');
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Failed to perform the operation on the Department');
+        alert('Failed to perform the operation');
     }
 }
 
@@ -608,10 +632,10 @@ async function FetchRequestGET(uri) {
             const data = await response.json();
             return data
         } else {
-            throw new Error('Error performing operation on the Department');
+            throw new Error('Error performing operation');
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Failed to perform the operation on the Department');
+        alert('Failed to perform the operation');
     }
 }

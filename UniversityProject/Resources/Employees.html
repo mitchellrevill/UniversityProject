@@ -31,9 +31,42 @@
 
     <div class="content">
         <div class="contentclass">
+            <div class="job-form">
+                <h2>Search Jobs</h2>
+                <div class="filter-container">
+                    <div>
+                        <label for="keywords">Keywords:</label>
+                        <input type="text" id="keywords" name="keywords" placeholder="Enter job keywords" required>
+                    </div>
+
+                    <div>
+                        <label for="jobTypes">Job Type:</label>
+                        <select name="jobTypes" id="jobTypes" required>
+                            <option value="" disabled selected>Select a job type</option>
+                            <option value="Full time">Full time</option>
+                            <option value="Part time">Part time</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="jobLocations">Location:</label>
+                        <select name="locations" id="jobLocations" required>
+                            <option value="" disabled selected>Select a location</option>
+                            <option value="Sheffield">Sheffield</option>
+                            <option value="London">London</option>
+                            <option value="Leeds">Leeds</option>
+                            <option value="Doncaster">Doncaster</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-btn-container">
+                        <button type="submit" onclick="filterJobTable()">Search</button>
+                    </div>
+                </div>
+            </div>
             <h2>Employees List</h2>
-            <div class="table-container">
-                <table id="jsonTable">
+            <div class="tableColour" style="overflow-y: scroll; height: 500px;">
+                <table id="jobPostingsTable" style="overflow-y: scroll;">
                     <thead>
                         <tr>
                             <th>Employee ID</th>
@@ -43,10 +76,15 @@
                             <th>Personal Email</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Rows will be dynamically inserted -->
+                    <tbody id="jobPostingsTableBody">
+                        <!-- Table rows will go here -->
                     </tbody>
                 </table>
+            </div>
+            <div class="action-buttons">
+                <a href="#container"><button style="background-color: #6290c8">Add Employee</button></a>
+                <a href="#container2"><button style="background-color: #829cbc">Edit Employee</button></a>
+                <a href="#container3"><button style="background-color: #F19180">Delete Employee</button></a>
             </div>
         </div>
     </div>

@@ -51,6 +51,37 @@
                             </div>
                         </div>
                     </div>
+                    <div id="container2">
+                        <div id="exampleModal" class="reveal-modal">
+                            <a href="#Department-block" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                            <h2>Update Department</h2>
+                            <div class="formContainer">
+                                <form id="addDepartmentForm" class="form-container">
+                                    <label for="departmentName">Department Name:</label>
+                                    <input type="text" id="departmentName" name="departmentName" class="form-input" required="">
+                                    <label for="departmentDescription">Description:</label>
+                                    <textarea id="DepartmentDescription" name="DepartmentDescription" class="form-input" required=""></textarea>
+                                    <a href="#Department-block" class="close-modal"><button type="button" class="submit-button" onclick="UpdateDepartment()">Add Department</button></a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="container3">
+                        <div id="exampleModal" class="reveal-modal">
+                            <h2>Delete Department</h2>
+                            <div class="formContainer">
+                                Are you sure you want to delete this department?
+                                <div class="button-container">
+                                    <a href="#Department-block" class="close-modal">
+                                        <button type="button" class="submit-button">Back</button>
+                                    </a>
+                                    <a href="#Department-block" class="close-modal">
+                                        <button type="button" onclick="DeleteDepartment()" class="submit-button">Delete Manager</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!--Containers END -->
                     <div class="tableColour" style="overflow-y: scroll; height: 500px;">
                         <table id="departmentTable" style="overflow-y: scroll;">
@@ -128,15 +159,17 @@
                     <!-- Delete Manager Confirmation -->
                     <div id="containerManager3">
                         <div id="exampleModalManagerDelete" class="reveal-modal">
-                            <a href="#Department-block" class="close-modal">
-                                <button type="button" class="submit-button" style="text-align: center;">Back</button>
-                            </a>
                             <h2>Delete Manager</h2>
                             <div class="formContainer">
                                 Are you sure you want to delete this manager?
-                                <a href="#Department-block" class="close-modal">
-                                    <button type="button" class="submit-button" onclick="deleteManager()">Delete Manager</button>
-                                </a>
+                                <div class="button-container">
+                                    <a href="#Department-block" class="close-modal">
+                                        <button type="button" class="submit-button">Back</button>
+                                    </a>
+                                    <a href="#Department-block" class="close-modal">
+                                        <button type="button" class="submit-button">Delete Manager</button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -211,15 +244,17 @@
                 </div>
             </div>
             <div id="containerCountry3">
-                <div id="exampleModalCountry" class="reveal-modal">
-                    <a href="#country-block" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
-                    <h2>Add New Country</h2>
+                <div id="exampleModal" class="reveal-modal">
+                    <h2>Delete Country</h2>
                     <div class="formContainer">
-                        <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
-                        <h2>Delete Country</h2>
-                        <div class="formContainer">
-                            Are you sure you want to delete this form?
-                            <a href="#country-block" class="close-modal"><button type="button" class="submit-button" onclick="DeleteCountry()">Add Country</button></a>
+                        Are you sure you want to delete this Country?
+                        <div class="button-container">
+                            <a href="#Department-block" class="close-modal">
+                                <button type="button" class="submit-button">Back</button>
+                            </a>
+                            <a href="#Department-block" class="close-modal">
+                                <button type="button" onclick="DeleteCountry()" class="submit-button">Delete Country</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -252,7 +287,7 @@
             <h2>Location</h2>
             <div id="containerLocation">
                 <div id="exampleModalAddLocation" class="reveal-modal">
-                    <a href="#" class="close-modal">
+                    <a href="#country-block" class="close-modal">
                         <button type="button" class="submit-button" style="text-align: center;">Back</button>
                     </a>
                     <h2>Add New Location</h2>
@@ -288,7 +323,7 @@
 
             <div id="containerLocation2">
                 <div id="exampleModalEditLocation" class="reveal-modal">
-                    <a href="#" class="close-modal">
+                    <a href="#country-block" class="close-modal">
                         <button type="button" class="submit-button" style="text-align: center;">Back</button>
                     </a>
                     <h2>Edit Location</h2>
@@ -327,23 +362,17 @@
 
             <div id="containerLocation3">
                 <div id="exampleModalDeleteLocation" class="reveal-modal">
-                    <a href="#" class="close-modal">
-                        <button type="button" class="submit-button" style="text-align: center;">Back</button>
-                    </a>
                     <h2>Delete Location</h2>
                     <div class="formContainer">
-                        <form id="deleteLocationForm" class="form-container">
-                            <label for="locationIdDelete">Location ID:</label>
-                            <input type="text" id="locationIdDelete" name="locationIdDelete" class="form-input" required="">
-
-                            <label for="locationDescription">Description:</label>
-                            <textarea id="locationDescription" name="locationDescription" class="form-input" required=""></textarea>
-
-                            <br><br>
-                            <a href="#" class="close-modal">
-                                <button type="button" class="submit-button" onclick="deleteLocation()">Delete Location</button>
+                        Are you sure you want to delete this Location?
+                        <div class="button-container">
+                            <a href="#country-block" class="close-modal">
+                                <button type="button" class="submit-button">Back</button>
                             </a>
-                        </form>
+                            <a href="#country-block" class="close-modal">
+                                <button type="button" onclick="deleteLocation()" class="submit-button">Delete Location</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -416,16 +445,17 @@
             </div>
             <div id="containerRegion3">
                 <div id="exampleModalRegion" class="reveal-modal">
-                    <a href="#region-block" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
                     <h2>Delete Region</h2>
                     <div class="formContainer">
-                        <form id="addRegionForm" class="form-container">
-                            <label for="regionName">Region Name:</label>
-                            <input type="text" id="regionName" name="regionName" class="form-input" required="">
-                            <label for="regionDescription">Description:</label>
-                            <textarea id="regionDescription" name="regionDescription" class="form-input" required=""></textarea>
-                            <a href="#region-block" class="close-modal"><button type="button" class="submit-button" onclick="DeleteRegion()">Add Region</button></a>
-                        </form>
+                        Are you sure you want to delete this Location?
+                        <div class="button-container">
+                            <a href="#region-block" class="close-modal">
+                                <button type="button" class="submit-button">Back</button>
+                            </a>
+                            <a href="#region-block" class="close-modal">
+                                <button type="button" onclick="DeleteRegion()" class="submit-button">Delete Region</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
