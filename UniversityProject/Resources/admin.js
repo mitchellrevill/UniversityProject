@@ -174,7 +174,7 @@ async function populateRegionsOptions() {
 
         Countries.forEach(item => {
             const option = document.createElement('option');
-            option.value = item.regionId;
+            option.value = item.RegionId;
             option.textContent = item.RegionName;
 
             select.appendChild(option);
@@ -282,7 +282,7 @@ function addNewLocation() {
     var latitude = document.getElementById("latitude").value;
     var longitude = document.getElementById("longitude").value;
 
-    regionId = String(regionId)
+
     if (!locationName || !regionId || !countryId || !latitude || !longitude) {
         alert("You have not answered all required fields");
         return;
@@ -296,6 +296,7 @@ function addNewLocation() {
         "Latitude": parseFloat(latitude),
         "Longitude": parseFloat(longitude)
     };
+    console.log("Location object:", Location);
 
     FetchRequest('InsertLocation', Location);
 }
