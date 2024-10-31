@@ -1,216 +1,5 @@
-body {
-    background: #b08f8f;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-    background-color: #ffffff; /* Set background color */
-    color: #000000;
-    font-size: 16px;
-    line-height: 1.6;
-}
-
-li a {
-    display: block;
-    color: #000;
-    padding: 8px 16px;
-    text-decoration: none;
-  }
-  li a.active {
-    background-color: #04AA6D;
-    color: white;
-  }
-  
-li a:hover:not(.active) {
-    background-color: #555;
-    color: white;
-  }
 
 
-.wrapper {
-
-    max-width: 100%;
-    background-color: #ffffff; /* Set background color for wrapper */
-}
-
-.header {
-    
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    background-color: white;
-    height: 70px; 
-    padding-left: 25px;
-    margin-left: 15%;
-    width: 85%;
-    padding-right: 0;
-}
-
-.title {
-    font-size: 1.5em; 
-    color: #000000; 
-}
-
-nav {
-    margin-left: auto; /* Push nav to the right */
-    padding-right: 25px;
-    padding-left: 25px;
-}
-
-nav ul {
-    background-color: #ffffff;
-    list-style: none;
-    display: flex;
-    padding: 0;
-    margin: 0; /* Reset margin */
-    height: 100%; /* Ensure nav takes full height of header */
-    white-space: nowrap; /* Prevent wrapping of nav items */
-}
-
-nav ul li {
-    flex: 1; /* Make each item take up equal width */
-    display: flex; /* Make the li a flex container */
-    align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
-    height: 100%; /* Ensure li takes full height of nav */
-}
-
-nav ul li a {
-    color: #000000; /* Change to black for contrast */
-    text-decoration: none;
-    font-size: 1em;
-    display: block; /* Ensure the entire area is clickable */
-    padding: 10px; /* Padding for clickable area */
-    width: 100%; /* Ensure anchor takes full width */
-    height: 100%; /* Ensure anchor takes full height */
-    box-sizing: border-box; /* Include padding in height calculation */
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-nav ul li a:hover {
-    background-color: #878e99; /* Change background on hover */
-}
-
-nav ul li a.active {
-    background-color: #878e99; /* Active link background */
-}
-
-.tableColour{
-    background-color: white;
-    border-radius: 25px;
-    filter: drop-shadow(4px 6px 10px #e6e6e6);
-}
-.table-fixed {
-    margin-left: 25rem;
-    margin-top: 10rem;
-}
-
-.table-fixed thead,
-.table-fixed thead>th {
-    background: #4d7275;
-    color: #fff;
-}
-
-.table-fixed tbody tr td {
-    background: #fff;
-}
-
-.table-fixed>thead>tr>th {
-    border: 0 !important;
-}
-
-.table-fixed>tbody>tr>td:last-child {
-    border-right: 0;
-}
-
-.table-fixed tbody td,
-.table-fixed thead>tr>th {
-    float: left;
-    font-size: 14px;
-    padding-left: 20px !important;
-}
-
-.table-fixed .col {
-    width: 25%;
-}
-
-.table-fixed tbody {
-    display: block;
-    height: 300px;
-    overflow-y: auto;
-}
-
-.table-fixed tr {
-    display:   
- block;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    font-size: 16px;
-}
-
-.scrollable-table {
-    overflow-y: auto;
-    height: 200px; /* Adjust the height as needed */
-}
-
-table thead {
-    background-color: #1f2421;
-    color: rgb(255, 255, 255);
-}
-
-table th, table td {
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    padding: 25px;
-}
-
-.action-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #003366;
-    color: rgb(255, 255, 255);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.action-buttons button:hover {
-    background-color: #00509e;
-}
-
-.modal-container {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.425);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    visibility: hidden;
-}
-
-/* Use `:target` selector for all containers */
-.modal-container:target {
-    visibility: visible;
-}
 
 /*Department */
 #container {
@@ -264,26 +53,6 @@ table tr:nth-child(even) {
 }
 
 
-.department-applications{
-    background-color: white;
-    height: 70%;
-    margin: 25px;
-    border-radius: 25px;
-    filter: drop-shadow(4px 6px 10px #e6e6e6);
-
-}
-.department-applications ul{
-   margin: 10px;
-    overflow-y: scroll;
-    height: inherit;
-}
-.department-applications p{
-    margin-bottom: 0px;
-    margin-left: 10px;
-    padding-top: 25px;
-    font-size: large;
-    font-weight: 700;
-}
 
 .Departmentclass{
     display: inline-block;
@@ -478,31 +247,8 @@ table tr:nth-child(even) {
 #containerCountry:target {
     visibility: visible;
 }
-.country-applications{
-    background-color: white;
-    height: 70%;
-    margin: 25px;
-    border-radius: 25px;
-    filter: drop-shadow(4px 6px 10px #e6e6e6);
-  
-  }
-  .country-applications ul{
-   margin: 10px;
-    overflow-y: scroll;
-    height: inherit;
-  }
-  .country-applications p{
-    margin-bottom: 0px;
-    margin-left: 10px;
-    padding-top: 25px;
-    font-size: large;
-    font-weight: 700;
-  }
-.countryNumber{
-    background-color: #F19180;
-    height: 20%;
-    border-radius: 25px;
-}
+
+
 #containerCountry2{
     width: 100%;
     height: 100%;
@@ -537,26 +283,7 @@ table tr:nth-child(even) {
 }
 
 
-.country-applications{
-    background-color: white;
-    height: 70%;
-    margin: 25px;
-    border-radius: 25px;
-    filter: drop-shadow(4px 6px 10px #e6e6e6);
-  
-  }
-  .country-applications ul{
-   margin: 10px;
-    overflow-y: scroll;
-    height: inherit;
-  }
-  .country-applications p{
-    margin-bottom: 0px;
-    margin-left: 10px;
-    padding-top: 25px;
-    font-size: large;
-    font-weight: 700;
-  }
+    
 
 #containerLocation {
     width: 100%;
@@ -611,9 +338,6 @@ table tr:nth-child(even) {
 #containerLocation3:target {
     visibility: visible;
 }
-
-
-
 
 
 /*region */
@@ -693,55 +417,5 @@ table tr:nth-child(even) {
 #containerRegion3:target {
     visibility: visible;
 }
-.region-applications{
-    background-color: white;
-    height: 70%;
-    margin: 25px;
-    border-radius: 25px;
-    filter: drop-shadow(4px 6px 10px #e6e6e6);
-  
-  }
-  .region-applications ul{
-   margin: 10px;
-    overflow-y: scroll;
-    height: inherit;
-  }
-  .region-applications p{
-    margin-bottom: 0px;
-    margin-left: 10px;
-    padding-top: 25px;
-    font-size: large;
-    font-weight: 700;
-  }
-  .regionNumber{
-    background-color: #F19180;
-    height: 20%;
-    border-radius: 25px;
-  }
 
 
-
-
-/* Side bar */ 
-.sidebar-menu {
-    list-style-type: none;
-    padding: 0;
-    width: 15%;
-    background-color: #1f2421;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-    margin-top: 0;
-  }
-  
-  .sidebar-menu-item a {
-    display: block;
-    color: #ffffff;
-    padding: 8px 16px;
-    text-decoration: none;
-    margin-left: 5px;
-    font-family: 'Roboto', sans-serif;
-  }
-  .sidebar-menu-postion{
-    margin-top: 0%;
-  }
