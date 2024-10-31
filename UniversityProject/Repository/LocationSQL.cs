@@ -23,14 +23,14 @@ namespace UniversityProject.Repository
 
                 string createTableQuery = @"
                 CREATE TABLE IF NOT EXISTS Locations (
-                    LocationId INTEGER PRIMARY KEY AUTOINCREMENT,
+                    LocationId TEXT PRIMARY KEY,
                     RegionId INTEGER NOT NULL,
                     CountryId INTEGER NOT NULL,
                     Latitude REAL NOT NULL,
                     Longitude REAL NOT NULL,
                     LocationName TEXT NOT NULL,
                     FOREIGN KEY (RegionId) REFERENCES Regions(RegionId) ON DELETE CASCADE,
-                    FOREIGN KEY (CountryId) REFERENCES Countries(CountryId) ON DELETE CASCADE
+                    FOREIGN KEY (CountryId) REFERENCES Country(CountryId) ON DELETE CASCADE
                 );";
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
@@ -47,11 +47,12 @@ namespace UniversityProject.Repository
                 connection.Open();
 
                 string insertQuery = @"
-                INSERT INTO Locations (RegionId, CountryId, Latitude, Longitude, LocationName)
-                VALUES (@RegionId, @CountryId, @Latitude, @Longitude, @LocationName)";
+                INSERT INTO Locations (LocationId, RegionId, CountryId, Latitude, Longitude, LocationName)
+                VALUES (@LocationId, @RegionId, @CountryId, @Latitude, @Longitude, @LocationName)";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
+                    command.Parameters.AddWithValue("@LocationId", location.LocationId);
                     command.Parameters.AddWithValue("@RegionId", location.RegionId);
                     command.Parameters.AddWithValue("@CountryId", location.CountryId);
                     command.Parameters.AddWithValue("@Latitude", location.Latitude);
@@ -62,6 +63,7 @@ namespace UniversityProject.Repository
                 }
             }
         }
+
 
         public List<Location> GetAllLocations()
         {
@@ -80,8 +82,8 @@ namespace UniversityProject.Repository
                         var location = new Location
                         {
                             LocationId = reader.GetString(0),
-                            RegionId = reader.GetString(1),
-                            CountryId = reader.GetString(2),
+                            RegionId = reader.GetInt32(1),
+                            CountryId = reader.GetInt32(2),
                             Latitude = reader.GetDouble(3),
                             Longitude = reader.GetDouble(4),
                             LocationName = reader.GetString(5)
@@ -113,8 +115,8 @@ namespace UniversityProject.Repository
                             return new Location
                             {
                                 LocationId = reader.GetString(0),
-                                RegionId = reader.GetString(1),
-                                CountryId = reader.GetString(2),
+                                RegionId = reader.GetInt32(1),
+                                CountryId = reader.GetInt32(2),
                                 Latitude = reader.GetDouble(3),
                                 Longitude = reader.GetDouble(4),
                                 LocationName = reader.GetString(5)

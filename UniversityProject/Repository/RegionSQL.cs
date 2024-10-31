@@ -41,7 +41,7 @@ namespace UniversityProject.Repository
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
-
+                Console.WriteLine(region.RegionName );
                 string insertQuery = @"
                 INSERT INTO Regions (RegionName, CountryId)
                 VALUES (@RegionName, @CountryId)";
@@ -72,7 +72,7 @@ namespace UniversityProject.Repository
                     {
                         var region = new Region
                         {
-                            RegionId = reader.GetString(0),
+                            RegionId = reader.GetInt32(0),
                             RegionName = reader.GetString(1),
                             CountryId = reader.GetString(2)
                         };
@@ -102,7 +102,7 @@ namespace UniversityProject.Repository
                         {
                             return new Region
                             {
-                                RegionId = reader.GetString(0),
+                                RegionId = reader.GetInt32(0),
                                 RegionName = reader.GetString(1),
                                 CountryId = reader.GetString(2)
                             };
@@ -137,7 +137,7 @@ namespace UniversityProject.Repository
             }
         }
 
-        public void DeleteRegion(string regionId)
+        public void DeleteRegion(int regionId)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {

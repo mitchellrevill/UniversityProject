@@ -15,6 +15,7 @@ populateDepartmentTable();
 populateLocationTable()
 populateRegionsOptions()
 populateCountryOptionsEdit()
+populateManagerOptions()
 // CountryOptions
 // employeeIdEdit
 
@@ -26,13 +27,16 @@ async function populateDepartmentTable() {
         if (!Array.isArray(Departments)) {
             throw new Error('Expected an array from FetchRequestGET.');
         }
-        console.log(Departments)
 
         const tbody = document.getElementById('departmentTableBody');
         tbody.innerHTML = '';
 
+        if (Departments.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4">No locations available.</td></tr>';
+            return;
+        }
+
         Departments.forEach(item => {
-            console.log("Entered Loop")
             const row = document.createElement('tr');
 
             row.innerHTML = `
@@ -57,6 +61,11 @@ async function populateRegionTable() {
         throw new Error('Expected an array from FetchRequestGET.');
     }
 
+    if (Regions.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4">No locations available.</td></tr>';
+        return;
+    }
+
     Regions.forEach(item => {
         const row = document.createElement('tr');
 
@@ -73,6 +82,7 @@ async function populateRegionTable() {
 
     async function populateLocationTable() {
         try {
+
             const Locations = await FetchRequestGET('GetLocations');
             const tbody = document.getElementById('LocationTableBody');
             tbody.innerHTML = ''; 
@@ -110,8 +120,7 @@ async function populateCountryTable() {
     Countries = await FetchRequestGET('GetCountries');
 
 
-    console.log(Countries)
-    if (countr.length === 0) {
+    if (Countries.length === 0) {
         tbody.innerHTML = '<tr><td colspan="4">No locations available.</td></tr>';
         return;
     }
@@ -133,31 +142,7 @@ async function populateCountryTable() {
         tbody.appendChild(row);
     });
 }
-    async function populateCountryTable() {
 
-        Countries = await FetchRequestGET('GetCountries');
-
-
-        console.log(Countries)
-
-
-        const tbody = document.getElementById('countryTableBody');
-        tbody.innerHTML = '';
-        console.log(typeof Countries)
-
-        Countries.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-            <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.CountryId}" data-name="${item.CountryName}" data-currency="${item.CountryCurrency}" data-minimum-leave="${item.MinimumLeave}"></td>
-            <td>${item.CountryId}</td>
-            <td>${item.CountryName}</td>
-            <td>${item.CountryCurrency}</td>
-            <td>${Array.isArray(item.LegalRequirements) ? item.LegalRequirements.join(", ") : ""}</td>
-            <td>${item.MinimumLeave}</td>        
-          `;
-            tbody.appendChild(row);
-        });
-    }
 
 
 async function populateCountryOptionsEdit() {
@@ -181,7 +166,7 @@ async function populateCountryOptionsEdit() {
 async function populateRegionsOptions() {
     const Countries = await FetchRequestGET('GetAllRegions');
     const selectElements = document.querySelectorAll('.Region-options');
-
+        
     console.log(selectElements)
     selectElements.forEach(select => {
 
@@ -196,6 +181,27 @@ async function populateRegionsOptions() {
         });
     });
 }
+
+
+async function populateManagerOptions() {
+    const Countries = await FetchRequestGET('GetAllEmployees');
+    const selectElements = document.querySelectorAll('.manager-options');
+    console.log("Request received for updating manager");
+    console.log(selectElements)
+    selectElements.forEach(select => {
+
+        select.innerHTML = '';
+
+        Countries.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.EmployeeId;
+            option.textContent = item.FirstName;
+
+            select.appendChild(option);
+        });
+    });
+}
+
 
 
 // MANAGER BUTTONS
@@ -269,13 +275,14 @@ function addNewLocation() {
     var LocationId = Math.floor(Math.random() * 1000) + 1;
 
 
+
     var locationName = document.getElementById("locationName").value;
     var regionId = document.getElementById("RegionOptions").value;
-    var countryId = document.getElementById("CountryOptions").value;
+    var countryId = document.getElementById("CountryOptions1").value;
     var latitude = document.getElementById("latitude").value;
     var longitude = document.getElementById("longitude").value;
 
-
+    regionId = String(regionId)
     if (!locationName || !regionId || !countryId || !latitude || !longitude) {
         alert("You have not answered all required fields");
         return;
@@ -348,7 +355,7 @@ function deleteLocation() {
     FetchRequest('DeleteLocation', LocationPosting);
 }
 
-
+// Departments
 function addNewDepartment() {
     console.log("Method Start");
     var DepartmentId = Math.floor(Math.random() * 1000) + 1;
@@ -419,7 +426,7 @@ async function DeleteDepartment() {
 // Country BUTTONS
 function addNewCountry() {
     console.log("Method Start");
-    var CountryId = document.getElementById("countryId").value;
+    var CountryId = Math.floor(Math.random() * 1000) + 1;
     var CountryName = document.getElementById("countryName").value;
     var CountryCurrency = document.getElementById("countryCurrency").value;
     var LegalRequirements = document.getElementById("legalRequirements").value;
@@ -496,9 +503,9 @@ selectedIds.forEach(element => {
 // Regions BUTTONS
 function addNewRegion() {
     console.log("Method Start");
-    var RegionId = document.getElementById("regionId").value;
+    var RegionId = Math.floor(Math.random() * 1000) + 1;
     var RegionName = document.getElementById("regionName").value;
-    var CountryId = document.getElementById('cars').value;
+    var CountryId = document.getElementById('CountryOptions2').value;
 
 
     console.log(CountryId)
@@ -513,6 +520,7 @@ function addNewRegion() {
         "CountryId": CountryId
     };
 
+    console.log(Region)
     FetchRequest('InsertRegion', Region);
 }
 
@@ -527,7 +535,7 @@ function updateRegion() {
     selectedIds.forEach(element => {
         var RegionId = element;
         var RegionName = document.getElementById("regionNameUpdate").value;
-        var CountryId = document.getElementById("countryIdUpdate").value;
+        var CountryId = document.getElementById("CountryOptions3").value;
 
         console.log(element);
 

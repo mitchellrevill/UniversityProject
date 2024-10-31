@@ -28,10 +28,10 @@ namespace UniversityProject.Repository
                     CompanyEmail TEXT NOT NULL,
                     PersonalEmail TEXT NOT NULL,
                     PhoneNumber TEXT NOT NULL,
-                    CountryId TEXT NOT NULL,
-                    DepartmentId TEXT NOT NULL,
-                    ManagerId TEXT,
-                    RegionId TEXT NOT NULL,
+                    CountryId INTEGER NOT NULL,
+                    DepartmentId INTEGER NOT NULL,
+                    ManagerId INTEGER,
+                    RegionId INTEGER NOT NULL,
                     EmploymentType TEXT,
                     StartDate TEXT NOT NULL,
                     Salary REAL NOT NULL,
@@ -51,6 +51,7 @@ namespace UniversityProject.Repository
                 }
             }
         }
+
 
         public void InsertEmployee(Employee employee)
         {
@@ -107,18 +108,19 @@ namespace UniversityProject.Repository
                             CompanyEmail = reader.GetString(3),
                             PersonalEmail = reader.GetString(4),
                             PhoneNumber = reader.GetString(5),
-                            CountryId = reader.GetString(6),
-                            DepartmentId = reader.GetString(7),
-                            ManagerId = reader.IsDBNull(8) ? null : reader.GetString(8),
-                            RegionId = reader.GetString(9),
+                            CountryId = reader.GetInt32(6),
+                            DepartmentId = reader.GetInt32(7),
+                            ManagerId = reader.GetInt32(8),
+                            RegionId = reader.GetInt32(9),
                             EmploymentType = reader.GetString(10),
                             StartDate = DateTime.Parse(reader.GetString(11)),
-                            Salary = reader.GetDecimal(12),
+                            Salary = reader.GetInt32(12), 
                             Benefits = reader.GetString(13),
                             Employeetype = reader.GetString(14),
-                            password = reader.GetString(15),
+                            password = reader.GetString(15), 
                             Status = (Employee.EmployeeStatus)reader.GetInt32(16)
                         };
+
 
                         employees.Add(employee);
                     }
@@ -149,16 +151,16 @@ namespace UniversityProject.Repository
                                 CompanyEmail = reader.GetString(3),
                                 PersonalEmail = reader.GetString(4),
                                 PhoneNumber = reader.GetString(5),
-                                CountryId = reader.GetString(6),
-                                DepartmentId = reader.GetString(7),
-                                ManagerId = reader.IsDBNull(8) ? null : reader.GetString(8),
-                                RegionId = reader.GetString(9),
+                                CountryId = reader.GetInt32(6),
+                                DepartmentId = reader.GetInt32(7),
+                                ManagerId = reader.GetInt32(8),
+                                RegionId = reader.GetInt32(9),
                                 EmploymentType = reader.GetString(10),
                                 StartDate = DateTime.Parse(reader.GetString(11)),
-                                Salary = reader.GetDecimal(12),
+                                Salary = reader.GetInt32(12),
                                 Benefits = reader.GetString(13),
-                                Employeetype = reader.GetString(15),
-                                password = reader.GetString(16),
+                                Employeetype = reader.GetString(14),
+                                password = reader.GetString(15),
                                 Status = (Employee.EmployeeStatus)reader.GetInt32(16)
                             };
                         }

@@ -27,22 +27,23 @@ namespace UniversityProject.Repository
 
                 string createTableQuery = @"
                 CREATE TABLE IF NOT EXISTS Applicant (
-                    ApplicantId TEXT PRIMARY KEY,
-                    FirstName TEXT NOT NULL,
-                    LastName TEXT NOT NULL,
-                    CoverLetter TEXT,
-                    Gender TEXT,
-                    City TEXT,
-                    RegionId TEXT,
-                    CountryId TEXT,
-                    PostingId TEXT,
-                    Phone TEXT,
-                    CVpdfContent TEXT,
-                    CVfileName TEXT,
-                    FOREIGN KEY (RegionId) REFERENCES Regions(RegionId) ON DELETE SET NULL,
-                    FOREIGN KEY (CountryId) REFERENCES Countries(CountryId) ON DELETE SET NULL,
-                    FOREIGN KEY (PostingId) REFERENCES Posting(PostingId) ON DELETE SET NULL
-                );";
+                ApplicantId TEXT PRIMARY KEY,
+                FirstName TEXT NOT NULL,
+                LastName TEXT NOT NULL,
+                CoverLetter TEXT,
+                Gender TEXT,
+                City TEXT,
+                RegionId INTEGER,
+                CountryId INTEGER,
+                PostingId TEXT,
+                Phone TEXT,
+                CVpdfContent TEXT,
+                CVfileName TEXT,
+                FOREIGN KEY (RegionId) REFERENCES Regions(RegionId) ON DELETE SET NULL,
+                FOREIGN KEY (CountryId) REFERENCES Country(CountryId) ON DELETE SET NULL,
+                FOREIGN KEY (PostingId) REFERENCES JobPostings(PostingId) ON DELETE SET NULL
+            );";
+
 
                 using (var command = new SqliteCommand(createTableQuery, connection))
                 {

@@ -16,10 +16,10 @@ namespace UniversityProject.Model
         public string CompanyEmail { get; set; }
         public string PersonalEmail { get; set; }
         public string PhoneNumber { get; set; }
-        public string CountryId { get; set; }
-        public string DepartmentId { get; set; }
-        public string ManagerId { get; set; }
-        public string RegionId { get; set; }
+        public int CountryId { get; set; }
+        public int DepartmentId { get; set; }
+        public int ManagerId { get; set; }
+        public int RegionId { get; set; }
         public string EmploymentType { get; set; }
         public DateTime StartDate { get; set; }
         public decimal Salary { get; set; }
