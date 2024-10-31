@@ -1,6 +1,4 @@
 
-
-
 /*Department */
 #container {
     width: 100%;
@@ -15,7 +13,8 @@
     z-index: 1000;
     visibility: hidden;
 }
-#container2{
+
+#container2 {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -28,14 +27,16 @@
     z-index: 1000;
     visibility: hidden;
 }
-#container2:target {
-    visibility: visible;
-}
+
+    #container2:target {
+        visibility: visible;
+    }
 
 #container:target {
     visibility: visible;
 }
-#container3{
+
+#container3 {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -48,13 +49,12 @@
     z-index: 1000;
     visibility: hidden;
 }
-#container3:target {
-    visibility: visible;
-}
 
+    #container3:target {
+        visibility: visible;
+    }
 
-
-.Departmentclass{
+.Departmentclass {
     display: inline-block;
     background-color: white;
     border-radius: 25px;
@@ -62,15 +62,17 @@
     width: 50%;
     margin-left: 25px;
 }
+
 .Departmentcontent {
     display: flex;
     padding-top: 10px;
     margin-left: 15%;
-    background-color: #e9e9e9; 
-    margin-top: 0; 
-    border-radius: 0;  
-    min-height: calc(100vh - 100px); 
+    background-color: #e9e9e9;
+    margin-top: 0;
+    border-radius: 0;
+    min-height: calc(100vh - 100px);
 }
+
 .DepartmentAnal, .Departmentclass {
     flex: 1;
     height: 650px;
@@ -79,77 +81,74 @@
     margin-left: 10px;
     padding: 25px;
     margin-right: 25px;
-    
 }
-.departmentNumber{
+
+.departmentNumber {
     background-color: #F19180;
     height: 20%;
     border-radius: 25px;
 }
-.departmentNumber p{
-   color: rgb(0, 0, 0);
-   margin: 25px;
-   padding-top: 10px;
-   font-size: large;
-   font-weight: 700;
-   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+
+    .departmentNumber p {
+        color: rgb(0, 0, 0);
+        margin: 25px;
+        padding-top: 10px;
+        font-size: large;
+        font-weight: 700;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 /* Modal styling */
 .reveal-modal {
     background-color: #fff;
-    padding: 40px; 
+    padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     max-width: 500px;
     width: 90%;
-    margin: 0 auto; 
+    margin: 0 auto;
     position: relative;
 }
 
-
 .form-container {
-    display: flex; 
-    flex-direction: column; 
+    display: flex;
+    flex-direction: column;
 }
-
 
 .form-input {
-    margin-bottom: 15px; 
-    padding: 10px; 
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
-
 
 .submit-button {
-    background-color: #007BFF; 
-    color: white; 
-    padding: 10px; 
-    border: none; 
-    border-radius: 4px; 
-    cursor: pointer; 
+    background-color: #007BFF;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-
-.submit-button:hover {
-    background-color: #0056b3; 
-}
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
 
 .close-modal {
-    display: block; 
-    margin-top: 15px; 
-    text-align: center; 
+    display: block;
+    margin-top: 15px;
+    text-align: center;
     color: #aaa;
     font-size: 20px;
     font-weight: bold;
     text-decoration: none;
 }
 
-.close-modal:hover {
-    color: black;
-}
+    .close-modal:hover {
+        color: black;
+    }
 
-#containerManager{
+#containerManager {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -162,11 +161,12 @@
     z-index: 1000;
     visibility: hidden;
 }
-#containerManager:target {
-    visibility: visible;
-}
 
-#containerManager2{
+    #containerManager:target {
+        visibility: visible;
+    }
+
+#containerManager2 {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -179,10 +179,12 @@
     z-index: 1000;
     visibility: hidden;
 }
-#containerManager2:target {
-    visibility: visible;
-}
-#containerManager3{
+
+    #containerManager2:target {
+        visibility: visible;
+    }
+
+#containerManager3 {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -195,16 +197,12 @@
     z-index: 1000;
     visibility: hidden;
 }
-#containerManager3:target {
-    visibility: visible;
-}
 
-
-
-
-
+    #containerManager3:target {
+        visibility: visible;
+    }
 /* Country */
-.Countryclass{
+.Countryclass {
     display: inline-block;
     background-color: white;
     border-radius: 25px;
@@ -212,6 +210,7 @@
     width: 50%;
     margin-left: 25px;
 }
+
 .countryAnal, .Countryclass {
     flex: 1;
     height: 650px;
@@ -220,18 +219,19 @@
     margin-left: 10px;
     padding: 25px;
     margin-right: 25px;
-    
-  }
+}
+
 .Countrycontent {
     display: flex;
     padding-top: 10px;
     margin-left: 15%;
-    background-color: #e9e9e9; 
-    margin-top: 0; 
-    border-radius: 0;  
+    background-color: #e9e9e9;
+    margin-top: 0;
+    border-radius: 0;
     min-height: calc(100vh - 100px)
 }
-#containerCountry{
+
+#containerCountry {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -244,12 +244,12 @@
     z-index: 1000;
     visibility: hidden;
 }
-#containerCountry:target {
-    visibility: visible;
-}
 
+    #containerCountry:target {
+        visibility: visible;
+    }
 
-#containerCountry2{
+#containerCountry2 {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -262,28 +262,28 @@
     z-index: 1000;
     visibility: hidden;
 }
+
+    #containerCountry2:target {
+        visibility: visible;
+    }
+
+#containerCountry3 {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
+
 #containerCountry2:target {
     visibility: visible;
 }
-#containerCountry3{
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.425);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    visibility: hidden;
-}
-#containerCountry2:target {
-    visibility: visible;
-}
-
-
-    
 
 #containerLocation {
     width: 100%;
@@ -335,22 +335,21 @@
     visibility: hidden;
 }
 
-#containerLocation3:target {
-    visibility: visible;
-}
-
-
+    #containerLocation3:target {
+        visibility: visible;
+    }
 /*region */
 .Regioncontent {
     display: flex;
     padding-top: 10px;
     margin-left: 15%;
-    background-color: #e9e9e9; 
-    margin-top: 0; 
-    border-radius: 0;  
+    background-color: #e9e9e9;
+    margin-top: 0;
+    border-radius: 0;
     min-height: calc(100vh - 100px)
 }
-.Regionclass{
+
+.Regionclass {
     display: inline-block;
     background-color: white;
     border-radius: 25px;
@@ -358,6 +357,7 @@
     width: 50%;
     margin-left: 25px;
 }
+
 .regionAnal, .Regionclass {
     flex: 1;
     height: 650px;
@@ -366,9 +366,9 @@
     margin-left: 10px;
     padding: 25px;
     margin-right: 25px;
-    
-  }
-#containerRegion{
+}
+
+#containerRegion {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -381,11 +381,12 @@
     z-index: 1000;
     visibility: hidden;
 }
-#containerRegion:target {
-    visibility: visible;
-}
 
-#containerRegion2{
+    #containerRegion:target {
+        visibility: visible;
+    }
+
+#containerRegion2 {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -398,10 +399,12 @@
     z-index: 1000;
     visibility: hidden;
 }
-#containerRegion2:target {
-    visibility: visible;
-}
-#containerRegion3{
+
+    #containerRegion2:target {
+        visibility: visible;
+    }
+
+#containerRegion3 {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -414,8 +417,7 @@
     z-index: 1000;
     visibility: hidden;
 }
-#containerRegion3:target {
-    visibility: visible;
-}
 
-
+    #containerRegion3:target {
+        visibility: visible;
+    }

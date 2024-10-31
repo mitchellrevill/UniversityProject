@@ -22,13 +22,15 @@
 .sidebar-menu-postion {
     margin-top: 0%;
 }
+
 body {
     background: #b08f8f;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    background-color: #ffffff; /* Set background color */
+    background-color: #ffffff;
+    /* Set background color */
     color: #000000;
     font-size: 16px;
     line-height: 1.6;
@@ -51,10 +53,10 @@ li a {
         color: white;
     }
 
-
 .wrapper {
     max-width: 100%;
-    background-color: #ffffff; /* Set background color for wrapper */
+    background-color: #ffffff;
+    /* Set background color for wrapper */
 }
 
 .header {
@@ -75,7 +77,8 @@ li a {
 }
 
 nav {
-    margin-left: auto; /* Push nav to the right */
+    margin-left: auto;
+    /* Push nav to the right */
     padding-right: 25px;
     padding-left: 25px;
 }
@@ -129,8 +132,7 @@ nav {
     margin-top: 10rem;
 }
 
-    .table-fixed thead,
-    .table-fixed thead > th {
+    .table-fixed thead, .table-fixed thead > th {
         background: #4d7275;
         color: #fff;
     }
@@ -147,8 +149,7 @@ nav {
         border-right: 0;
     }
 
-    .table-fixed tbody td,
-    .table-fixed thead > tr > th {
+    .table-fixed tbody td, .table-fixed thead > tr > th {
         float: left;
         font-size: 14px;
         padding-left: 20px !important;
@@ -165,7 +166,7 @@ nav {
     }
 
     .table-fixed tr {
-        display:   block;
+        display: block;
     }
 
 table {
@@ -177,7 +178,8 @@ table {
 
 .scrollable-table {
     overflow-y: auto;
-    height: 200px; /* Adjust the height as needed */
+    height: 200px;
+    /* Adjust the height as needed */
 }
 
 table thead {
@@ -194,7 +196,6 @@ table th, table td {
 table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-
 
 .action-buttons {
     display: flex;
