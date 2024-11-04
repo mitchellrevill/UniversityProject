@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="employeesCSS.css">
-    <link rel="stylesheet" href="header.css">
-    <script type="text/javascript" src="admin.js" defer></script>
+    <link rel="stylesheet" href="header.css">   
+    <script type="text/javascript" src="Employees.js" defer></script>
     <title>Global HR Systems - Administration</title>
 </head>
 <article id="Department-block">
@@ -31,6 +31,146 @@
 
     <div class="content">
         <div class="contentclass">
+            <div id="container">
+                <div id="exampleModal" class="reveal-modal">
+                    <a href="#Department-block" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                    <h2>Add New Employee    </h2>
+                    <div class="formContainer">
+                        <form id="form-container" class="form-container">
+                            <label for="employeeId">Employee ID:</label>
+                            <input type="text" id="employeeId" name="employeeId" class="form-input" required="">
+
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" name="firstName" class="form-input" required="">
+
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" name="lastName" class="form-input" required="">
+
+                            <label for="companyEmail">Company Email:</label>
+                            <input type="email" id="companyEmail" name="companyEmail" class="form-input" required="">
+
+                            <label for="personalEmail">Personal Email:</label>
+                            <input type="email" id="personalEmail" name="personalEmail" class="form-input">
+
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="text" id="phoneNumber" name="phoneNumber" class="form-input">
+
+                            <label for="countryId">Choose a Country:</label>
+                            <select class="country-options" id="CountryOptions1" name="countryId" required>
+                                <!-- Dynamically add country options here -->
+                            </select>
+
+                            <label for="regionId">Choose a Region:</label>
+                            <select class="Region-options" id="RegionOptions"></select>
+                            <!-- Region Options -->
+                            </select>
+
+                            <label for="departmentId">Choose a Department:</label>
+                            <select class="department-options" id="DepartmentOptions" name="departmentId" required>
+                                <!-- Dynamically add department options here -->
+                            </select>
+
+                            <label for="managerId">Choose a Manager:</label>
+                            <select class="manager-options" id="ManagerOptions1" name="managerId">
+                                <!-- Dynamically add manager options here -->
+                            </select>
+
+                            <label for="employmentType">Employment Type:</label>
+                            <input type="text" id="employmentType" name="employmentType" class="form-input">
+
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" id="startDate" name="startDate" class="form-input" required="">
+
+                            <label for="salary">Salary:</label>
+                            <input type="number" step="0.01" id="salary" name="salary" class="form-input">
+
+                            <label for="benefits">Benefits:</label>
+                            <textarea id="benefits" name="benefits" class="form-input"></textarea>
+
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" class="form-input" required="">
+
+                            <label for="employeeType">Employee Type:</label>
+                            <input type="text" id="employeeType" name="employeeType" class="form-input">
+
+                            <label for="status">Status:</label>
+                            <input type="text" id="status" name="status" class="form-input">
+
+                            <button type="button" class="submit-button" onclick="addNewEmployee()">Add Employee</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="container2">
+                <div id="exampleModal" class="reveal-modal">
+                    <a href="#Department-block" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Back</button></a>
+                    <h2>Update Employee</h2>
+                    <div class="formContainer">
+                        <form id="form-container" class="form-container">
+                            <label for="employeeId">Employee ID:</label>
+                            <input type="text" id="employeeId" name="employeeId" class="form-input" required>
+
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" name="firstName" class="form-input" required>
+
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" name="lastName" class="form-input" required>
+
+                            <label for="companyEmail">Company Email:</label>
+                            <input type="email" id="companyEmail" name="companyEmail" class="form-input" required>
+
+                            <label for="personalEmail">Personal Email:</label>
+                            <input type="email" id="personalEmail" name="personalEmail" class="form-input">
+
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="text" id="phoneNumber" name="phoneNumber" class="form-input">
+
+                            <label for="countryId">Choose a Country:</label>
+                            <select class="country-options" id="CountryOptions1" name="countryId" required>
+                                <!-- Dynamically add country options here -->
+                            </select>
+
+                            <label for="regionId">Choose a Region:</label>
+                            <select class="Region-options" id="RegionOptions" name="regionId">
+                                <!-- Dynamically add region options here -->
+                            </select>
+
+                            <label for="departmentId">Choose a Department:</label>
+                            <select class="department-options" id="DepartmentOptions" name="departmentId" required>
+                                <!-- Dynamically add department options here -->
+                            </select>
+
+                            <label for="managerId">Choose a Manager:</label>
+                            <select class="manager-options" id="ManagerOptions1" name="managerId">
+                                <!-- Dynamically add manager options here -->
+                            </select>
+
+                            <label for="employmentType">Employment Type:</label>
+                            <input type="text" id="employmentType" name="employmentType" class="form-input">
+
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" id="startDate" name="startDate" class="form-input" required>
+
+                            <label for="salary">Salary:</label>
+                            <input type="number" step="0.01" id="salary" name="salary" class="form-input">
+
+                            <label for="benefits">Benefits:</label>
+                            <textarea id="benefits" name="benefits" class="form-input"></textarea>
+
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" class="form-input" required>
+
+                            <label for="employeeType">Employee Type:</label>
+                            <input type="text" id="employeeType" name="employeeType" class="form-input">
+
+                            <label for="status">Status:</label>
+                            <input type="text" id="status" name="status" class="form-input">
+
+                            <button type="button" class="submit-button" onclick="UpdateEmployee()">Update Employee</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="job-form">
                 <h2>Search Jobs</h2>
                 <div class="filter-container">
@@ -64,6 +204,9 @@
                     </div>
                 </div>
             </div>
+
+
+
             <h2>Employees List</h2>
             <div class="tableColour" style="overflow-y: scroll; height: 500px;">
                 <table id="jobPostingsTable" style="overflow-y: scroll;">
@@ -74,9 +217,10 @@
                             <th>Last Name</th>
                             <th>Company Email</th>
                             <th>Personal Email</th>
+                            <th>Phone Number</th>
                         </tr>
                     </thead>
-                    <tbody id="jobPostingsTableBody">
+                    <tbody id="EmployeeTableBody">
                         <!-- Table rows will go here -->
                     </tbody>
                 </table>

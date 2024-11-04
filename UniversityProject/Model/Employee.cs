@@ -18,7 +18,7 @@ namespace UniversityProject.Model
         public string PhoneNumber { get; set; }
         public int CountryId { get; set; }
         public int DepartmentId { get; set; }
-        public int ManagerId { get; set; }
+        public int? ManagerId { get; set; }
         public int RegionId { get; set; }
         public string EmploymentType { get; set; }
         public DateTime StartDate { get; set; }

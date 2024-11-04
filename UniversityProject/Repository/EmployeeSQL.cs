@@ -39,7 +39,7 @@ namespace UniversityProject.Repository
                     Employeetype TEXT,
                     Password TEXT,
                     Status INTEGER NOT NULL,
-                    FOREIGN KEY (CountryId) REFERENCES Countries(CountryId) ON DELETE CASCADE,
+                    FOREIGN KEY (CountryId) REFERENCES Country(CountryId) ON DELETE CASCADE,
                     FOREIGN KEY (DepartmentId) REFERENCES Departments(DepartmentId) ON DELETE SET NULL,
                     FOREIGN KEY (ManagerId) REFERENCES Managers(ManagerId) ON DELETE SET NULL,
                     FOREIGN KEY (RegionId) REFERENCES Regions(RegionId) ON DELETE SET NULL
@@ -58,10 +58,26 @@ namespace UniversityProject.Repository
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
-
                 string insertQuery = @"
                 INSERT INTO Employees (EmployeeId, FirstName, LastName, CompanyEmail, PersonalEmail, PhoneNumber, CountryId, DepartmentId, ManagerId, RegionId, EmploymentType, StartDate, Salary, Benefits, Employeetype, Password, Status)
                 VALUES (@EmployeeId, @FirstName, @LastName, @CompanyEmail, @PersonalEmail, @PhoneNumber, @CountryId, @DepartmentId, @ManagerId, @RegionId, @EmploymentType, @StartDate, @Salary, @Benefits, @Employeetype, @Password, @Status)";
+                Console.WriteLine("EmployeeId: " + employee.EmployeeId);
+                Console.WriteLine("FirstName: " + employee.FirstName);
+                Console.WriteLine("LastName: " + employee.LastName);
+                Console.WriteLine("CompanyEmail: " + employee.CompanyEmail);
+                Console.WriteLine("PersonalEmail: " + employee.PersonalEmail);
+                Console.WriteLine("PhoneNumber: " + employee.PhoneNumber);
+                Console.WriteLine("CountryId: " + employee.CountryId);
+                Console.WriteLine("DepartmentId: " + employee.DepartmentId);
+                Console.WriteLine("ManagerId: " + employee.ManagerId);
+                Console.WriteLine("RegionId: " + employee.RegionId);
+                Console.WriteLine("EmploymentType: " + employee.EmploymentType);
+                Console.WriteLine("StartDate: " + employee.StartDate.ToString("yyyy-MM-dd"));
+                Console.WriteLine("Salary: " + employee.Salary);
+                Console.WriteLine("Benefits: " + employee.Benefits);
+                Console.WriteLine("Employeetype: " + employee.Employeetype);
+                Console.WriteLine("Password: " + employee.password);
+                Console.WriteLine("Status: " + employee.Status);
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
@@ -73,7 +89,7 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
                     command.Parameters.AddWithValue("@CountryId", employee.CountryId);
                     command.Parameters.AddWithValue("@DepartmentId", employee.DepartmentId);
-                    command.Parameters.AddWithValue("@ManagerId", employee.ManagerId);
+                    command.Parameters.AddWithValue("@ManagerId", (object)employee.ManagerId ?? DBNull.Value); 
                     command.Parameters.AddWithValue("@RegionId", employee.RegionId);
                     command.Parameters.AddWithValue("@EmploymentType", employee.EmploymentType);
                     command.Parameters.AddWithValue("@StartDate", employee.StartDate.ToString("yyyy-MM-dd"));
@@ -84,6 +100,7 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@Status", (int)employee.Status);
                     command.ExecuteNonQuery();
                 }
+
             }
         }
         public List<Employee> GetAllEmployees()
@@ -110,24 +127,25 @@ namespace UniversityProject.Repository
                             PhoneNumber = reader.GetString(5),
                             CountryId = reader.GetInt32(6),
                             DepartmentId = reader.GetInt32(7),
-                            ManagerId = reader.GetInt32(8),
+                            ManagerId = reader.IsDBNull(8) ? (int?)null : reader.GetInt32(8), // Handle nullable ManagerId
                             RegionId = reader.GetInt32(9),
                             EmploymentType = reader.GetString(10),
                             StartDate = DateTime.Parse(reader.GetString(11)),
-                            Salary = reader.GetInt32(12), 
+                            Salary = reader.GetInt32(12),
                             Benefits = reader.GetString(13),
                             Employeetype = reader.GetString(14),
-                            password = reader.GetString(15), 
+                            password = reader.GetString(15),
                             Status = (Employee.EmployeeStatus)reader.GetInt32(16)
                         };
-
 
                         employees.Add(employee);
                     }
                 }
             }
+
             return employees;
         }
+
         public Employee GetEmployeeById(string employeeId)
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -207,12 +225,13 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
                     command.Parameters.AddWithValue("@CountryId", employee.CountryId);
                     command.Parameters.AddWithValue("@DepartmentId", employee.DepartmentId);
-                    command.Parameters.AddWithValue("@ManagerId", employee.ManagerId);
+                    command.Parameters.AddWithValue("@ManagerId", (object)employee.ManagerId ?? DBNull.Value);
                     command.Parameters.AddWithValue("@RegionId", employee.RegionId);
                     command.Parameters.AddWithValue("@EmploymentType", employee.EmploymentType);
                     command.Parameters.AddWithValue("@StartDate", employee.StartDate.ToString("yyyy-MM-dd"));
                     command.Parameters.AddWithValue("@Salary", employee.Salary);
                     command.Parameters.AddWithValue("@Benefits", employee.Benefits);
+                    command.Parameters.AddWithValue("@Employeetype", employee.Employeetype);
                     command.Parameters.AddWithValue("@Password", employee.password);
                     command.Parameters.AddWithValue("@Status", (int)employee.Status);
                     command.ExecuteNonQuery();

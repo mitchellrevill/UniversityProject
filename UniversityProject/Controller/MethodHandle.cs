@@ -85,6 +85,7 @@ public static class MethodHandle
 
     private static async Task<T> ReadRequestBodyAsync<T>(HttpListenerRequest req) // Repeated code i replaced, just takes the HTTP content and converts it, efficiency???? lmao
     {
+        Console.WriteLine("Read Body");
         using var reader = new StreamReader(req.InputStream, req.ContentEncoding);
         string json = await reader.ReadToEndAsync();
         return JsonConvert.DeserializeObject<T>(json);
@@ -125,6 +126,7 @@ public static class MethodHandle
         try
         {
             var newEmployee = await ReadRequestBodyAsync<Employee>(req);
+            Console.WriteLine(newEmployee.ManagerId); 
             await employeeService.InsertEmployeeAsync(newEmployee);
             await SendResponse(resp, "Employee inserted successfully.");
         }
