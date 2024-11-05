@@ -22,7 +22,7 @@ populateManagerOptions()
 
 async function populateDepartmentTable() {
     try {
-        const Departments = await FetchRequestGET('GetAllDepartments');
+        const Departments = await FetGhRequestGET('GetAllDepartments');
         if (!Array.isArray(Departments)) {
             throw new Error('Expected an array from FetchRequestGET.');
         }

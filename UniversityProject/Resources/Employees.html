@@ -108,69 +108,88 @@
                     <div class="formContainer">
                         <form id="form-container" class="form-container">
                             <label for="employeeId">Employee ID:</label>
-                            <input type="text" id="employeeId" name="employeeId" class="form-input" required>
+                            <input type="text" id="employeeIdUpdate" name="employeeId" class="form-input" required>
 
                             <label for="firstName">First Name:</label>
-                            <input type="text" id="firstName" name="firstName" class="form-input" required>
+                            <input type="text" id="firstNameUpdate" name="firstName" class="form-input" required>
 
                             <label for="lastName">Last Name:</label>
-                            <input type="text" id="lastName" name="lastName" class="form-input" required>
+                            <input type="text" id="lastNameUpdate" name="lastName" class="form-input" required>
 
                             <label for="companyEmail">Company Email:</label>
-                            <input type="email" id="companyEmail" name="companyEmail" class="form-input" required>
+                            <input type="email" id="companyEmailUpdate" name="companyEmail" class="form-input" required>
 
                             <label for="personalEmail">Personal Email:</label>
-                            <input type="email" id="personalEmail" name="personalEmail" class="form-input">
+                            <input type="email" id="personalEmailUpdate" name="personalEmail" class="form-input">
 
                             <label for="phoneNumber">Phone Number:</label>
-                            <input type="text" id="phoneNumber" name="phoneNumber" class="form-input">
+                            <input type="text" id="phoneNumberUpdate" name="phoneNumber" class="form-input">
 
                             <label for="countryId">Choose a Country:</label>
-                            <select class="country-options" id="CountryOptions1" name="countryId" required>
+                            <select class="country-options" id="CountryOptions2" name="countryId" required>
                                 <!-- Dynamically add country options here -->
                             </select>
 
                             <label for="regionId">Choose a Region:</label>
-                            <select class="Region-options" id="RegionOptions" name="regionId">
+                            <select class="Region-options" id="RegionOptions2" name="regionId">
                                 <!-- Dynamically add region options here -->
                             </select>
 
                             <label for="departmentId">Choose a Department:</label>
-                            <select class="department-options" id="DepartmentOptions" name="departmentId" required>
+                            <select class="department-options" id="DepartmentOptions2" name="departmentId" required>
                                 <!-- Dynamically add department options here -->
                             </select>
 
                             <label for="managerId">Choose a Manager:</label>
-                            <select class="manager-options" id="ManagerOptions1" name="managerId">
+                            <select class="manager-options" id="ManagerOptions2" name="managerId">
                                 <!-- Dynamically add manager options here -->
                             </select>
 
                             <label for="employmentType">Employment Type:</label>
-                            <input type="text" id="employmentType" name="employmentType" class="form-input">
+                            <input type="text" id="employmentTypeUpdate" name="employmentType" class="form-input">
 
                             <label for="startDate">Start Date:</label>
-                            <input type="date" id="startDate" name="startDate" class="form-input" required>
+                            <input type="date" id="startDateUpdate" name="startDate" class="form-input" required>
 
                             <label for="salary">Salary:</label>
-                            <input type="number" step="0.01" id="salary" name="salary" class="form-input">
+                            <input type="number" step="0.01" id="salaryUpdate" name="salary" class="form-input">
 
                             <label for="benefits">Benefits:</label>
-                            <textarea id="benefits" name="benefits" class="form-input"></textarea>
+                            <textarea id="benefitsUpdate" name="benefits" class="form-input"></textarea>
 
                             <label for="password">Password:</label>
-                            <input type="password" id="password" name="password" class="form-input" required>
+                            <input type="password" id="passwordUpdate" name="password" class="form-input" required>
 
                             <label for="employeeType">Employee Type:</label>
-                            <input type="text" id="employeeType" name="employeeType" class="form-input">
+                            <input type="text" id="employeeTypeUpdate" name="employeeType" class="form-input">
 
                             <label for="status">Status:</label>
-                            <input type="text" id="status" name="status" class="form-input">
+                            <input type="text" id="statusUpdate" name="status" class="form-input">
 
                             <button type="button" class="submit-button" onclick="UpdateEmployee()">Update Employee</button>
                         </form>
                     </div>
                 </div>
             </div>
+
+
+            <div id="container3">
+                <div id="exampleModal" class="reveal-modal">
+                    <h2>Delete Employee</h2>
+                    <div class="formContainer">
+                        Are you sure you want to delete this Employee?
+                        <div class="button-container">
+                            <a href="#Department-block" class="close-modal">
+                                <button type="button" class="submit-button">Back</button>
+                            </a>
+                            <a href="#Department-block" class="close-modal">
+                                <button type="button" onclick="DeleteEmployee()" class="submit-button">Delete Employee</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="job-form">
                 <h2>Search Jobs</h2>
                 <div class="filter-container">

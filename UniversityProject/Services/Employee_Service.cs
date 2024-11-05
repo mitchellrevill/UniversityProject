@@ -30,4 +30,36 @@ public class Employee_Service : IEmployeeService
     {
         await Task.Run(() => _EmployeeSQL.DeleteEmployee(employeeId));
     }
+    public async Task<Employee> GetEmployeeByIdAsync(string postingId)
+    {
+        return await Task.Run(() => _EmployeeSQL.GetEmployeeById(postingId));
+    }
+
+    public async Task<string> AuthAsync(Employee employee)
+    {
+        try
+        {
+            Employee data = await GetEmployeeByIdAsync(employee.EmployeeId);
+
+            if (data != null && data.password == employee.password && data.Employeetype == "Admin")
+            {
+                var access = "Admin";
+                return access; 
+            }
+            else if (data != null && data.password == employee.password && data.Employeetype == "User")
+            {
+                var access = "User";
+                return access;
+            }
+            else
+            {
+                return "User or Password Incorrect";
+            }
+        }
+        catch (Exception ex)
+        {
+            return "Employee Doesn't Exist";
+        }
+    }
 }
+

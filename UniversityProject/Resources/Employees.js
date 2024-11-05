@@ -10,7 +10,7 @@ function getSelectedIds() {
 }
 populateRegionsOptions()
 populateCountryOptionsEdit()
-populateManagerOptions()
+//populateManagerOptions()
 populateDepartmentOptions()
 populateEmployeeTable()
 async function populateEmployeeTable() {
@@ -110,23 +110,23 @@ function UpdateEmployee() {
         return;
     }
     selectedIds.forEach(element => {
-        var employeeId = document.getElementById("employeeId").value;
-        var firstName = document.getElementById("firstName").value;
-        var lastName = document.getElementById("lastName").value;
-        var companyEmail = document.getElementById("companyEmail").value;
-        var personalEmail = document.getElementById("personalEmail").value;
-        var phoneNumber = document.getElementById("phoneNumber").value;
-        var countryId = document.getElementById("CountryOptions1").value;
-        var regionId = document.getElementById("RegionOptions").value;
-        var departmentId = document.getElementById("DepartmentOptions").value;
-        var managerId = document.getElementById("ManagerOptions1").value;
-        var employmentType = document.getElementById("employmentType").value;
-        var startDate = document.getElementById("startDate").value;
-        var salary = document.getElementById("salary").value;
-        var benefits = document.getElementById("benefits").value;
-        var password = document.getElementById("password").value;
-        var employeeType = document.getElementById("employeeType").value;
-        var status = document.getElementById("status").value;
+        var employeeId = document.getElementById("employeeIdUpdate").value;
+        var firstName = document.getElementById("firstNameUpdate").value;
+        var lastName = document.getElementById("lastNameUpdate").value;
+        var companyEmail = document.getElementById("companyEmailUpdate").value;
+        var personalEmail = document.getElementById("personalEmailUpdate").value;
+        var phoneNumber = document.getElementById("phoneNumberUpdate").value;
+        var countryId = document.getElementById("CountryOptions2").value;
+        var regionId = document.getElementById("RegionOptions2").value;
+        var departmentId = document.getElementById("DepartmentOptions2").value;
+        var managerId = document.getElementById("ManagerOptions2").value;
+        var employmentType = document.getElementById("employmentTypeUpdate").value;
+        var startDate = document.getElementById("startDateUpdate").value;
+        var salary = document.getElementById("salaryUpdate").value;
+        var benefits = document.getElementById("benefitsUpdate").value;
+        var password = document.getElementById("passwordUpdate").value;
+        var employeeType = document.getElementById("employeeTypeUpdate").value;
+        var status = document.getElementById("statusUpdate").value;
 
 
         console.log(element);
@@ -290,8 +290,25 @@ async function populateManagerOptions() {
         });
     });
 }
+async function DeleteEmployee() {
+    const selectedIds = getSelectedIds();
+    if (selectedIds.length === 0) {
+        alert("No departments selected for deletion.");
+        return;
+    }
 
+    selectedIds.forEach(element => {
+        var EmployeeId = element;
 
+        var employee = {
+            "EmployeeId": EmployeeId
+        };
+
+        FetchRequest('DeleteEmployee', employee);
+        alert('Successful')
+        populateEmployeeTable();
+    });
+}
 
 async function FetchRequestGET(uri) {
     try {

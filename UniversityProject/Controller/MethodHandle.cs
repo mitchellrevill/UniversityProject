@@ -59,10 +59,11 @@ public static class MethodHandle
         { "UpdateLocation", UpdateLocation },
         { "DeleteLocation", DeleteLocation },
         { "GetJobPostingById", GetJobPostingById }
+
         };
 
 
-
+ 
     public static async Task HandleRequest(HttpListenerRequest req, HttpListenerResponse resp)
     {
         string requestedPath = req.Url.AbsolutePath.TrimStart('/');
@@ -105,7 +106,19 @@ public static class MethodHandle
         await SendResponse(resp, ex.Message);
     }
 
-
+    private static async Task InsertEmployee(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            var newEmployee = await ReadRequestBodyAsync<Employee>(req);
+            var Authresp = await employeeService.AuthAsync(newEmployee);
+            await SendResponse(resp, "Authenticated");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
     // EMPLOYEE
     private static async Task GetEmployees(HttpListenerRequest req, HttpListenerResponse resp)
     {
