@@ -22,7 +22,7 @@ populateManagerOptions()
 
 async function populateDepartmentTable() {
     try {
-        const Departments = await FetGhRequestGET('GetAllDepartments');
+        const Departments = await FetchRequestGET('GetAllDepartments');
         if (!Array.isArray(Departments)) {
             throw new Error('Expected an array from FetchRequestGET.');
         }
@@ -598,39 +598,61 @@ function DeleteRegion() {
 
 // STATIC CALLS PLEASE DONT MOVE
 async function FetchRequest(uri, model) {
-    console.log("Req sent")
+    console.log("Req sent");
+
+
+    const token = localStorage.getItem("authToken");
+
+
+    let headers = {
+        'Content-Type': 'application/json'
+    };
+
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
     try {
         const response = await fetch(host + '/' + uri, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(model)
         });
 
         if (response.ok) {
-            const data = await response.text();
+            const data = await response.json();
+            return data;
         } else {
             throw new Error('Error performing operation');
         }
     } catch (error) {
         console.error('Error:', error);
         alert('Failed to perform the operation');
+        return null;
     }
 }
-
 async function FetchRequestGET(uri) {
     try {
+        const token = localStorage.getItem("authToken");
+
+        let headers = {
+            'Content-Type': 'application/json'
+        };
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        // Make the GET request
         const response = await fetch(host + '/' + uri, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers
         });
 
         if (response.ok) {
             const data = await response.json();
-            return data
+            return data;
         } else {
             throw new Error('Error performing operation');
         }

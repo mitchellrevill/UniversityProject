@@ -171,7 +171,7 @@ namespace UniversityProject.Repository
                                 PhoneNumber = reader.GetString(5),
                                 CountryId = reader.GetInt32(6),
                                 DepartmentId = reader.GetInt32(7),
-                                ManagerId = reader.GetInt32(8),
+                                ManagerId = reader.IsDBNull(8) ? (int?)null : reader.GetInt32(8),
                                 RegionId = reader.GetInt32(9),
                                 EmploymentType = reader.GetString(10),
                                 StartDate = DateTime.Parse(reader.GetString(11)),

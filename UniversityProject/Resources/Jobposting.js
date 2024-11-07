@@ -137,23 +137,3 @@ function newJobContainerVisible() {
     document.getElementById("addJobForm").style.display = "block";
 }
 
-async function FetchRequestGET(uri) {
-    try {
-        const response = await fetch(host + '/' + uri, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        } else {
-            throw new Error('Error performing operation on the Department');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to perform the operation on the Department');
-    }
-}

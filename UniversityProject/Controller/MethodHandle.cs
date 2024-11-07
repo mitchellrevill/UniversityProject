@@ -1,6 +1,11 @@
 ﻿using HRSystem;
+using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 using UniversityProject.Interfaces;
 using UniversityProject.Model;
@@ -28,7 +33,7 @@ public static class MethodHandle
         { "GetCountries", GetCountries },
         { "GetAllRegions", GetAllRegions },
         { "GetManagers",  GetManagers },
-        { "GetLocations", GetLocations }
+        { "GetLocations", GetLocations },
         };
     // Post requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _postRoutes =
@@ -58,19 +63,18 @@ public static class MethodHandle
         { "InsertLocation", InsertLocation },
         { "UpdateLocation", UpdateLocation },
         { "DeleteLocation", DeleteLocation },
-        { "GetJobPostingById", GetJobPostingById }
-
+        { "GetJobPostingById", GetJobPostingById },
+        { "Authenticate", Authenticate }
         };
 
 
- 
     public static async Task HandleRequest(HttpListenerRequest req, HttpListenerResponse resp)
     {
         string requestedPath = req.Url.AbsolutePath.TrimStart('/');
 
-        if (req.HttpMethod == "POST" && _postRoutes.TryGetValue(requestedPath, out var postHandler)) // Is dictionary same as request? if true out value (method) post handler 
+        if (req.HttpMethod == "POST" && _postRoutes.TryGetValue(requestedPath, out var postHandler)) 
         {
-            await postHandler(req, resp); // post handler inherits / invokes method that was outed from the dictionary FUCKING HELL THIS WAS PAIN 
+            await postHandler(req, resp); 
         }
         else if (req.HttpMethod == "GET" && _getRoutes.TryGetValue(requestedPath, out var getHandler))
         {
@@ -84,9 +88,105 @@ public static class MethodHandle
     }
 
 
+    // Auth
+    public static bool TokenStatus(HttpListenerRequest req)
+    {
+        string authHeader = req.Headers["Authorization"];
+
+
+        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+        {
+
+            string token = authHeader.Substring("Bearer ".Length).Trim();
+
+
+            ClaimsPrincipal claimsPrincipal;
+            return ValidateToken(token, out claimsPrincipal);
+        }
+
+
+        return false;
+    }
+
+    private static bool ValidateTokenAndGetClaims(HttpListenerRequest req, out ClaimsPrincipal claimsPrincipal)
+    {
+        claimsPrincipal = null;
+
+        // Get the Authorization header
+        string authHeader = req.Headers["Authorization"];
+
+        if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+        {
+            return false; 
+        }
+
+      
+        string token = authHeader.Substring("Bearer ".Length).Trim();
+
+        return ValidateToken(token, out claimsPrincipal); 
+    }
+
+    private static bool ValidateToken(string token, out ClaimsPrincipal claimsPrincipal)
+    {
+        claimsPrincipal = null;
+
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVerySecureKeyEvenThisWasntLongEnoughBlyat123456789"));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidIssuer = "mitchellrevill",
+                ValidAudience = "AccessAPI",
+                IssuerSigningKey = securityKey
+            }, out SecurityToken validatedToken);
+
+            claimsPrincipal = principal; 
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // Handle any exceptions (invalid token, expired, etc.)
+            Console.WriteLine("Token validation failed: " + ex.Message);
+            return false;
+        }
+    }
+
+
+    private static bool HasValidRole(ClaimsPrincipal claimsPrincipal, params string[] allowedRoles)
+    {
+        var userRole = claimsPrincipal?.FindFirst(ClaimTypes.Role)?.Value;
+
+        return allowedRoles.Contains(userRole);
+    }
+
+    private static async Task Authenticate(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            Console.WriteLine("Here");
+            var newEmployee = await ReadRequestBodyAsync<Employee>(req);
+            var Authresp = await employeeService.AuthAsync(newEmployee);
+            var jsonResponse = JsonConvert.SerializeObject(Authresp);
+            Console.WriteLine(jsonResponse);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+    // Auth
+
+
     private static async Task<T> ReadRequestBodyAsync<T>(HttpListenerRequest req) // Repeated code i replaced, just takes the HTTP content and converts it, efficiency???? lmao
     {
-        Console.WriteLine("Read Body");
+
         using var reader = new StreamReader(req.InputStream, req.ContentEncoding);
         string json = await reader.ReadToEndAsync();
         return JsonConvert.DeserializeObject<T>(json);
@@ -105,25 +205,27 @@ public static class MethodHandle
         resp.StatusCode = (int)HttpStatusCode.InternalServerError;
         await SendResponse(resp, ex.Message);
     }
-
-    private static async Task InsertEmployee(HttpListenerRequest req, HttpListenerResponse resp)
-    {
-        try
-        {
-            var newEmployee = await ReadRequestBodyAsync<Employee>(req);
-            var Authresp = await employeeService.AuthAsync(newEmployee);
-            await SendResponse(resp, "Authenticated");
-        }
-        catch (Exception ex)
-        {
-            await HandleError(resp, ex);
-        }
-    }
+   
     // EMPLOYEE
     private static async Task GetEmployees(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
         {
+
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var employees = await employeeService.GetAllEmployeesAsync();
             string jsonResponse = JsonConvert.SerializeObject(employees);
             await SendResponse(resp, jsonResponse, "application/json");

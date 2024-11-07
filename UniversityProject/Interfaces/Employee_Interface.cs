@@ -10,7 +10,7 @@ namespace UniversityProject.Interfaces
         Task UpdateEmployeeAsync(Employee employee);
         Task DeleteEmployeeAsync(string employeeId);
         Task<Employee> GetEmployeeByIdAsync(string postingId);
-        Task<string> AuthAsync(Employee employee);
+        Task<AuthResponse> AuthAsync(Employee employee);
     }
 
 }

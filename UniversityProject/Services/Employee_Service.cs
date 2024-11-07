@@ -1,6 +1,10 @@
 ﻿using UniversityProject.Model;
 using UniversityProject.Repository;
 using UniversityProject.Interfaces;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 public class Employee_Service : IEmployeeService
 {
@@ -35,31 +39,80 @@ public class Employee_Service : IEmployeeService
         return await Task.Run(() => _EmployeeSQL.GetEmployeeById(postingId));
     }
 
-    public async Task<string> AuthAsync(Employee employee)
+    public async Task<AuthResponse> AuthAsync(Employee employee)
     {
         try
         {
+           
+            Console.WriteLine($"Received employee ID: {employee.EmployeeId}");
+            Console.WriteLine($"Received employee password: {employee.password}");
+
+           
             Employee data = await GetEmployeeByIdAsync(employee.EmployeeId);
 
-            if (data != null && data.password == employee.password && data.Employeetype == "Admin")
+            if (data == null)
             {
-                var access = "Admin";
-                return access; 
+                Console.WriteLine("No employee data found.");
+                return new AuthResponse { Message = "Employee Doesn't Exist" };
             }
-            else if (data != null && data.password == employee.password && data.Employeetype == "User")
+
+            Console.WriteLine($"Fetched employee: {data.EmployeeId}, Password: {data.password}, Role: {data.Employeetype}");
+
+          
+            if (data.password == employee.password)
             {
-                var access = "User";
-                return access;
+                Console.WriteLine("Password match successful");
+
+                
+                string role = data.Employeetype == "Admin" ? "Admin" : "User";
+                Console.WriteLine($"Assigned role: {role}");
+
+               
+                var token = GenerateJwtToken(data.EmployeeId, role, data.Employeetype);
+                Console.WriteLine($"Generated token: {token}");
+
+                return new AuthResponse { Token = token, Role = role, Message = "Success" };
             }
             else
             {
-                return "User or Password Incorrect";
+                Console.WriteLine("Password mismatch");
+                return new AuthResponse { Message = "User or Password Incorrect" };
             }
         }
         catch (Exception ex)
         {
-            return "Employee Doesn't Exist";
+           
+            Console.WriteLine($"Exception occurred: {ex.Message}");
+            return new AuthResponse { Message = "Employee Doesn't Exist" };
         }
     }
+
+
+    private string GenerateJwtToken(string employeeId, string role, string employeeType)
+    {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVerySecureKeyEvenThisWasntLongEnoughBlyat123456789"));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        var claims = new[]
+        {
+        new Claim(JwtRegisteredClaimNames.Sub, employeeId),
+        new Claim(ClaimTypes.Role, role), 
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), 
+        new Claim("EmployeeType", employeeType), 
+        new Claim("EmployeeId", employeeId) 
+    };
+
+        var token = new JwtSecurityToken(
+            issuer: "mitchellrevill",
+            audience: "AccessAPI",
+            claims: claims,
+            expires: DateTime.Now.AddHours(12), 
+            signingCredentials: credentials
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+
 }
 
