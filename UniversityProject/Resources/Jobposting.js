@@ -1,30 +1,8 @@
 const host = `${window.location.protocol}//${window.location.host}`;
 
-fetchApiRequest('GetAllEmployees');
-fetchApiRequest('GetAllJobPostings');
+FetchRequestGET('GetAllEmployees');
+FetchRequestGET('GetAllJobPostings');
 
-async function fetchApiRequest(functionName) {
-    try {
-        var response = await fetch(host + '/' + functionName);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        console.log(response);
-
-        var jsonResponse = await response.json();
-        console.log('apiRequest function successful:', jsonResponse);
-        switch (functionName) {
-            case "GetAllJobPostings":
-                displayJobs(jsonResponse);
-                break;
-        }
-
-    } catch (error) {
-        console.error('Failed to fetch employees:', error);
-        alert('Failed to load employee data. Please check your connection.');
-    }
-}
 
 function displayJobs(jobs) {
     const tbody = document.querySelector('#jobPostingsTableBody');
@@ -137,3 +115,67 @@ function newJobContainerVisible() {
     document.getElementById("addJobForm").style.display = "block";
 }
 
+async function FetchRequest(uri, model) {
+    console.log("Req sent");
+
+
+    const token = localStorage.getItem("authToken");
+
+
+    let headers = {
+        'Content-Type': 'application/json'
+    };
+
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    try {
+        const response = await fetch(host + '/' + uri, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(model)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error('Error performing operation');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to perform the operation');
+        return null;
+    }
+}
+async function FetchRequestGET(uri) {
+    try {
+        const token = localStorage.getItem("authToken");
+
+        let headers = {
+            'Content-Type': 'application/json'
+        };
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        // Make the GET request
+        const response = await fetch(host + '/' + uri, {
+            method: 'GET',
+            headers: headers
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error('Error performing operation');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to perform the operation');
+    }
+}

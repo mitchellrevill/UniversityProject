@@ -240,6 +240,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newEmployee = await ReadRequestBodyAsync<Employee>(req);
             Console.WriteLine(newEmployee.ManagerId); 
             await employeeService.InsertEmployeeAsync(newEmployee);
@@ -255,6 +269,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var newEmployee = await ReadRequestBodyAsync<Employee>(req);
             await employeeService.UpdateEmployeeAsync(newEmployee);
             await SendResponse(resp, "Employee inserted successfully.");
@@ -269,6 +296,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newEmployee = await ReadRequestBodyAsync<Employee>(req);
             await employeeService.DeleteEmployeeAsync(newEmployee.EmployeeId);
             await SendResponse(resp, "Employee inserted successfully.");
@@ -285,6 +326,20 @@ public static class MethodHandle
         Console.WriteLine("Method start");
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             Console.WriteLine("Entered method");
             var JobPostings = await jobPostingsService.GetAllJobPostingsAsync();
             string jsonResponse = JsonConvert.SerializeObject(JobPostings);
@@ -300,6 +355,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var JobPostings = await ReadRequestBodyAsync<JobPostings>(req);
             await jobPostingsService.UpdateJobPostingsAsync(JobPostings);
             await SendResponse(resp, "Employee inserted successfully.");
@@ -314,6 +383,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var newEmployee = await ReadRequestBodyAsync<JobPostings>(req);
             await jobPostingsService.DeleteJobPostingsAsync(newEmployee.postingId);
             await SendResponse(resp, "Employee inserted successfully.");
@@ -328,6 +410,20 @@ public static class MethodHandle
      
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             Console.WriteLine("Entered try part 1");
 
             var newJobPosting= await ReadRequestBodyAsync<JobPostings>(req);
@@ -348,6 +444,20 @@ public static class MethodHandle
 
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             Console.WriteLine("Entered try part 1");
             var newJobPosting = await ReadRequestBodyAsync<JobPostings>(req);
             await jobPostingsService.GetJobPostingByIdAsync(newJobPosting.postingId);
@@ -367,6 +477,20 @@ public static class MethodHandle
         Console.WriteLine("Method start");
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             Console.WriteLine("Entered method");
             var Applications = await ApplicantService.GetAllApplicantsAsync();
             string jsonResponse = JsonConvert.SerializeObject(Applications);
@@ -382,6 +506,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var Applications = await ReadRequestBodyAsync<Applicant>
                 (req);
             await ApplicantService.UpdateApplicantAsync(Applications);
@@ -397,6 +535,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newEmployee = await ReadRequestBodyAsync<Applicant>
                 (req);
             await ApplicantService.DeleteApplicantAsync(newEmployee.applicantId);
@@ -411,6 +563,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var newApplication = await ReadRequestBodyAsync<Applicant>(req);
             await ApplicantService.InsertApplicantAsync(newApplication);
             await SendResponse(resp, "Employee inserted successfully.");
@@ -426,6 +591,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var Departments = await departmentService.GetAllDepartmentsAsync();
             string jsonResponse = JsonConvert.SerializeObject(Departments);
             await SendResponse(resp, jsonResponse, "application/json");
@@ -440,6 +618,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var newDepartment = await ReadRequestBodyAsync<Department>(req);
             await departmentService.InsertDepartmentAsync(newDepartment);
             await SendResponse(resp, "Department inserted successfully.");
@@ -453,6 +644,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newDepartment = await ReadRequestBodyAsync<Department>(req);
             await departmentService.UpdateDepartmentAsync(newDepartment);
             await SendResponse(resp, "Department inserted successfully.");
@@ -467,6 +672,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newDepartment = await ReadRequestBodyAsync<Department>(req);
             await departmentService.DeleteDepartmentAsync(newDepartment.DepartmentId);
             await SendResponse(resp, "Department inserted successfully.");
@@ -482,6 +701,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var Managers = await managerService.GetAllManagersAsync();
             string jsonResponse = JsonConvert.SerializeObject(Managers);
             await SendResponse(resp, jsonResponse, "application/json");
@@ -496,6 +729,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newManager = await ReadRequestBodyAsync<Manager>(req);
             await managerService.InsertManagerAsync(newManager);
             await SendResponse(resp, "Manager inserted successfully.");
@@ -509,6 +756,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newManager = await ReadRequestBodyAsync<Manager>(req);
             await managerService.UpdateManagerAsync(newManager);
             await SendResponse(resp, "Manager inserted successfully.");
@@ -523,6 +784,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newManager = await ReadRequestBodyAsync<Manager>(req);
             await managerService.DeleteManagerAsync(newManager.ManagerId);
             await SendResponse(resp, "Manager inserted successfully.");
@@ -538,6 +813,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var Countrys = await countryService.GetAllCountriesAsync();
             string jsonResponse = JsonConvert.SerializeObject(Countrys);
             await SendResponse(resp, jsonResponse, "application/json");
@@ -552,6 +841,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newCountry = await ReadRequestBodyAsync<Country>(req);
             await countryService.InsertCountryAsync(newCountry);
             await SendResponse(resp, "Country inserted successfully.");
@@ -566,6 +869,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newCountry = await ReadRequestBodyAsync<Country>(req);
             await countryService.UpdateCountryAsync(newCountry);
             await SendResponse(resp, "Country inserted successfully.");
@@ -580,6 +897,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newCountry = await ReadRequestBodyAsync<Country>(req);
             await countryService.DeleteCountryAsync(newCountry.CountryId);
             await SendResponse(resp, "Country inserted successfully.");
@@ -595,6 +926,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             Console.WriteLine("Entered Regions");
             var Regions = await regionService.GetAllRegionsAsync();
             string jsonResponse = JsonConvert.SerializeObject(Regions);
@@ -609,6 +954,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newRegion = await ReadRequestBodyAsync<Region>(req);
             await regionService.InsertRegionAsync(newRegion);
             await SendResponse(resp, "Region inserted successfully.");
@@ -622,6 +981,20 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
             var newRegion = await ReadRequestBodyAsync<Region>(req);
             await regionService.UpdateRegionAsync(newRegion);
             await SendResponse(resp, "Region inserted successfully.");
@@ -636,6 +1009,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var newRegion = await ReadRequestBodyAsync<Region>(req);
             await regionService.DeleteRegionAsync(newRegion.RegionId);
             await SendResponse(resp, "Region inserted successfully.");
@@ -650,6 +1036,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var Locations = await LocationService.GetAllLocationsAsync();
             string jsonResponse = JsonConvert.SerializeObject(Locations);
             await SendResponse(resp, jsonResponse, "application/json");
@@ -664,6 +1063,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var newLocation = await ReadRequestBodyAsync<Location>(req);
             await LocationService.InsertLocationAsync(newLocation);
             await SendResponse(resp, "Location inserted successfully.");
@@ -678,6 +1090,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var newLocation = await ReadRequestBodyAsync<Location>(req);
             await LocationService.UpdateLocationAsync(newLocation);
             await SendResponse(resp, "Location inserted successfully.");
@@ -692,6 +1117,19 @@ public static class MethodHandle
     {
         try
         {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
             var newLocation = await ReadRequestBodyAsync<Location>(req);
             await LocationService.DeleteLocationAsync(newLocation.LocationId);
             await SendResponse(resp, "Location inserted successfully.");

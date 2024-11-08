@@ -31,6 +31,7 @@ async function Auth() {
     if (response && response.Token) {
         localStorage.setItem("authToken", response.Token);
         console.log("Token saved:", response.Token);
+        window.location.href = 'home.html';
     } else {
         console.log("Authentication failed");
     }
