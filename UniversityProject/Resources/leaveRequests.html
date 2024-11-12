@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script src="https://kit.fontawesome.com/4842f2fae0.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Home.css">
-    <title>Global HR Systems - Leave requests</title>
+    <link rel="stylesheet" href="LeaveRequest.css">
+    <link rel="stylesheet" href="header.css">
+    <script type="text/javascript" src="LeaveRequest.js" defer></script>
+    <title>Global HR Systems - Leave Requests</title>
 </head>
+
 <body>
-    <div class="wrapper">
+    <article id="LeaveRequest-block">
+        <ul class="sidebar-menu">
+            <img src="GlobalLogo.png" alt="logo" style="height: 196px;" width="100%">
+            <div class="sidebar-menu-position">
+            <li class="sidebar-menu-item">
+                <a href="#LeaveRequest-block">
+                    <i class="fa-solid fa-calendar-days" style="margin-right: 10px; text-align: left;"></i>Leave Requests
+                </a>
+            </li>
+            </div>
+        </ul>
         <header class="header">
-            <h1 class="title">Global HR Systems - Leave requests</h1>
+            <h1 class="title">Global HR Systems - Leave Requests</h1>
             <nav>
                 <ul>
                     <li><a href="Home.html">Home</a></li>
@@ -20,10 +35,104 @@
                 </ul>
             </nav>
         </header>
+        <div class="wrapper">
+            <div class="JobContent">
+                <div id="container2">
+                    <div id="leaveRequestModal" class="reveal-modal">
+                        <h2>Submit New Leave Request</h2><br />
+                        <div class="formContainer">
+                            <form id="addLeaveForm" class="form-container">
+                                <label for="employeeName">Employee Name:</label>
+                                <input type="text" id="employeeName" name="employeeName" class="form-input" required="">
 
-        <div class="content">
-            <p>Welcome to the Global HR Leave request Page!</p>
+                                <label for="leaveType">Leave Type:</label>
+                                <select id="leaveType" name="leaveType" class="form-input" required="">
+                                    <option value=""></option>
+                                    <option value="Sick Leave">Sick Leave</option>
+                                    <option value="Vacation">Vacation</option>
+                                    <option value="Personal Leave">Personal Leave</option>
+                                </select>
+
+                                <label for="startDate">Start Date:</label>
+                                <input type="date" id="startDate" name="startDate" class="form-input" required="">
+
+                                <label for="endDate">End Date:</label>
+                                <input type="date" id="endDate" name="endDate" class="form-input" required="">
+
+                                <label for="reason">Reason:</label>
+                                <textarea id="reason" name="reason" class="form-input" required=""></textarea>
+
+                                <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="submitLeaveRequest()">Submit Request</button></a><br />
+                                <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Cancel</button></a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="JobClass">
+                    <div class="leave-form">
+                        <h2>Search Leave Requests</h2>
+                        <div class="filter-container">
+                            <div>
+                                <label for="employeeSearch">Employee Name:</label>
+                                <input type="text" id="employeeSearch" name="employeeSearch" placeholder="Enter employee name">
+                            </div>
+
+                            <div>
+                                <label for="leaveTypeFilter">Leave Type:</label>
+                                <select name="leaveTypeFilter" id="leaveTypeFilter">
+                                    <option value="" disabled selected>Select a leave type</option>
+                                    <option value="Sick Leave">Sick Leave</option>
+                                    <option value="Vacation">Vacation</option>
+                                    <option value="Personal Leave">Personal Leave</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="statusFilter">Status:</label>
+                                <select name="statusFilter" id="statusFilter">
+                                    <option value="" disabled selected>Select status</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-btn-container">
+                                <button type="submit" onclick="filterLeaveTable()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tableButtonContainer">
+                        <div class="tableColour" style="overflow-y: scroll; height: 500px;">
+                            <table id="leaveRequestsTable" style="overflow-y: scroll;">
+                                <thead>
+                                    <tr>
+                                        <th>Select</th>
+                                        <th>Request ID</th>
+                                        <th>Employee Name</th>
+                                        <th>Leave Type</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Status</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaveRequestsTableBody">
+                                    <!-- Table rows will go here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="#container2"><button style="background-color: #6290c8">Submit Leave Request</button></a>
+                            <a href="#editLeaveRequestContainer"><button style="background-color: #829cbc">Edit Leave Request</button></a>
+                            <a href="#deleteLeaveRequestContainer"><button style="background-color: #F19180">Delete Leave Request</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </article>
 </body>
+
 </html>
