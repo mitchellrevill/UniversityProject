@@ -15,11 +15,45 @@ populateLocationTable()
 populateRegionsOptions()
 populateCountryOptionsEdit()
 populateManagerOptions()
+populateManagerTable()
 // CountryOptions
 // employeeIdEdit
 
 
+async function populateManagerTable() {
+    try {
 
+        const Locations = await FetchRequestGET('GetManagers');
+        const tbody = document.getElementById('ManagerTableBody');
+        tbody.innerHTML = '';
+
+        if (!Array.isArray(Locations)) {
+            throw new Error('Expected an array from FetchRequestGET.');
+        }
+
+        if (Locations.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4">No locations available.</td></tr>';
+            return;
+        }
+
+        console.log(Locations)
+        Locations.forEach(item => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+            <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.ManagerId}" data-name="${item.ManagerId}" data-country-id="${item.ManagerId}" aria-label="Select ${item.ManagerId}"></td>
+            <td>${item.ManagerId}</td>
+            <td>${item.ManagerArea}</td>
+            <td>${item.EmployeeId}</td>
+            `;
+
+            tbody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error populating location table:', error);
+
+    }
+}
 async function populateDepartmentTable() {
     try {
         const Departments = await FetchRequestGET('GetAllDepartments');
@@ -208,8 +242,8 @@ function addNewManager() {
     console.log("Method Start");
 
     var managerId = Math.floor(Math.random() * 1000) + 1;
-    var employeeId = document.getElementById("employeeIdAdd").value;
-    var managerArea = document.getElementById("managerAreaAdd").value;
+    var employeeId = document.getElementById("ManagerOptions1").value;
+    var managerArea = document.getElementById("managerAreaEdit").value;
 
     if (!employeeId || !managerArea) {
         alert("You have not answered all required fields");

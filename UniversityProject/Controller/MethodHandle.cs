@@ -320,6 +320,39 @@ public static class MethodHandle
         }
     }
 
+
+    private static async Task GetJobPostingById(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+
+        try
+        {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
+            Console.WriteLine("Entered try part 1");
+            var newJobPosting = await ReadRequestBodyAsync<Employee>(req);
+            await employeeService.GetJobPostingByIdAsync(newJobPosting.postingId);
+            await SendResponse(resp, "Employee inserted successfully.");
+            Console.WriteLine("Exited try part 1");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Failed part 1");
+            await HandleError(resp, ex);
+        }
+    }
+
     // JOB POSTING
     private static async Task GetAllJobPostings(HttpListenerRequest req, HttpListenerResponse resp)
     {
