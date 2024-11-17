@@ -5,6 +5,7 @@ var totalHoursUsed;
 
 payload = parseJwt(token)
 console.log(payload)
+Countries = FetchRequestGET('GetCountries')
 Managers = FetchRequestGET('GetManagers')
 Employee = GetEmployee()
 calculateLeave()
@@ -194,6 +195,9 @@ function parseJwt(token) {
 
     return JSON.parse(jsonPayload);
 }
+
+
+
 
 async function FetchRequest(uri, model) {
     console.log("Req sent");
