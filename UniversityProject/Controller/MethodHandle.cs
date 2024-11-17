@@ -22,6 +22,8 @@ public static class MethodHandle
     private static readonly IRegionService regionService = new RegionService(dbPath);
     private static readonly IApplicantService ApplicantService = new ApplicantService(dbPath);
     private static readonly ILocationService LocationService = new LocationService(dbPath);
+    private static readonly ILeaveRequestService LeaveRequestService = new LeaveRequestService(dbPath);
+
     // Get requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _getRoutes =
         new Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>>
@@ -34,6 +36,7 @@ public static class MethodHandle
         { "GetAllRegions", GetAllRegions },
         { "GetManagers",  GetManagers },
         { "GetLocations", GetLocations },
+        { "GetLeaveRequest", GetLeaveRequest }
         };
     // Post requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _postRoutes =
@@ -42,6 +45,7 @@ public static class MethodHandle
         { "insertEmployee", InsertEmployee },
         { "UpdateEmployees", UpdateEmployee },
         { "DeleteEmployee", DeleteEmployee },
+        { "GetEmployeeById", GetEmployeeById },
         { "InsertJobPosting", InsertJobPosting },
         { "UpdateJobPosting", UpdateJobPosting },
         { "DeleteJobPosting", DeleteJobPosting },
@@ -64,7 +68,8 @@ public static class MethodHandle
         { "UpdateLocation", UpdateLocation },
         { "DeleteLocation", DeleteLocation },
         { "GetJobPostingById", GetJobPostingById },
-        { "Authenticate", Authenticate }
+        { "Authenticate", Authenticate },
+        { "InsertLeaveRequest", InsertLeaveRequest }
         };
 
 
@@ -184,6 +189,9 @@ public static class MethodHandle
     // Auth
 
 
+
+
+    
     private static async Task<T> ReadRequestBodyAsync<T>(HttpListenerRequest req) // Repeated code i replaced, just takes the HTTP content and converts it, efficiency???? lmao
     {
 
@@ -205,7 +213,68 @@ public static class MethodHandle
         resp.StatusCode = (int)HttpStatusCode.InternalServerError;
         await SendResponse(resp, ex.Message);
     }
-   
+
+
+
+    private static async Task GetLeaveRequest(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
+            var employees = await LeaveRequestService.GetAllLeaveRequestsAsync();
+            string jsonResponse = JsonConvert.SerializeObject(employees);
+            await SendResponse(resp, jsonResponse, "application/json");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
+    private static async Task InsertLeaveRequest(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+        try
+        {
+            Console.WriteLine("Entered Insert Leave Request");
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
+            var newLeaveRequest = await ReadRequestBodyAsync<LeaveRequest>(req);
+            Console.WriteLine("HandlerFailure");
+            await LeaveRequestService.InsertLeaveRequestAsync(newLeaveRequest);
+            await SendResponse(resp, "LeaveRequest inserted successfully.");
+        }
+        catch (Exception ex)
+        {
+            await HandleError(resp, ex);
+        }
+    }
+
     // EMPLOYEE
     private static async Task GetEmployees(HttpListenerRequest req, HttpListenerResponse resp)
     {
@@ -316,6 +385,39 @@ public static class MethodHandle
         }
         catch (Exception ex)
         {
+            await HandleError(resp, ex);
+        }
+    }
+
+
+    private static async Task GetEmployeeById(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+
+        try
+        {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+            Console.WriteLine("Entered try part 1");
+            var Employee = await ReadRequestBodyAsync<Employee>(req);
+            var EmployeeObject = await employeeService.GetEmployeeByIdAsync(Employee.EmployeeId);
+            string jsonResponse = JsonConvert.SerializeObject(EmployeeObject);
+            await SendResponse(resp, jsonResponse, "application/json");
+            Console.WriteLine("Exited try part 1");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Failed part 1");
             await HandleError(resp, ex);
         }
     }
