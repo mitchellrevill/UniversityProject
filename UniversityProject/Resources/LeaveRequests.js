@@ -9,29 +9,101 @@ Countries = FetchRequestGET('GetCountries')
 Managers = FetchRequestGET('GetManagers')
 Employee = GetEmployee()
 calculateLeave()
+populateLeaveRequest()
+
 
 
 
 async function populateLeaveRequest() {
     try {
         const leaveRequests = await FetchRequestGET("GetLeaveRequest");
-        if (!Array.isArray(Departments)) {
+        if (!Array.isArray(leaveRequests)) {
             throw new Error('Expected an array from FetchRequestGET.');
         }
+
+        
+        const filteredRequests = leaveRequests.filter(request => request.EmployeeId === payload.EmployeeId);
+
 
         const tbody = document.getElementById('leaveRequestsTableBody');
         tbody.innerHTML = '';
 
-        if (leaveRequests.length === 0) {
+        if (filteredRequests.length === 0) {
             tbody.innerHTML = '<tr><td colspan="4">No locations available.</td></tr>';
             return;
         }
 
-        leaveRequests.forEach(item => {
+        filteredRequests.forEach(item => {
             const row = document.createElement('tr');
 
             row.innerHTML = `
                 <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.EmployeeId}" data-name="${item.EmployeeId}" data-description="${item.Description}"></td>
+                <td>${item.LeaveRequestId}</td>
+                <td>${item.EmployeeId}</td>
+                <td>${item.StartDate}</td>
+                <td>${item.EndDate}</td>
+                <td>${item.HoursUsed}</td>
+                <td>${item.IsApproved}</td>
+            `;
+
+            tbody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error populating department table:', error);
+    }
+}
+
+
+
+
+
+
+
+async function populateEmployeeRequest() {
+    try {
+        const leaveRequests = await FetchRequestGET("GetLeaveRequest");
+        
+        if (!Array.isArray(leaveRequests)) {
+            throw new Error('Expected an array from FetchRequestGET.');
+        }
+
+        const result = managers.reduce((acc, manager) => {
+            if (payload.EmployeeId === manager.EmployeeId) {
+                acc.isManager = true;
+                acc.managerId = manager.EmployeeId;  // Store the manager's EmployeeId
+            }
+            return acc;
+        }, { isManager: false, managerId: null });
+
+            
+        if (result.isManager) {
+            const Employees = await FetchRequestGET("GetAllEmployees");
+
+
+            const employeesUnderManager = Employees.filter(employee => employee.ManagerId === result.managerId);
+
+
+            console.log('Employees under this manager:', employeesUnderManager);
+
+        } else {
+            
+            return
+        }
+
+        const tbody = document.getElementById('EmployeeleaveRequestsTableBody');
+        tbody.innerHTML = '';
+
+        if (employeesUnderManager.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4">No locations available.</td></tr>';
+            return;
+        }
+
+        employeesUnderManager.forEach(item => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.EmployeeId}" data-name="${item.EmployeeId}" data-description="${item.Description}"></td>
+                <td>${item.LeaveRequestId}</td>
                 <td>${item.EmployeeId}</td>
                 <td>${item.StartDate}</td>
                 <td>${item.EndDate}</td>
@@ -79,7 +151,6 @@ async function submitLeaveRequest() {
         }
     }
 }
-
 function calculateHours() {
     const startDateInput = document.getElementById('startDate').value;
     const endDateInput = document.getElementById('endDate').value;
@@ -103,48 +174,33 @@ function calculateHours() {
 
     return hoursDifference;
 }
-
-//totalHoursUsed
-//hoursLeft
-
-
-
-
 async function calculateLeave() {
     try {
         const leaveRequests = await FetchRequestGET("GetLeaveRequest");
         const Countries = await FetchRequestGET('GetCountries');
         const country = Countries.find((c) => String(c.CountryId) === String(Employee.CountryId));
 
-        const employeeId = Employee.employeeId;
+
+        const employeeId = payload.EmployeeId;
+
+        console.log(employeeId)
+        const filteredRequests = leaveRequests.filter(request => request.EmployeeId === employeeId);
+
+        let totalHoursUsed = 0;
         const currentYear = new Date().getFullYear();
 
-        const filteredRequests = leaveRequests.filter(request => {
+        for (const request of filteredRequests) {
             const startDate = new Date(request.StartDate);
-            const endDate = new Date(request.EndDate);
-
-            return request.EmployeeId === employeeId &&
-                startDate.getFullYear() === currentYear &&
-                endDate.getFullYear() === currentYear;
-        });
-
-        const totalHoursUsed = filteredRequests.reduce((total, request) => total + (request.HoursUsed || 0), 0);
-
-        const employeeStartDate = new Date(Employee.startDate);
-        const isCurrentYearStart = employeeStartDate.getFullYear() === currentYear;
-        let remainingLeave = country.MinimumLeave;
-
-        if (isCurrentYearStart) {
-            const daysInYear = 365;
-            const daysWorked = Math.floor((new Date() - employeeStartDate) / (1000 * 60 * 60 * 24));
-            const percentageOfYearWorked = daysWorked / daysInYear;
-            const proRatedLeave = employee.totalAnnualLeave * percentageOfYearWorked;
-            remainingLeave -= proRatedLeave;
+            if (startDate.getFullYear() === currentYear) {
+                totalHoursUsed += request.HoursUsed || 0; // Add HoursUsed if the year matches
+            }
         }
 
-        const hoursLeft = remainingLeave * 24;
+        let remainingLeave = country.MinimumLeave * 24;
 
+        let hoursLeft =  remainingLeave - totalHoursUsed
 
+            
         const filterContainer = document.querySelector('.filter-container');
         filterContainer.innerHTML = "";
         const hoursUsedElement = document.createElement('p');
@@ -159,8 +215,6 @@ async function calculateLeave() {
         console.error('Error calculating leave:', error);
     }
 }
-
-
 
 async function GetEmployee() {
 
@@ -195,10 +249,6 @@ function parseJwt(token) {
 
     return JSON.parse(jsonPayload);
 }
-
-
-
-
 async function FetchRequest(uri, model) {
     console.log("Req sent");
 

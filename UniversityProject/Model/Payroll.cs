@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace UniversityProject.Model
 {
-    internal class Payroll
+    public class Payroll
     {
         public int PayrollId { get; set; }
         public int EmployeeId { get; set; }

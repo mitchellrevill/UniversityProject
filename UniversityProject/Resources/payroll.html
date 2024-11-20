@@ -5,7 +5,7 @@
     <script src="https://kit.fontawesome.com/4842f2fae0.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="leaveRequestsCSS.css">
+    <link rel="stylesheet" href=".css">
     <link rel="stylesheet" href="header.css">
     <script type="text/javascript" src="LeaveRequests.js" defer></script>
     <title>Global HR Systems - Leave Requests</title>
@@ -94,61 +94,7 @@
 
             </div>
             </article>
-            <article id="Employee-block">
-                <div class="JobContent">
-                    <div id="container">
-                        <div id="leaveRequestModal" class="reveal-modal">
-                            <h2>Submit New Leave Request</h2><br />
-                            <div class="formContainer">
-                                <form id="addLeaveForm" class="form-container">
-
-
-                                    <label for="startDate">Start Date:</label>
-                                    <input type="date" id="startDate" name="startDate" class="form-input" required="">
-
-                                    <label for="endDate">End Date:</label>
-                                    <input type="date" id="endDate" name="endDate" class="form-input" required="">
-
-                                    <a href="#" class="close-modal"><button type="button" class="submit-button" onclick="submitLeaveRequest()">Submit Request</button></a><br />
-                                    <a href="#" class="close-modal"><button type="button" class="submit-button" style="text-align: center;">Cancel</button></a>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="JobClass">
-                        <div class="leave-form">
-                            <h2>Employee Leave Requests</h2>
-                            <div class="filter-container">
-
-                            </div>
-                        </div>
-                        <div class="tableButtonContainer">
-                            <div class="tableColour" style="overflow-y: scroll; height: 800px;">
-                                <table id="leaveRequestsTable" style="overflow-y: scroll;">
-                                    <thead>
-                                        <tr>
-                                            <th>Select</th>
-                                            <th>Request ID</th>
-                                            <th>Employee ID</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Hours Used</th>
-                                            <th>Approved</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="EmployeeleaveRequestsTableBody">
-                                        <!-- Table rows will go here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-        </div>
-    </article>
+            
 </body>
 
 </html>
