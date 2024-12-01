@@ -15,7 +15,10 @@ public class PayrollService : IPayrollService
     {
         return await Task.Run(() => _applicationDatabase.GetAllPayrolls());
     }
-
+    public async Task<IEnumerable<Payroll>> GetAllPayrollsByIdAsync(string employeeId)
+    {
+        return await Task.Run(() => _applicationDatabase.GetAllPayrollsById(employeeId));
+    }
     public async Task InsertPayrollAsync(Payroll Payroll)
     {
         await Task.Run(() => _applicationDatabase.InsertPayroll(Payroll));
@@ -30,4 +33,6 @@ public class PayrollService : IPayrollService
     {
         await Task.Run(() => _applicationDatabase.DeletePayroll(PayrollId));
     }
+
+  
 }

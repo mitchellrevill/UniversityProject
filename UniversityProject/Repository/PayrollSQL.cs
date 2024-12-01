@@ -24,7 +24,7 @@ namespace UniversityProject.Repository
                 string createTableQuery = @"
                 CREATE TABLE IF NOT EXISTS Payrolls (
                     PayrollId INTEGER PRIMARY KEY AUTOINCREMENT,
-                    EmployeeId INTEGER NOT NULL,
+                    EmployeeId TEXT NOT NULL,
                     TaxNumberCode TEXT NOT NULL,
                     BaseSalary REAL NOT NULL,
                     ThisPaycheck REAL NOT NULL,
@@ -98,7 +98,7 @@ namespace UniversityProject.Repository
                         var payroll = new Payroll
                         {
                             PayrollId = reader.GetInt32(0),
-                            EmployeeId = reader.GetInt32(1),
+                            EmployeeId = reader.GetString(1),
                             TaxNumberCode = reader.GetString(2),
                             BaseSalary = reader.GetDecimal(3),
                             ThisPaycheck = reader.GetDecimal(4),
@@ -117,6 +117,52 @@ namespace UniversityProject.Repository
                         };
 
                         payrolls.Add(payroll);
+                    }
+                }
+            }
+
+            return payrolls;
+        }
+        public List<Payroll> GetAllPayrollsById(string employeeId)
+        {
+            var payrolls = new List<Payroll>();
+
+            using (var connection = new SqliteConnection(_connectionString))
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT * FROM Payrolls WHERE EmployeeId = @EmployeeId";
+                using (var command = new SqliteCommand(selectQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@EmployeeId", employeeId);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var payroll = new Payroll
+                            {
+                                PayrollId = reader.GetInt32(0),
+                                EmployeeId = reader.GetString(1),
+                                TaxNumberCode = reader.GetString(2),
+                                BaseSalary = reader.GetDecimal(3),
+                                ThisPaycheck = reader.GetDecimal(4),
+                                Recurrence = reader.GetString(5),
+                                Tax = reader.GetDecimal(6),
+                                ExtraDeductions = reader.GetDecimal(7),
+                                PayPeriodStart = DateTime.Parse(reader.GetString(8)),
+                                PayPeriodEnd = DateTime.Parse(reader.GetString(9)),
+                                NetPay = reader.GetDecimal(10),
+                                Bonuses = reader.GetDecimal(11),
+                                OvertimeHours = reader.GetInt32(12),
+                                OvertimePay = reader.GetDecimal(13),
+                                PaymentDate = DateTime.Parse(reader.GetString(14)),
+                                PaymentMethod = reader.GetString(15),
+                                Deductions = new List<string>(reader.GetString(16).Split(',')),
+                            };
+
+                            payrolls.Add(payroll);
+                        }
                     }
                 }
             }
@@ -142,7 +188,7 @@ namespace UniversityProject.Repository
                             return new Payroll
                             {
                                 PayrollId = reader.GetInt32(0),
-                                EmployeeId = reader.GetInt32(1),
+                                EmployeeId = reader.GetString(1),
                                 TaxNumberCode = reader.GetString(2),
                                 BaseSalary = reader.GetDecimal(3),
                                 ThisPaycheck = reader.GetDecimal(4),

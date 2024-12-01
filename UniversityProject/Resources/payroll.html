@@ -5,10 +5,10 @@
     <script src="https://kit.fontawesome.com/4842f2fae0.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href=".css">
+    <link rel="stylesheet" href="payroll.css">
     <link rel="stylesheet" href="header.css">
-    <script type="text/javascript" src="LeaveRequests.js" defer></script>
-    <title>Global HR Systems - Leave Requests</title>
+    <script type="text/javascript" src="payroll.js" defer></script>
+    <title>Global HR Systems - Payroll</title>
 </head>
 
 <body>
@@ -18,19 +18,19 @@
             <div class="sidebar-menu-position">
             <li class="sidebar-menu-item">
                 <a href="#LeaveRequest-block">
-                    <i class="fa-solid fa-calendar-days" style="margin-right: 10px; text-align: left;"></i>Leave Requests
+                    <i class="fa-solid fa-calendar-days" style="margin-right: 10px; text-align: left;"></i>Payroll
                 </a>
             </li>
-            <li class="sidebar-menu-item"><a href="#Employee-block"><i class="fa-solid fa-earth-europe" style="margin-right: 10px; text-align: left"></i>Your Employee Requests</a></li>
+            
             </div>
         </ul>
         <header class="header">
-            <h1 class="title">Global HR Systems - Leave Requests</h1>
+            <h1 class="title">Global HR Systems - Payroll</h1>
             <nav>
                 <ul>
                     <li><a href="Home.html">Home</a></li>
                     <li><a href="Job_Postings.html">Jobs</a></li>
-                    <li><a href="leaveRequests.html">Leave Requests</a></li>
+                    <li><a href="leaveRequests.html">Payroll</a></li>
                     <li><a href="Employees.html">Employees</a></li>
                     <li><a href="admin.html">Admin</a></li>
                     <li><a href="payroll.html">Payroll</a></li>
@@ -61,32 +61,30 @@
 
                 <div class="JobClass">
                     <div class="leave-form">
-                        <h2>Your Leave Requests</h2>
+                        <h2>Your Payroll</h2>
                         <div class="filter-container">
 
                         </div>
                     </div>
                     <div class="tableButtonContainer">
                         <div class="tableColour" style="overflow-y: scroll; height: 500px;">
-                            <table id="leaveRequestsTable" style="overflow-y: scroll;">
+                            <table id="PayrollTable" style="overflow-y: scroll;">
                                 <thead>
                                     <tr>
-                                        <th>Select</th>
-                                        <th>Request ID</th>
+                                        <th>Payroll ID</th>
                                         <th>Employee ID</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
-                                        <th>Hours Used</th>
-                                        <th>Approved</th>
+                                        <th>Net Pay</th>
                                     </tr>
                                 </thead>
-                                <tbody id="leaveRequestsTableBody">
+                                <tbody id="PayrollTableBody">
                                     <!-- Table rows will go here -->
                                 </tbody>
                             </table>
                         </div>
                         <div class="action-buttons">
-                            <a href="#container"><button style="background-color: #6290c8">Submit Leave Request</button></a>
+                            
                         </div>
                     </div>
                 </div>

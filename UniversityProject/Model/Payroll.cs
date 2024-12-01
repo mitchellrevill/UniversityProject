@@ -6,7 +6,7 @@ namespace UniversityProject.Model
     public class Payroll
     {
         public int PayrollId { get; set; }
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
         public string TaxNumberCode { get; set; }
         public decimal BaseSalary { get; set; }
         public decimal ThisPaycheck { get; set; }

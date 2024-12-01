@@ -23,6 +23,8 @@ public static class MethodHandle
     private static readonly IApplicantService ApplicantService = new ApplicantService(dbPath);
     private static readonly ILocationService LocationService = new LocationService(dbPath);
     private static readonly ILeaveRequestService LeaveRequestService = new LeaveRequestService(dbPath);
+    private static readonly IPayrollService payrollService = new PayrollService(dbPath);
+
 
     // Get requests
     private static readonly Dictionary<string, Func<HttpListenerRequest, HttpListenerResponse, Task>> _getRoutes =
@@ -69,7 +71,8 @@ public static class MethodHandle
         { "DeleteLocation", DeleteLocation },
         { "GetJobPostingById", GetJobPostingById },
         { "Authenticate", Authenticate },
-        { "InsertLeaveRequest", InsertLeaveRequest }
+        { "InsertLeaveRequest", InsertLeaveRequest },
+        {"GetAllPayrollsById", GetAllPayrollsById }
         };
 
 
@@ -174,6 +177,7 @@ public static class MethodHandle
     {
         try
         {
+            GeneratePayrollAsync();
             Console.WriteLine("Here");
             var newEmployee = await ReadRequestBodyAsync<Employee>(req);
             var Authresp = await employeeService.AuthAsync(newEmployee);
@@ -188,10 +192,82 @@ public static class MethodHandle
     }
     // Auth
 
+   
+    public static async Task GeneratePayrollAsync()
+    {
+
+        var employees = await employeeService.GetAllEmployeesAsync();
+
+        foreach (Employee employee in employees)
+        {
+            var existingPayrolls = await payrollService.GetAllPayrollsByIdAsync(employee.EmployeeId);
+
+            Payroll mostRecentPayroll = existingPayrolls
+                .OrderByDescending(p => p.PaymentDate)
+                .FirstOrDefault();
+
+            if (mostRecentPayroll != null)
+            {
+
+                if (mostRecentPayroll.PaymentDate.AddDays(28) < DateTime.Today)
+                {
+                    Console.WriteLine($"Inserting new payroll for EmployeeId: {employee.EmployeeId}");
+                    await payrollService.InsertPayrollAsync(new Payroll
+                    {
+                        EmployeeId = employee.EmployeeId,
+                        TaxNumberCode = "1257l",
+                        BaseSalary = employee.Salary,
+                        ThisPaycheck = CalculatePay(employee),
+                        Recurrence = (365 / 12).ToString(),
+                        Tax = 2,
+                        ExtraDeductions = 0,
+                        PayPeriodStart = employee.StartDate,
+                        PayPeriodEnd = employee.StartDate.AddDays(28),
+                        NetPay = CalculatePay(employee),
+                        Bonuses = 0,
+                        OvertimeHours = 0,
+                        OvertimePay = 0,
+                        PaymentDate = DateTime.Today,
+                        PaymentMethod = "Credit",
+                        Deductions = new List<string>()
+                    });
+                }
+            }
+            else
+            {
+                // No payroll exists for this employee, insert the first payroll
+                Console.WriteLine($"Inserting initial payroll for EmployeeId: {employee.EmployeeId}");
+                await payrollService.InsertPayrollAsync(new Payroll
+                {
+                    EmployeeId = employee.EmployeeId,
+                    TaxNumberCode = "1257l",
+                    BaseSalary = employee.Salary,
+                    ThisPaycheck = CalculatePay(employee),
+                    Recurrence = (365 / 12).ToString(),
+                    Tax = 2,
+                    ExtraDeductions = 0,
+                    PayPeriodStart = employee.StartDate,
+                    PayPeriodEnd = employee.StartDate.AddDays(28),
+                    NetPay = CalculatePay(employee),
+                    Bonuses = 0,
+                    OvertimeHours = 0,
+                    OvertimePay = 0,
+                    PaymentDate = DateTime.Today,
+                    PaymentMethod = "Credit",
+                    Deductions = new List<string>()
+                });
+            }
+        }
+    }
+
+    private static decimal CalculatePay(Employee employee)
+    {
+        
+        return employee.Salary / 12; 
+    }
 
 
 
-    
     private static async Task<T> ReadRequestBodyAsync<T>(HttpListenerRequest req) // Repeated code i replaced, just takes the HTTP content and converts it, efficiency???? lmao
     {
 
@@ -573,6 +649,38 @@ public static class MethodHandle
         }
     }
     // APPLICATION
+    private static async Task GetAllPayrollsById(HttpListenerRequest req, HttpListenerResponse resp)
+    {
+
+        try
+        {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+
+            Console.WriteLine("Entered try part 1");
+            var newPayroll = await ReadRequestBodyAsync<Payroll>(req);
+            var payload = await payrollService.GetAllPayrollsByIdAsync(newPayroll.EmployeeId);
+            string jsonResponse = JsonConvert.SerializeObject(payload);
+            await SendResponse(resp,jsonResponse,"Success");
+            Console.WriteLine("Exited try part 1");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Failed part 1");
+            await HandleError(resp, ex);
+        }
+    }
 
     private static async Task GetAllApplications(HttpListenerRequest req, HttpListenerResponse resp)
     {
