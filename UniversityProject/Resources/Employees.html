@@ -196,28 +196,19 @@
                 <div class="filter-container">
                     <div>
                         <label for="keywords">Keywords:</label>
-                        <input type="text" id="keywords" name="keywords" placeholder="Enter job keywords" required>
+                        <input type="text" id="keywords" name="keywords" placeholder="Enter Employee keywords" required>
                     </div>
 
                     <div>
-                        <label for="jobTypes">Job Type:</label>
+                        <label for="jobTypes">Employee Type:</label>
                         <select name="jobTypes" id="jobTypes" required>
-                            <option value="" disabled selected>Select a job type</option>
+                            <option value="" disabled selected>Select a Employee type</option>
                             <option value="Full time">Full time</option>
                             <option value="Part time">Part time</option>
                         </select>
                     </div>
 
-                    <div>
-                        <label for="jobLocations">Location:</label>
-                        <select name="locations" id="jobLocations" required>
-                            <option value="" disabled selected>Select a location</option>
-                            <option value="Sheffield">Sheffield</option>
-                            <option value="London">London</option>
-                            <option value="Leeds">Leeds</option>
-                            <option value="Doncaster">Doncaster</option>
-                        </select>
-                    </div>
+                   
 
                     <div class="filter-btn-container">
                         <button type="submit" onclick="filterJobTable()">Search</button>

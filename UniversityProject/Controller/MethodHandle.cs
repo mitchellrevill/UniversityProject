@@ -72,7 +72,8 @@ public static class MethodHandle
         { "GetJobPostingById", GetJobPostingById },
         { "Authenticate", Authenticate },
         { "InsertLeaveRequest", InsertLeaveRequest },
-        {"GetAllPayrollsById", GetAllPayrollsById }
+        { "GetAllPayrollsById", GetAllPayrollsById },
+        { "GetLocationById", GetLocationById }
         };
 
 
@@ -648,6 +649,9 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
+
+  
+
     // APPLICATION
     private static async Task GetAllPayrollsById(HttpListenerRequest req, HttpListenerResponse resp)
     {
@@ -1014,6 +1018,7 @@ public static class MethodHandle
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Test");
             await HandleError(resp, ex);
         }
     }
@@ -1268,7 +1273,37 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
+    private static async Task GetLocationById(HttpListenerRequest req, HttpListenerResponse resp)
+    {
 
+        try
+        {
+            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+            {
+                resp.StatusCode = 401; // Unauthorized
+                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                return;
+            }
+
+            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+            {
+                resp.StatusCode = 403; // Forbidden
+                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                return;
+            }
+            Console.WriteLine("Entered try part 1");
+            var location = await ReadRequestBodyAsync<Location>(req);
+            var locationObject = await LocationService.GetLocationIdAsync(location.LocationId);
+            string jsonResponse = JsonConvert.SerializeObject(locationObject);
+            await SendResponse(resp, jsonResponse, "application/json");
+            Console.WriteLine("Exited try part 1");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Failed part 1");
+            await HandleError(resp, ex);
+        }
+    }
     private static async Task InsertLocation(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try

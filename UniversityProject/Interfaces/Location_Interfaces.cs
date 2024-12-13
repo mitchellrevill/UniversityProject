@@ -11,5 +11,7 @@ namespace UniversityProject.Interfaces
         Task InsertLocationAsync(Location location);
         Task UpdateLocationAsync(Location location);
         Task DeleteLocationAsync(string locationId);
+        Task<Location> GetLocationIdAsync(string postingId);
+        
     }
 }

@@ -135,6 +135,11 @@ namespace UniversityProject.Repository
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
+                Console.WriteLine("Inserting Country:");
+                Console.WriteLine($"CountryName: {country.CountryName}");
+                Console.WriteLine($"CountryCurrency: {country.CountryCurrency}");
+                Console.WriteLine($"LegalRequirements: {string.Join(",", country.LegalRequirements)}");
+                Console.WriteLine($"MinimumLeave: {country.MinimumLeave}");
 
                 string updateQuery = @"
                 UPDATE Country

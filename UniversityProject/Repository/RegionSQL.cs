@@ -38,48 +38,61 @@ namespace UniversityProject.Repository
 
         public void InsertRegion(Region region)
         {
-            using (var connection = new SqliteConnection(_connectionString))
+            try
             {
-                connection.Open();
-                Console.WriteLine(region.RegionName );
-                string insertQuery = @"
+                using (var connection = new SqliteConnection(_connectionString))
+                {
+                    connection.Open();
+                    Console.WriteLine(region.RegionName);
+                    string insertQuery = @"
                 INSERT INTO Regions (RegionName, CountryId)
                 VALUES (@RegionName, @CountryId)";
 
-                using (var command = new SqliteCommand(insertQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@RegionName", region.RegionName);
-                    command.Parameters.AddWithValue("@CountryId", region.CountryId);
+                    using (var command = new SqliteCommand(insertQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@RegionName", region.RegionName);
+                        command.Parameters.AddWithValue("@CountryId", region.CountryId);
 
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Database error: {ex.Message}");
             }
         }
 
         public List<Region> GetAllRegions()
         {
             var regions = new List<Region>();
-
-            using (var connection = new SqliteConnection(_connectionString))
+            try
             {
-                connection.Open();
-
-                string selectQuery = "SELECT * FROM Regions";
-                using (var command = new SqliteCommand(selectQuery, connection))
-                using (var reader = command.ExecuteReader())
+                using (var connection = new SqliteConnection(_connectionString))
                 {
-                    while (reader.Read())
-                    {
-                        var region = new Region
-                        {
-                            RegionId = reader.GetInt32(0),
-                            RegionName = reader.GetString(1),
-                            CountryId = reader.GetString(2)
-                        };
+                    connection.Open();
 
-                        regions.Add(region);
+                    string selectQuery = "SELECT * FROM Regions";
+                    using (var command = new SqliteCommand(selectQuery, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var region = new Region
+                            {
+                                RegionId = reader.GetInt32(0),
+                                RegionName = reader.GetString(1),
+                                CountryId = reader.GetString(2)
+                            };
+
+                            regions.Add(region);
+                        }
                     }
                 }
+            }
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Database error: {ex.Message}");
             }
 
             return regions;
@@ -87,28 +100,35 @@ namespace UniversityProject.Repository
 
         public Region GetRegionById(int regionId)
         {
-            using (var connection = new SqliteConnection(_connectionString))
+            try
             {
-                connection.Open();
-
-                string selectQuery = "SELECT * FROM Regions WHERE RegionId = @RegionId";
-                using (var command = new SqliteCommand(selectQuery, connection))
+                using (var connection = new SqliteConnection(_connectionString))
                 {
-                    command.Parameters.AddWithValue("@RegionId", regionId);
+                    connection.Open();
 
-                    using (var reader = command.ExecuteReader())
+                    string selectQuery = "SELECT * FROM Regions WHERE RegionId = @RegionId";
+                    using (var command = new SqliteCommand(selectQuery, connection))
                     {
-                        if (reader.Read())
+                        command.Parameters.AddWithValue("@RegionId", regionId);
+
+                        using (var reader = command.ExecuteReader())
                         {
-                            return new Region
+                            if (reader.Read())
                             {
-                                RegionId = reader.GetInt32(0),
-                                RegionName = reader.GetString(1),
-                                CountryId = reader.GetString(2)
-                            };
+                                return new Region
+                                {
+                                    RegionId = reader.GetInt32(0),
+                                    RegionName = reader.GetString(1),
+                                    CountryId = reader.GetString(2)
+                                };
+                            }
                         }
                     }
                 }
+            }
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Database error: {ex.Message}");
             }
 
             return null;
@@ -116,39 +136,54 @@ namespace UniversityProject.Repository
 
         public void UpdateRegion(Region region)
         {
-            using (var connection = new SqliteConnection(_connectionString))
+            try
             {
-                connection.Open();
+                using (var connection = new SqliteConnection(_connectionString))
+                {
+                    connection.Open();
 
-                string updateQuery = @"
+                    string updateQuery = @"
                 UPDATE Regions
                 SET RegionName = @RegionName,
                     CountryId = @CountryId
                 WHERE RegionId = @RegionId";
 
-                using (var command = new SqliteCommand(updateQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@RegionId", region.RegionId);
-                    command.Parameters.AddWithValue("@RegionName", region.RegionName);
-                    command.Parameters.AddWithValue("@CountryId", region.CountryId);
+                    using (var command = new SqliteCommand(updateQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@RegionId", region.RegionId);
+                        command.Parameters.AddWithValue("@RegionName", region.RegionName);
+                        command.Parameters.AddWithValue("@CountryId", region.CountryId);
 
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Database error: {ex.Message}");
             }
         }
 
         public void DeleteRegion(int regionId)
         {
-            using (var connection = new SqliteConnection(_connectionString))
+            try
             {
-                connection.Open();
-
-                string deleteQuery = "DELETE FROM Regions WHERE RegionId = @RegionId";
-                using (var command = new SqliteCommand(deleteQuery, connection))
+                using (var connection = new SqliteConnection(_connectionString))
                 {
-                    command.Parameters.AddWithValue("@RegionId", regionId);
-                    command.ExecuteNonQuery();
+                    connection.Open();
+
+                    string deleteQuery = "DELETE FROM Regions WHERE RegionId = @RegionId";
+                    using (var command = new SqliteCommand(deleteQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@RegionId", regionId);
+                        command.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Database error: {ex.Message}");
+               
             }
         }
     }

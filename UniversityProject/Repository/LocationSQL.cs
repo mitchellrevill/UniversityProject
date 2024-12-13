@@ -103,6 +103,8 @@ namespace UniversityProject.Repository
             {
                 connection.Open();
 
+                Console.WriteLine(locationId + " Gay");
+
                 string selectQuery = "SELECT * FROM Locations WHERE LocationId = @LocationId";
                 using (var command = new SqliteCommand(selectQuery, connection))
                 {

@@ -59,10 +59,10 @@
                             <div class="formContainer">
                                 <form id="addDepartmentForm" class="form-container">
                                     <label for="departmentName">Department Name:</label>
-                                    <input type="text" id="departmentName" name="departmentName" class="form-input" required="">
+                                    <input type="text" id="departmentNameUpdate" name="departmentName" class="form-input" required="">
                                     <label for="departmentDescription">Description:</label>
-                                    <textarea id="DepartmentDescription" name="DepartmentDescription" class="form-input" required=""></textarea>
-                                    <a href="#Department-block" class="close-modal"><button type="button" class="submit-button" onclick="UpdateDepartment()">Add Department</button></a>
+                                    <textarea id="departmentDescriptionUpdate" name="DepartmentDescription" class="form-input" required=""></textarea>
+                                    <a href="#Department-block" class="close-modal"><button type="button" class="submit-button" onclick="UpdateDepartment()">Update Department</button></a>
                                 </form>
                             </div>
                         </div>
@@ -77,14 +77,14 @@
                                         <button type="button" class="submit-button">Back</button>
                                     </a>
                                     <a href="#Department-block" class="close-modal">
-                                        <button type="button" onclick="DeleteDepartment()" class="submit-button">Delete Manager</button>
+                                        <button type="button" onclick="DeleteDepartment()" class="submit-button">Delete Department</button>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!--Containers END -->
-                    <div class="tableColour" style="overflow-y: scroll; height: 500px;">
+                    <div class="tableColour" style="overflow-y: scroll; height: 600px;">
                         <table id="departmentTable" style="overflow-y: scroll;">
                             <thead>
                                 <tr>
@@ -122,9 +122,8 @@
                                     <!-- Dynamically add employee options here -->
                                     </select>
                                     <label for="managerAreaEdit">Manager Area:</label>
-                                    <input type="text" id="managerAreaEdit" name="managerArea" class="form-input" required="">
-                                    <label for="managerIdEdit">Manager ID:</label>
-                                    <input type="text" id="managerIdEdit" name="managerId" class="form-input" required="">
+                                    <input type="text" id="managerArea" name="managerArea" class="form-input" required="">
+
                                     <a href="#Department-block" class="close-modal">
                                         <button type="button" class="submit-button" onclick="addNewManager()">Update Manager</button>
                                     </a>
@@ -148,8 +147,8 @@
                                     </select>
                                     <label for="managerAreaEdit">Manager Area:</label>
                                     <input type="text" id="managerAreaEdit" name="managerArea" class="form-input" required="">
-                                    <label for="managerIdEdit">Manager ID:</label>
-                                    <input type="text" id="managerIdEdit" name="managerId" class="form-input" required="">
+                               
+                                    
                                     <a href="#Department-block" class="close-modal">
                                         <button type="button" class="submit-button" onclick="updateManager()">Update Manager</button>
                                     </a>
@@ -168,7 +167,7 @@
                                         <button type="button" class="submit-button">Back</button>
                                     </a>
                                     <a href="#Department-block" class="close-modal">
-                                        <button type="button" class="submit-button">Delete Manager</button>
+                                        <button type="button" onclick="deleteManager()" class="submit-button">Delete Manager</button>
                                     </a>
                                 </div>
                             </div>
@@ -176,7 +175,7 @@
                     </div>
                     <!--Containers END -->
                     <h2>Manager</h2>
-                    <div class="tableColour" style="overflow-y: scroll; height: 500px;">
+                    <div class="tableColour" style="overflow-y: scroll; height: 600px;">
                         <table id="LocationTable" style="overflow-y: scroll;">
                             <thead>
                                 <tr>
@@ -232,13 +231,13 @@
                     <div class="formContainer">
                         <form class="form-container">
                             <label for="countryName">Country Name:</label>
-                            <input type="text" id="countryName" name="countryName" class="form-input" required="">
+                            <input type="text" id="countryNameUpdate" name="countryName" class="form-input" required="">
                             <label for="countryCurrency">Country Currency:</label>
-                            <input type="text" id="countryCurrency" name="countryCurrency" class="form-input" required="">
+                            <input type="text" id="countryCurrencyUpdate" name="countryCurrency" class="form-input" required="">
                             <label for="legalRequirements">Legal Requirements:</label>
-                            <input type="text" id="legalRequirements" name="legalRequirements" class="form-input" placeholder="Enter each requirement separated by commas" required="">
+                            <input type="text" id="legalRequirementsUpdate" name="legalRequirements" class="form-input" placeholder="Enter each requirement separated by commas" required="">
                             <label for="minimumLeave">Minimum Leave:</label>
-                            <input type="number" id="minimumLeave" name="minimumLeave" class="form-input" required="">
+                            <input type="number" id="minimumLeaveUpdate" name="minimumLeave" class="form-input" required="">
                             <a href="#country-block" class="close-modal"><button type="button" class="submit-button" onclick="updateCountry()">Add Country</button></a>
                         </form>
                     </div>
@@ -253,7 +252,7 @@
                             <a href="#Department-block" class="close-modal">
                                 <button type="button" class="submit-button">Back</button>
                             </a>
-                            <a href="#Department-block" class="close-modal">
+                            <a href="#country-block" class="close-modal">
                                 <button type="button" onclick="DeleteCountry()" class="submit-button">Delete Country</button>
                             </a>
                         </div>
@@ -261,7 +260,7 @@
                 </div>
             </div>
             <!--Containers END -->
-            <div class="tableColour" style="overflow-y: scroll; height: 500px;">
+            <div class="tableColour" style="overflow-y: scroll; height: 600px;">
                 <table id="itemTable2" style="overflow-y: scroll;">
                     <thead>
                         <tr>
@@ -330,20 +329,18 @@
                     <h2>Edit Location</h2>
                     <div class="formContainer">
                         <form class="form-container">
-                            <label for="locationId">Location ID:</label>
-                            <input type="text" id="locationId" name="locationId" class="form-input" required="">
-
+                         
                             <label for="locationNameEdit">Location Name:</label>
                             <input type="text" id="locationNameEdit" name="locationNameEdit" class="form-input" required="">
 
                             <label for="regionIdEdit">Choose a Region:</label>
-                            <select id="location-options" name="locationoptions1">
-                                <!-- Region Options -->
+                            <select class="Region-options" id="RegionOptionsEdit"></select>
+                            <!-- Region Options -->
                             </select>
 
                             <label for="countryIdEdit">Choose a Country:</label>
-                            <select class="country-options" id="CountryOptions4"></select>
-                                <!-- Country Options -->
+                            <select class="country-options" id="CountryOptionsEdit"></select>
+                            <!-- Country Options -->
                             </select>
 
                             <label for="latitudeEdit">Latitude:</label>
@@ -377,7 +374,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tableColour" style="overflow-y: scroll; height: 500px;">
+            <div class="tableColour" style="overflow-y: scroll; height: 600px;">
                 <table id="LocationTable" style="overflow-y: scroll;">
                     <thead>
                         <tr>
@@ -461,7 +458,7 @@
                 </div>
             </div>
             <!--Containers END -->
-            <div class="tableColour" style="overflow-y: scroll; height: 500px;">
+            <div class="tableColour" style="overflow-y: scroll; height: 600px;">
                 <table id="regionTable" style="overflow-y: scroll;">
                     <thead>
                         <tr>

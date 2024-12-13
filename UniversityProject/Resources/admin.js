@@ -43,8 +43,8 @@ async function populateManagerTable() {
             row.innerHTML = `
             <td><input type="checkbox" class="dynamic-checkbox-item" data-id="${item.ManagerId}" data-name="${item.ManagerId}" data-country-id="${item.ManagerId}" aria-label="Select ${item.ManagerId}"></td>
             <td>${item.ManagerId}</td>
-            <td>${item.ManagerArea}</td>
             <td>${item.EmployeeId}</td>
+            <td>${item.ManagerArea}</td>
             `;
 
             tbody.appendChild(row);
@@ -243,10 +243,10 @@ function addNewManager() {
 
     var managerId = Math.floor(Math.random() * 1000) + 1;
     var employeeId = document.getElementById("ManagerOptions1").value;
-    var managerArea = document.getElementById("managerAreaEdit").value;
+    var managerArea = document.getElementById("managerArea").value;
 
     if (!employeeId || !managerArea) {
-        alert("You have not answered all required fields");
+        alert(`Fill fields EmployeeId: ${employeeId}, ManagerArea ${managerArea}`);
         return;
     }
 
@@ -257,49 +257,62 @@ function addNewManager() {
     };
 
     FetchRequest('InsertManager', manager);
-    alert('Successful')
+    populateManagerTable()
 }
 
 function updateManager() {
     console.log("Request received for updating manager");
+    console.log("Req Rec")
 
-    const employeeId = document.getElementById("employeeIdEdit").value;
+    const employeeId = document.getElementById("ManagerOptions2").value;
     const managerArea = document.getElementById("managerAreaEdit").value;
-    const managerId = document.getElementById("managerIdEdit").value;
 
-    if (!employeeId || !managerArea || !managerId) {
-        alert("You have not answered all required fields");
+    const selectedIds = getSelectedIds();
+    if (selectedIds.length === 0) {
+        alert("No departments selected for updating.");
         return;
     }
 
-    var managerPosting = {
-        "ManagerId": managerId,
-        "EmployeeId": employeeId,
-        "ManagerArea": managerArea
-    };
+      if (!employeeId || !managerArea) {
+        alert("You have not answered all required fields");
+        return;
+    }
+    console.log(employeeId + managerArea)
 
-    FetchRequest('UpdateManager', managerPosting);
-    alert('Successful')
+    selectedIds.forEach(element => {
+
+        var managerPosting = {  
+            "ManagerId": element,
+            "EmployeeId": employeeId,
+            "ManagerArea": managerArea
+        };
+
+        FetchRequest('UpdateManager', managerPosting);
+        populateManagerTable()
+    });
 }
 
 function deleteManager() {
     console.log("Request received for deleting manager");
-
-    const managerId = document.getElementById("managerIdEdit").value;
-
-    if (!managerId) {
-        alert("No manager selected for deletion.");
+    getSelectedIds()
+    const selectedIds = getSelectedIds();
+    if (selectedIds.length === 0) {
+        alert("No departments selected for updating.");
         return;
     }
+    console.log("Req Rec")
 
-    var managerPosting = {
-        "ManagerId": managerId,
-        "EmployeeId": "NULL",
-        "ManagerArea": "NULL"
-    };
+    selectedIds.forEach(element => {
+        var managerPosting = {
+            "ManagerId": element,
+            "EmployeeId": "NULL",
+            "ManagerArea": "NULL"
+        };
 
-    FetchRequest('DeleteManager', managerPosting);
-    alert('Successful')
+        FetchRequest('DeleteManager', managerPosting);
+    });
+
+    populateManagerTable()
 }
 
 // Location
@@ -335,14 +348,20 @@ function addNewLocation() {
     console.log("Location object:", Location);
 
     FetchRequest('InsertLocation', Location);
-    alert('Successful')
+    
     populateLocationTable()
 }
 
 function updateLocation() {
     console.log("Request received for updating Location");
+    getSelectedIds()
+    const selectedIds = getSelectedIds();
+    if (selectedIds.length === 0) {
+        alert("No departments selected for updating.");
+        return;
+    }
 
-    const locationId = document.getElementById("locationId").value;
+
     const locationName = document.getElementById("locationNameEdit").value;
     const regionId = document.getElementById("RegionOptionsEdit").value;
     const countryId = document.getElementById("CountryOptionsEdit").value;
@@ -350,51 +369,60 @@ function updateLocation() {
     const longitude = document.getElementById("longitudeEdit").value;
 
     
-    if (!locationId || !locationName || !regionId || !countryId || !latitude || !longitude) {
+    if (!locationName || !regionId || !countryId || !latitude || !longitude) {
         alert("You have not answered all required fields");
         return;
     }
 
-    var LocationPosting = {
-        "LocationId": locationId,
-        "LocationName": locationName,
-        "RegionId": regionId,
-        "CountryId": countryId,
-        "Latitude": parseFloat(latitude),
-        "Longitude": parseFloat(longitude)
-    };
+  
+    selectedIds.forEach(element => {
+        var LocationPosting = {
+            "LocationId": element,
+            "LocationName": locationName,
+            "RegionId": regionId,
+            "CountryId": countryId,
+            "Latitude": parseFloat(latitude),
+            "Longitude": parseFloat(longitude)
+        };
+
+        FetchRequest('UpdateLocation', LocationPosting);
+    });
 
 
-    FetchRequest('UpdateLocation', LocationPosting);
-    alert('Successful')
+
+    
     populateLocationTable()
 }
 
 function deleteLocation() {
     console.log("Request received for deleting Location");
 
-
-    const locationId = document.getElementById("locationIdDelete").value;
-
-
+    getSelectedIds()
+    const selectedIds = getSelectedIds();
+    if (selectedIds.length === 0) {
+        alert("No departments selected for updating.");
+        return;
+    }
     if (!locationId) {
         alert("No Location selected for deletion.");
         return;
     }
 
 
-    var LocationPosting = {
-        "LocationId": locationId,
-        "LocationName": "NULL",
-        "RegionId": "NULL",
-        "CountryId": "NULL",
-        "Latitude": "NULL",
-        "Longitude": "NULL"
-    };
+    
 
+    selectedIds.forEach(element => {
+        var LocationPosting = {
+            "LocationId": element,
+            "LocationName": locationName,
+            "RegionId": regionId,
+            "CountryId": countryId,
+            "Latitude": parseFloat(latitude),
+            "Longitude": parseFloat(longitude)
+        };
 
-    FetchRequest('DeleteLocation', LocationPosting);
-    alert('Successful')
+        FetchRequest('DeleteLocation', LocationPosting);
+    });
     populateLocationTable()
 }
 
@@ -417,11 +445,11 @@ function addNewDepartment() {
         "Description": DepartmentDescription,
     };
     FetchRequest('InsertDepartment', Department);
-    alert('Successful')
+    
     populateDepartmentTable();
 }
 
-function updateDepartment() {
+function UpdateDepartment() {
     console.log("Req Rec")
     const selectedIds = getSelectedIds();
     if (selectedIds.length === 0) {
@@ -443,7 +471,7 @@ function updateDepartment() {
         };
         console.log(DepartmentPosting)
         FetchRequest('UpdateDepartment', DepartmentPosting);
-        alert('Successful')
+        
         populateDepartmentTable();
     });
 }
@@ -465,7 +493,7 @@ async function DeleteDepartment() {
         };
 
         FetchRequest('DeleteDepartment', DepartmentPosting);
-        alert('Successful')
+        
         populateDepartmentTable();
     });
 }
@@ -495,7 +523,7 @@ function addNewCountry() {
     };
 
     FetchRequest('InsertCountry', Country);
-    alert('Successful')
+    
     populateCountryTable();
 }
 
@@ -519,39 +547,38 @@ function updateCountry() {
         var CountryPosting = {
             "CountryId": CountryId,
             "CountryName": CountryName,
-            "Currency": CountryCurrency,
+            "CountryCurrency": CountryCurrency,
             "LegalRequirements": LegalRequirements.split(',').map(item => item.trim()),
             "MinimumLeave": MinimumLeave
         };
         console.log(CountryPosting);
         FetchRequest('UpdateCountry', CountryPosting);
-        alert('Successful')
+        
         populateCountryTable();
     });
 }
 function DeleteCountry() {
     const selectedIds = getSelectedIds();
     if (selectedIds.length === 0) {
-        alert("No countries selected for deletion.");
+        alert("No countries selected for updating.");
         return;
     }
+
+
+    selectedIds.forEach(element => {
+        var CountryId = element;
+        var CountryPosting = {
+            "CountryId": CountryId,
+            "CountryName": "NULL",
+            "Currency": "NULL",
+            "LegalRequirements": [],
+            "MinimumLeave": 0
+        };
+
+        FetchRequest('DeleteCountry', CountryPosting);
+        populateCountryTable();
+    });
 }
-
-selectedIds.forEach(element => {
-    var CountryId = element;
-
-    var CountryPosting = {
-        "CountryId": CountryId,
-        "CountryName": "NULL",
-        "Currency": "NULL",
-        "LegalRequirements": [],
-        "MinimumLeave": 0
-    };
-
-    FetchRequest('DeleteCountry', CountryPosting);
-    populateCountryTable();
-});
-
 
 
 // Regions BUTTONS
@@ -576,7 +603,7 @@ function addNewRegion() {
 
     console.log(Region)
     FetchRequest('InsertRegion', Region);
-    alert('Successful')
+    
     populateRegionTable();
 }
 
@@ -602,7 +629,7 @@ function updateRegion() {
         };
         console.log(RegionPosting);
         FetchRequest('UpdateRegion', RegionPosting);
-        alert('Successful')
+        
         populateRegionTable();
     });
 }
@@ -618,12 +645,12 @@ function DeleteRegion() {
 
         var RegionPosting = {
             "RegionId": RegionId,
-            "RegionName": "NULL",
-            "CountryId": "NULL"
+            "RegionName": "test",
+            "CountryId": 1
         };
 
         FetchRequest('DeleteRegion', RegionPosting);
-        alert('Successful')
+        
         populateRegionTable();
     });
 }
@@ -648,7 +675,12 @@ async function FetchRequest(uri, model) {
     }
 
     try {
-        const response = await fetch(host + '/' + uri, {
+        const url = host + '/' + uri;
+        console.log('URL:', url);
+        console.log('Headers:', headers);
+        console.log('Body:', JSON.stringify(model));
+
+        const response = await fetch(url, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify(model)
@@ -658,11 +690,11 @@ async function FetchRequest(uri, model) {
             const data = await response.json();
             return data;
         } else {
-            throw new Error('Error performing operation');
+            const errorText = await response.text();
+            throw new Error(`Error ${response.status}: ${response.statusText}. ${errorText}`);
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Failed to perform the operation');
         return null;
     }
 }

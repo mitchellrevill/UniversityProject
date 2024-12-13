@@ -10,10 +10,12 @@ function getSelectedIds() {
 }
 populateRegionsOptions()
 populateCountryOptionsEdit()
-//populateManagerOptions()
+populateManagerOptions()
 populateDepartmentOptions()
 populateEmployeeTable()
+
 async function populateEmployeeTable() {
+    console.log("Done")
     try {
         const Departments = await FetchRequestGET('GetAllEmployees');
         if (!Array.isArray(Departments)) {
@@ -243,6 +245,7 @@ async function FetchRequestGET(uri) {
         alert('Failed to perform the operation');
     }
 }
+
 async function populateDepartmentOptions() {
     try {
         const response = await FetchRequestGET('GetAllDepartments');

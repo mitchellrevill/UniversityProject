@@ -42,55 +42,72 @@ namespace UniversityProject.Repository
 
         public void AddJobPost(JobPostings Post)
         {
-            using (var connection = new SqliteConnection(_connectionString))
+            try
             {
-                connection.Open();
-                string insertQuery = @"
+                using (var connection = new SqliteConnection(_connectionString))
+                {
+                    connection.Open();
+                    string insertQuery = @"
                 INSERT INTO JobPostings (postingId, Title, jobdesc, jobtype, hours, salary, LocationId)
                 VALUES (@postingId, @Title, @jobdesc, @jobtype, @hours, @salary, @LocationId)";
 
-                using (var command = new SqliteCommand(insertQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@postingId", Post.postingId);
-                    command.Parameters.AddWithValue("@Title", Post.Title);
-                    command.Parameters.AddWithValue("@jobdesc", Post.JobDescription);
-                    command.Parameters.AddWithValue("@jobtype", Post.JobType);
-                    command.Parameters.AddWithValue("@hours", Post.Hours);
-                    command.Parameters.AddWithValue("@salary", Post.Salary);
-                    command.Parameters.AddWithValue("@locationId", Post.LocationId); 
-                    command.ExecuteNonQuery();
+                    Console.WriteLine(Post.LocationId);
+                    using (var command = new SqliteCommand(insertQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@postingId", Post.postingId);
+                        command.Parameters.AddWithValue("@Title", Post.Title);
+                        command.Parameters.AddWithValue("@jobdesc", Post.JobDescription);
+                        command.Parameters.AddWithValue("@jobtype", Post.JobType);
+                        command.Parameters.AddWithValue("@hours", Post.Hours);
+                        command.Parameters.AddWithValue("@salary", Post.Salary);
+                        command.Parameters.AddWithValue("@LocationId", Post.LocationId);
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Database error: {ex.Message}");
+            }
+
         }
 
         public List<JobPostings> GetAllJobPostings()
         {
-            var jobs = new List<JobPostings>();
-            using (var connection = new SqliteConnection(_connectionString))
+            try
             {
-                connection.Open();
-
-                string selectQuery = "SELECT * FROM JobPostings";
-                using (var command = new SqliteCommand(selectQuery, connection))
-                using (var reader = command.ExecuteReader())
+                var jobs = new List<JobPostings>();
+                using (var connection = new SqliteConnection(_connectionString))
                 {
-                    while (reader.Read())
+                    connection.Open();
+
+                    string selectQuery = "SELECT * FROM JobPostings";
+                    using (var command = new SqliteCommand(selectQuery, connection))
+                    using (var reader = command.ExecuteReader())
                     {
-                        var job = new JobPostings
+                        while (reader.Read())
                         {
-                            postingId = reader.GetString(0),
-                            Title = reader.GetString(1),
-                            JobDescription = reader.GetString(2),
-                            JobType = reader.GetString(3),
-                            Hours = reader.GetString(4),
-                            Salary = reader.GetString(5),
-                            LocationId = reader.GetString(6) 
-                        };
-                        jobs.Add(job);
+                            var job = new JobPostings
+                            {
+                                postingId = reader.GetString(0),
+                                Title = reader.GetString(1),
+                                JobDescription = reader.GetString(2),
+                                JobType = reader.GetString(3),
+                                Hours = reader.GetString(4),
+                                Salary = reader.GetString(5),
+                                LocationId = reader.GetString(6)
+                            };
+                            jobs.Add(job);
+                        }
                     }
                 }
+                return jobs;
             }
-            return jobs;
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Database error: {ex.Message}");
+                return null;
+            }
         }
 
         public void DeleteJob(string postingId)
@@ -110,43 +127,53 @@ namespace UniversityProject.Repository
 
         public JobPostings GetJobPostingById(string postingId)
         {
-            using (var connection = new SqliteConnection(_connectionString))
+            try
             {
-                connection.Open();
-
-                string selectQuery = "SELECT * FROM JobPostings WHERE postingId = @PostingId";
-                using (var command = new SqliteCommand(selectQuery, connection))
+                using (var connection = new SqliteConnection(_connectionString))
                 {
-                    command.Parameters.AddWithValue("@PostingId", postingId);
+                    connection.Open();
 
-                    using (var reader = command.ExecuteReader())
+                    string selectQuery = "SELECT * FROM JobPostings WHERE postingId = @PostingId";
+                    using (var command = new SqliteCommand(selectQuery, connection))
                     {
-                        if (reader.Read())
+                        command.Parameters.AddWithValue("@PostingId", postingId);
+
+                        using (var reader = command.ExecuteReader())
                         {
-                            return new JobPostings
+                            if (reader.Read())
                             {
-                                postingId = reader.GetString(0),
-                                Title = reader.GetString(1),
-                                JobDescription = reader.GetString(2),
-                                JobType = reader.GetString(3),
-                                Hours = reader.GetString(4),
-                                Salary = reader.GetString(5),
-                                LocationId = reader.GetString(6) 
-                            };
+                                return new JobPostings
+                                {
+                                    postingId = reader.GetString(0),
+                                    Title = reader.GetString(1),
+                                    JobDescription = reader.GetString(2),
+                                    JobType = reader.GetString(3),
+                                    Hours = reader.GetString(4),
+                                    Salary = reader.GetString(5),
+                                    LocationId = reader.GetString(6)
+                                };
+                            }
                         }
                     }
                 }
+                return null;
+            }
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Database error: {ex.Message}");
             }
             return null;
         }
 
         public void UpdateJobPosting(JobPostings Post)
         {
-            using (var connection = new SqliteConnection(_connectionString))
+            try
             {
-                connection.Open();
+                using (var connection = new SqliteConnection(_connectionString))
+                {
+                    connection.Open();
 
-                string updateQuery = @"
+                    string updateQuery = @"
                 UPDATE JobPostings
                 SET Title = @Title,
                     Salary = @Salary,
@@ -156,17 +183,22 @@ namespace UniversityProject.Repository
                     LocationId = @LocationId
                 WHERE postingId = @postingId";
 
-                using (var command = new SqliteCommand(updateQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@postingId", Post.postingId);
-                    command.Parameters.AddWithValue("@Title", Post.Title);
-                    command.Parameters.AddWithValue("@jobdesc", Post.JobDescription);
-                    command.Parameters.AddWithValue("@jobtype", Post.JobType);
-                    command.Parameters.AddWithValue("@hours", Post.Hours);
-                    command.Parameters.AddWithValue("@salary", Post.Salary);
-                    command.Parameters.AddWithValue("@LocationId", Post.LocationId); // New field
-                    command.ExecuteNonQuery();
+                    using (var command = new SqliteCommand(updateQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@postingId", Post.postingId);
+                        command.Parameters.AddWithValue("@Title", Post.Title);
+                        command.Parameters.AddWithValue("@jobdesc", Post.JobDescription);
+                        command.Parameters.AddWithValue("@jobtype", Post.JobType);
+                        command.Parameters.AddWithValue("@hours", Post.Hours);
+                        command.Parameters.AddWithValue("@salary", Post.Salary);
+                        command.Parameters.AddWithValue("@LocationId", Post.LocationId); // New field
+                        command.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Database error: {ex.Message}");
             }
         }
     }

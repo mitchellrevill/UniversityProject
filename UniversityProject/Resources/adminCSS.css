@@ -75,7 +75,7 @@
 
 .DepartmentAnal, .Departmentclass {
     flex: 1;
-    height: 650px;
+    height: 800px;
     background-color: white;
     border-radius: 25px;
     margin-left: 10px;
@@ -224,7 +224,7 @@
 
 .countryAnal, .Countryclass {
     flex: 1;
-    height: 650px;
+    height: 800px;
     background-color: white;
     border-radius: 25px;
     margin-left: 10px;
@@ -371,7 +371,7 @@
 
 .regionAnal, .Regionclass {
     flex: 1;
-    height: 650px;
+    height: 800px;
     background-color: white;
     border-radius: 25px;
     margin-left: 10px;

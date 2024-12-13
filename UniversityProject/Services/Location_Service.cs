@@ -37,4 +37,8 @@ public class LocationService : ILocationService
     {
         await Task.Run(() => _locationDatabase.DeleteLocation(locationId));
     }
+    public async Task<Location> GetLocationIdAsync(string locationid)
+    {
+        return await Task.Run(() => _locationDatabase.GetLocationById(locationid));
+    }
 }

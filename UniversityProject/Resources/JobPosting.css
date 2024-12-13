@@ -5,7 +5,7 @@
     padding: 25px;
     width: 90%;
     margin-left: 25px;
-    height: 50%;
+    height: 100%;
 }
 
 .filter-btn-container button {
@@ -46,7 +46,7 @@
 
 .job-form {
     display: inline-block;
-    height: 500px;
+    height: 800px;
     width: 20%;
     margin: 15px;
     margin-top: 0;
@@ -113,7 +113,23 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+#apply {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
 
+    #apply:target {
+        visibility: visible;
+    }
 .submit-button {
     background-color: #007BFF;
     color: white;
