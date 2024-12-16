@@ -1,5 +1,5 @@
-﻿using UniversityProject.Model;
-using UniversityProject.Interfaces;
+﻿using UniversityProject.Interfaces;
+using UniversityProject.Model;
 using UniversityProject.Repository;
 
 public class LeaveRequestService : ILeaveRequestService

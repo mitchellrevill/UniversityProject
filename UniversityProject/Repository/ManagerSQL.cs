@@ -1,6 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
 using UniversityProject.Model;
 
 namespace UniversityProject.Repository

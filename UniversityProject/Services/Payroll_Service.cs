@@ -1,6 +1,6 @@
-﻿using UniversityProject.Model;
+﻿using UniversityProject.Interfaces;
+using UniversityProject.Model;
 using UniversityProject.Repository;
-using UniversityProject.Interfaces;
 
 public class PayrollService : IPayrollService
 {
@@ -34,5 +34,5 @@ public class PayrollService : IPayrollService
         await Task.Run(() => _applicationDatabase.DeletePayroll(PayrollId));
     }
 
-  
+
 }

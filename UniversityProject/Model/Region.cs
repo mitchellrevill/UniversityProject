@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace UniversityProject.Model
+﻿namespace UniversityProject.Model
 {
     public class Region
     {
-        public int RegionId { get; set; } 
+        public int RegionId { get; set; }
         public string RegionName { get; set; }
-        public string CountryId { get; set; } 
+        public string CountryId { get; set; }
     }
 }

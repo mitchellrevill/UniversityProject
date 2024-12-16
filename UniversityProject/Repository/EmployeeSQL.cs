@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using System;
 using UniversityProject.Model;
 
 namespace UniversityProject.Repository
@@ -89,7 +88,7 @@ namespace UniversityProject.Repository
                     command.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
                     command.Parameters.AddWithValue("@CountryId", employee.CountryId);
                     command.Parameters.AddWithValue("@DepartmentId", employee.DepartmentId);
-                    command.Parameters.AddWithValue("@ManagerId", (object)employee.ManagerId ?? DBNull.Value); 
+                    command.Parameters.AddWithValue("@ManagerId", (object)employee.ManagerId ?? DBNull.Value);
                     command.Parameters.AddWithValue("@RegionId", employee.RegionId);
                     command.Parameters.AddWithValue("@EmploymentType", employee.EmploymentType);
                     command.Parameters.AddWithValue("@StartDate", employee.StartDate.ToString("yyyy-MM-dd"));
@@ -127,7 +126,7 @@ namespace UniversityProject.Repository
                             PhoneNumber = reader.GetString(5),
                             CountryId = reader.GetInt32(6),
                             DepartmentId = reader.GetInt32(7),
-                            ManagerId = reader.IsDBNull(8) ? (int?)null : reader.GetInt32(8), // Handle nullable ManagerId
+                            ManagerId = reader.IsDBNull(8) ? (int?)null : reader.GetInt32(8), 
                             RegionId = reader.GetInt32(9),
                             EmploymentType = reader.GetString(10),
                             StartDate = DateTime.Parse(reader.GetString(11)),
@@ -187,7 +186,7 @@ namespace UniversityProject.Repository
             }
             return null;
         }
- 
+
 
         public void UpdateEmployee(Employee employee)
         {
@@ -217,30 +216,30 @@ namespace UniversityProject.Repository
 
 
                 using (var command = new SqliteCommand(updateQuery, connection))
-                    {
-                        command.Parameters.AddWithValue("@EmployeeId", employee.EmployeeId);
-                        command.Parameters.AddWithValue("@FirstName", employee.FirstName);
-                        command.Parameters.AddWithValue("@LastName", employee.LastName);
-                        command.Parameters.AddWithValue("@CompanyEmail", employee.CompanyEmail);
-                        command.Parameters.AddWithValue("@PersonalEmail", employee.PersonalEmail);
-                        command.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
-                        command.Parameters.AddWithValue("@CountryId", employee.CountryId);
-                        command.Parameters.AddWithValue("@DepartmentId", employee.DepartmentId);
-                        command.Parameters.AddWithValue("@ManagerId", (object)employee.ManagerId ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@RegionId", employee.RegionId);
-                        command.Parameters.AddWithValue("@EmploymentType", employee.EmploymentType);
-                        command.Parameters.AddWithValue("@StartDate", employee.StartDate.ToString("yyyy-MM-dd"));
-                        command.Parameters.AddWithValue("@Salary", employee.Salary);
-                        command.Parameters.AddWithValue("@Benefits", employee.Benefits);
-                        command.Parameters.AddWithValue("@Employeetype", employee.Employeetype);
-                        command.Parameters.AddWithValue("@Password", employee.password);
-                        command.Parameters.AddWithValue("@Status", (int)employee.Status);
-                        command.ExecuteNonQuery();
+                {
+                    command.Parameters.AddWithValue("@EmployeeId", employee.EmployeeId);
+                    command.Parameters.AddWithValue("@FirstName", employee.FirstName);
+                    command.Parameters.AddWithValue("@LastName", employee.LastName);
+                    command.Parameters.AddWithValue("@CompanyEmail", employee.CompanyEmail);
+                    command.Parameters.AddWithValue("@PersonalEmail", employee.PersonalEmail);
+                    command.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
+                    command.Parameters.AddWithValue("@CountryId", employee.CountryId);
+                    command.Parameters.AddWithValue("@DepartmentId", employee.DepartmentId);
+                    command.Parameters.AddWithValue("@ManagerId", (object)employee.ManagerId ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@RegionId", employee.RegionId);
+                    command.Parameters.AddWithValue("@EmploymentType", employee.EmploymentType);
+                    command.Parameters.AddWithValue("@StartDate", employee.StartDate.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@Salary", employee.Salary);
+                    command.Parameters.AddWithValue("@Benefits", employee.Benefits);
+                    command.Parameters.AddWithValue("@Employeetype", employee.Employeetype);
+                    command.Parameters.AddWithValue("@Password", employee.password);
+                    command.Parameters.AddWithValue("@Status", (int)employee.Status);
+                    command.ExecuteNonQuery();
                 }
             }
         }
         public void DeleteEmployee(string employeeId)
-        {   
+        {
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();

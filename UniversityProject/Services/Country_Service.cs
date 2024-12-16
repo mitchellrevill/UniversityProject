@@ -1,6 +1,6 @@
-﻿using UniversityProject.Model;
+﻿using UniversityProject.Interfaces;
+using UniversityProject.Model;
 using UniversityProject.Repository;
-using UniversityProject.Interfaces;
 
 public class CountryService : ICountryService
 {
@@ -29,7 +29,7 @@ public class CountryService : ICountryService
 
     public async Task UpdateCountryAsync(Country CountryId)
     {
-        // Ensure you have this method implemented in CountrySQL
+        
         await Task.Run(() => _CountrySQL.UpdateCountry(CountryId));
     }
 

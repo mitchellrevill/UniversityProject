@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using UniversityProject.Interfaces;
 using UniversityProject.Model;
 using UniversityProject.Repository;
-using UniversityProject.Interfaces;
 
 public class ManagerService : IManagerService
 {

@@ -1,8 +1,6 @@
-﻿using UniversityProject.Model;
+﻿using UniversityProject.Interfaces;
+using UniversityProject.Model;
 using UniversityProject.Repository;
-using UniversityProject.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class LocationService : ILocationService
 {

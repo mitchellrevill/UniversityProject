@@ -1,10 +1,10 @@
-﻿using UniversityProject.Model;
-using UniversityProject.Repository;
-using UniversityProject.Interfaces;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using UniversityProject.Interfaces;
+using UniversityProject.Model;
+using UniversityProject.Repository;
 
 public class Employee_Service : IEmployeeService
 {
@@ -43,11 +43,11 @@ public class Employee_Service : IEmployeeService
     {
         try
         {
-           
+
             Console.WriteLine($"Received employee ID: {employee.EmployeeId}");
             Console.WriteLine($"Received employee password: {employee.password}");
 
-           
+
             Employee data = await GetEmployeeByIdAsync(employee.EmployeeId);
 
             if (data == null)
@@ -58,16 +58,16 @@ public class Employee_Service : IEmployeeService
 
             Console.WriteLine($"Fetched employee: {data.EmployeeId}, Password: {data.password}, Role: {data.Employeetype}");
 
-          
+
             if (data.password == employee.password)
             {
                 Console.WriteLine("Password match successful");
 
-                
+
                 string role = data.Employeetype == "Admin" ? "Admin" : "User";
                 Console.WriteLine($"Assigned role: {role}");
 
-               
+
                 var token = GenerateJwtToken(data.EmployeeId, role, data.Employeetype);
                 Console.WriteLine($"Generated token: {token}");
 
@@ -81,7 +81,7 @@ public class Employee_Service : IEmployeeService
         }
         catch (Exception ex)
         {
-           
+
             Console.WriteLine($"Exception occurred: {ex.Message}");
             return new AuthResponse { Message = "Employee Doesn't Exist" };
         }
@@ -96,17 +96,17 @@ public class Employee_Service : IEmployeeService
         var claims = new[]
         {
         new Claim(JwtRegisteredClaimNames.Sub, employeeId),
-        new Claim(ClaimTypes.Role, role), 
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), 
-        new Claim("EmployeeType", employeeType), 
-        new Claim("EmployeeId", employeeId) 
+        new Claim(ClaimTypes.Role, role),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim("EmployeeType", employeeType),
+        new Claim("EmployeeId", employeeId)
     };
 
         var token = new JwtSecurityToken(
             issuer: "mitchellrevill",
             audience: "AccessAPI",
             claims: claims,
-            expires: DateTime.Now.AddHours(12), 
+            expires: DateTime.Now.AddHours(12),
             signingCredentials: credentials
         );
 

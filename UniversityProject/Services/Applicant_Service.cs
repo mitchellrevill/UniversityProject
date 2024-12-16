@@ -1,6 +1,6 @@
-﻿using UniversityProject.Model;
+﻿using UniversityProject.Interfaces;
+using UniversityProject.Model;
 using UniversityProject.Repository;
-using UniversityProject.Interfaces;
 
 public class ApplicantService : IApplicantService
 {

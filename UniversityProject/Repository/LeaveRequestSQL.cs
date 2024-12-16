@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using System.Collections.Generic;
 using UniversityProject.Model;
 
 namespace UniversityProject.Repository
@@ -79,7 +78,7 @@ namespace UniversityProject.Repository
                             StartDate = DateTime.Parse(reader.GetString(2)),
                             EndDate = DateTime.Parse(reader.GetString(3)),
                             HoursUsed = reader.GetInt32(4),
-                            IsApproved = reader.GetString(5) 
+                            IsApproved = reader.GetString(5)
                         });
                     }
                 }

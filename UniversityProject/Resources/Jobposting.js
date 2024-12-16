@@ -74,7 +74,7 @@ async function populatePostingTable() {
 
 
 function addNewJob() {
-    var postingId = Math.random().toString(36).substring(2, 9); // Generate a random ID
+    var postingId = Math.random().toString(36).substring(2, 9); 
     var jobTitle = document.getElementById("jobTitle").value;
     var jobDescription = document.getElementById("jobDescription").value;
     var jobType = document.getElementById("jobType").value;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UniversityProject.Model
+﻿namespace UniversityProject.Model
 {
     public class Department
     {

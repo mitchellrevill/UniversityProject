@@ -1,6 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
 using UniversityProject.Model;
 
 namespace UniversityProject.Repository
@@ -183,7 +181,7 @@ namespace UniversityProject.Repository
             catch (SqliteException ex)
             {
                 Console.WriteLine($"Database error: {ex.Message}");
-               
+
             }
         }
     }

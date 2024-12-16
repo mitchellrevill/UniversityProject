@@ -120,7 +120,7 @@ async function populateEmployeeRequest() {
 
 async function submitLeaveRequest() {
     const hoursBetween = calculateHours();
-    const leaveDetails = await calculateLeave(); // Await the result
+    const leaveDetails = await calculateLeave();
     var employee = await GetEmployee();
 
     console.log(employee)
@@ -129,7 +129,7 @@ async function submitLeaveRequest() {
         console.log(`Total Hours Used: ${totalHoursUsed}`);
         console.log(`Hours Left: ${hoursLeft}`);
 
-        // Use document.getElementById to fetch input values
+        
         const endDate = document.getElementById('endDate').value;
         const startDate = document.getElementById('startDate').value;
 

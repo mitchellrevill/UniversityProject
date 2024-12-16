@@ -13,8 +13,8 @@ namespace UniversityProject.Model
     public class Applicant
     {
         public string applicantId { get; set; }
-        public string firstName { get; set; }   
-       
+        public string firstName { get; set; }
+
         public string postingId { get; set; }
         public string coverletter { get; set; }
         public string lastName { get; set; }

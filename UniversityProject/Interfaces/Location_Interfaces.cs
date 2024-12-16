@@ -1,6 +1,4 @@
 ﻿using UniversityProject.Model;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace UniversityProject.Interfaces
 {
@@ -12,6 +10,6 @@ namespace UniversityProject.Interfaces
         Task UpdateLocationAsync(Location location);
         Task DeleteLocationAsync(string locationId);
         Task<Location> GetLocationIdAsync(string postingId);
-        
+
     }
 }

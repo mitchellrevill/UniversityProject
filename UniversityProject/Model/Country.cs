@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace UniversityProject.Model
+﻿namespace UniversityProject.Model
 {
     public class Country
     {

@@ -1,12 +1,10 @@
-﻿using HRSystem;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using HRSystem;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using UniversityProject.Interfaces;
 using UniversityProject.Model;
 
@@ -81,9 +79,9 @@ public static class MethodHandle
     {
         string requestedPath = req.Url.AbsolutePath.TrimStart('/');
 
-        if (req.HttpMethod == "POST" && _postRoutes.TryGetValue(requestedPath, out var postHandler)) 
+        if (req.HttpMethod == "POST" && _postRoutes.TryGetValue(requestedPath, out var postHandler))
         {
-            await postHandler(req, resp); 
+            await postHandler(req, resp);
         }
         else if (req.HttpMethod == "GET" && _getRoutes.TryGetValue(requestedPath, out var getHandler))
         {
@@ -126,13 +124,13 @@ public static class MethodHandle
 
         if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
         {
-            return false; 
+            return false;
         }
 
-      
+
         string token = authHeader.Substring("Bearer ".Length).Trim();
 
-        return ValidateToken(token, out claimsPrincipal); 
+        return ValidateToken(token, out claimsPrincipal);
     }
 
     private static bool ValidateToken(string token, out ClaimsPrincipal claimsPrincipal)
@@ -155,7 +153,7 @@ public static class MethodHandle
                 IssuerSigningKey = securityKey
             }, out SecurityToken validatedToken);
 
-            claimsPrincipal = principal; 
+            claimsPrincipal = principal;
             return true;
         }
         catch (Exception ex)
@@ -193,7 +191,7 @@ public static class MethodHandle
     }
     // Auth
 
-   
+
     public static async Task GeneratePayrollAsync()
     {
 
@@ -263,8 +261,8 @@ public static class MethodHandle
 
     private static decimal CalculatePay(Employee employee)
     {
-        
-        return employee.Salary / 12; 
+
+        return employee.Salary / 12;
     }
 
 
@@ -401,7 +399,7 @@ public static class MethodHandle
             }
 
             var newEmployee = await ReadRequestBodyAsync<Employee>(req);
-            Console.WriteLine(newEmployee.ManagerId); 
+            Console.WriteLine(newEmployee.ManagerId);
             await employeeService.InsertEmployeeAsync(newEmployee);
             await SendResponse(resp, "Employee inserted successfully.");
         }
@@ -586,7 +584,7 @@ public static class MethodHandle
     }
     private static async Task InsertJobPosting(HttpListenerRequest req, HttpListenerResponse resp)
     {
-     
+
         try
         {
             if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
@@ -605,7 +603,7 @@ public static class MethodHandle
 
             Console.WriteLine("Entered try part 1");
 
-            var newJobPosting= await ReadRequestBodyAsync<JobPostings>(req);
+            var newJobPosting = await ReadRequestBodyAsync<JobPostings>(req);
 
             Console.WriteLine("Entered try part 1.5");
             await jobPostingsService.InsertJobPostingsAsync(newJobPosting);
@@ -650,7 +648,7 @@ public static class MethodHandle
         }
     }
 
-  
+
 
     // APPLICATION
     private static async Task GetAllPayrollsById(HttpListenerRequest req, HttpListenerResponse resp)
@@ -676,7 +674,7 @@ public static class MethodHandle
             var newPayroll = await ReadRequestBodyAsync<Payroll>(req);
             var payload = await payrollService.GetAllPayrollsByIdAsync(newPayroll.EmployeeId);
             string jsonResponse = JsonConvert.SerializeObject(payload);
-            await SendResponse(resp,jsonResponse,"Success");
+            await SendResponse(resp, jsonResponse, "Success");
             Console.WriteLine("Exited try part 1");
         }
         catch (Exception ex)
@@ -1079,7 +1077,7 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
-    
+
     private static async Task UpdateCountry(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
