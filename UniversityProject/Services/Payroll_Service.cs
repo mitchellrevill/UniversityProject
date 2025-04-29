@@ -4,21 +4,47 @@ using UniversityProject.Repository;
 
 public class PayrollService : IPayrollService
 {
+    // Singleton instance
+    private static PayrollService _instance;
+
+
+    private static readonly object _lock = new object();
+
     private readonly PayrollSQL _applicationDatabase;
 
-    public PayrollService(string dbPath)
+  
+    private PayrollService(string dbPath)
     {
         _applicationDatabase = new PayrollSQL(dbPath);
     }
+
+
+    public static PayrollService GetInstance(string dbPath)
+    {
+        if (_instance == null)
+        {
+            lock (_lock) // Ensure thread safety
+            {
+                if (_instance == null)
+                {
+                    _instance = new PayrollService(dbPath);
+                }
+            }
+        }
+        return _instance;
+    }
+
 
     public async Task<IEnumerable<Payroll>> GetAllPayrollsAsync()
     {
         return await Task.Run(() => _applicationDatabase.GetAllPayrolls());
     }
+
     public async Task<IEnumerable<Payroll>> GetAllPayrollsByIdAsync(string employeeId)
     {
         return await Task.Run(() => _applicationDatabase.GetAllPayrollsById(employeeId));
     }
+
     public async Task InsertPayrollAsync(Payroll Payroll)
     {
         await Task.Run(() => _applicationDatabase.InsertPayroll(Payroll));
@@ -33,6 +59,4 @@ public class PayrollService : IPayrollService
     {
         await Task.Run(() => _applicationDatabase.DeletePayroll(PayrollId));
     }
-
-
 }

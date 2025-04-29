@@ -1,9 +1,10 @@
 ﻿using System.Net;
-
+using static AuthRegistry;
 namespace HRSystem
 {
     class HttpServer
     {
+        
         public static HttpListener listener;
         public static string url = "http://localhost:8000/";
         public static int requestCount = 0;
@@ -13,6 +14,7 @@ namespace HRSystem
 
         public static async Task HandleIncomingConnections()
         {
+            AuthRegistry.Initialize();
             bool runServer = true;
 
             while (runServer)

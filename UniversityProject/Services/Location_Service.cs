@@ -4,12 +4,37 @@ using UniversityProject.Repository;
 
 public class LocationService : ILocationService
 {
+    // Singleton instance
+    private static LocationService _instance;
+
+
+    private static readonly object _lock = new object();
+
+
     private readonly LocationSQL _locationDatabase;
 
-    public LocationService(string dbPath)
+  
+    private LocationService(string dbPath)
     {
         _locationDatabase = new LocationSQL(dbPath);
     }
+
+  
+    public static LocationService GetInstance(string dbPath)
+    {
+        if (_instance == null)
+        {
+            lock (_lock) // Ensure thread safety
+            {
+                if (_instance == null)
+                {
+                    _instance = new LocationService(dbPath);
+                }
+            }
+        }
+        return _instance;
+    }
+
 
     public async Task<IEnumerable<Location>> GetAllLocationsAsync()
     {
@@ -35,8 +60,9 @@ public class LocationService : ILocationService
     {
         await Task.Run(() => _locationDatabase.DeleteLocation(locationId));
     }
-    public async Task<Location> GetLocationIdAsync(string locationid)
+
+    public async Task<Location> GetLocationIdAsync(string locationId)
     {
-        return await Task.Run(() => _locationDatabase.GetLocationById(locationid));
+        return await Task.Run(() => _locationDatabase.GetLocationById(locationId));
     }
 }

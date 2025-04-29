@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.Collections.Specialized;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -10,18 +11,20 @@ using UniversityProject.Model;
 
 public static class MethodHandle
 {
-    // Instance Creation
     private static readonly string dbPath = Path.Combine(HttpServer.ResourcesDirectory, "database.db");
-    private static readonly IEmployeeService employeeService = new Employee_Service(dbPath);
-    private static readonly IDepartmentService departmentService = new DepartmentService(dbPath);
-    private static readonly IJobPostingsService jobPostingsService = new JobPostingsService(dbPath);
-    private static readonly IManagerService managerService = new ManagerService(dbPath);
-    private static readonly ICountryService countryService = new CountryService(dbPath);
-    private static readonly IRegionService regionService = new RegionService(dbPath);
-    private static readonly IApplicantService ApplicantService = new ApplicantService(dbPath);
-    private static readonly ILocationService LocationService = new LocationService(dbPath);
-    private static readonly ILeaveRequestService LeaveRequestService = new LeaveRequestService(dbPath);
-    private static readonly IPayrollService payrollService = new PayrollService(dbPath);
+
+    // Adjust all services to use Singleton `GetInstance()` if applicable
+    private static readonly Employee_Service employeeService = new Employee_Service(dbPath);
+    private static readonly DepartmentService departmentService = DepartmentService.GetInstance(dbPath);
+    private static readonly JobPostingsService jobPostingsService = JobPostingsService.GetInstance(dbPath);
+    private static readonly ManagerService managerService = ManagerService.GetInstance(dbPath);
+    private static readonly CountryService countryService = CountryService.GetInstance(dbPath);
+    private static readonly RegionService regionService = RegionService.GetInstance(dbPath);
+    private static readonly ApplicantService applicantService = ApplicantService.GetInstance(dbPath);
+    private static readonly LocationService locationService = LocationService.GetInstance(dbPath);
+    private static readonly LeaveRequestService leaveRequestService = LeaveRequestService.GetInstance(dbPath);
+    private static readonly PayrollService payrollService = PayrollService.GetInstance(dbPath);
+
 
 
     // Get requests
@@ -94,6 +97,65 @@ public static class MethodHandle
         }
     }
 
+   
+    public class JwtAuthStrategy : IAuthStrategy
+    {
+        private readonly TokenValidationParameters _validationParams;
+
+        public JwtAuthStrategy(string issuer, string audience, byte[] signingKey)
+        {
+            _validationParams = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidIssuer = issuer,
+                ValidAudience = audience,
+                IssuerSigningKey = new SymmetricSecurityKey(signingKey)
+            };
+        }
+
+        public bool Authenticate(HttpListenerRequest req, out ClaimsPrincipal claimsPrincipal)
+        {
+            claimsPrincipal = null;
+            var authHeader = req.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                claimsPrincipal = handler.ValidateToken(token, _validationParams, out _);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
+    public class ApiKeyAuthStrategy : IAuthStrategy
+    {
+        private const string HEADER = "X-Api-Key";
+        private readonly HashSet<string> _validKeys;
+
+        public ApiKeyAuthStrategy(IEnumerable<string> validKeys)
+            => _validKeys = new HashSet<string>(validKeys);
+
+        public bool Authenticate(HttpListenerRequest req, out ClaimsPrincipal claimsPrincipal)
+        {
+            claimsPrincipal = null;
+            var key = req.Headers[HEADER];
+            if (string.IsNullOrEmpty(key) || !_validKeys.Contains(key))
+                return false;
+
+            var claims = new[] { new Claim(ClaimTypes.NameIdentifier, "api-client"), new Claim(ClaimTypes.Role, "ApiUser") };
+            claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, "ApiKey"));
+            return true;
+        }
+    }
+
 
     // Auth
     public static bool TokenStatus(HttpListenerRequest req)
@@ -108,61 +170,79 @@ public static class MethodHandle
 
 
             ClaimsPrincipal claimsPrincipal;
-            return ValidateToken(token, out claimsPrincipal);
+            return ValidateTokenAndGetClaims(token, out claimsPrincipal);
         }
 
 
         return false;
     }
-
+    // MARK
     private static bool ValidateTokenAndGetClaims(HttpListenerRequest req, out ClaimsPrincipal claimsPrincipal)
     {
         claimsPrincipal = null;
-
-        // Get the Authorization header
-        string authHeader = req.Headers["Authorization"];
-
-        if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+        foreach (var strat in AuthRegistry.Strategies)
         {
-            return false;
+            if (strat.Authenticate(req, out claimsPrincipal))
+                return true;
         }
-
-
-        string token = authHeader.Substring("Bearer ".Length).Trim();
-
-        return ValidateToken(token, out claimsPrincipal);
+        return false;
     }
 
-    private static bool ValidateToken(string token, out ClaimsPrincipal claimsPrincipal)
+
+    public static bool ValidateTokenAndGetClaims(string token, out ClaimsPrincipal claimsPrincipal)
     {
         claimsPrincipal = null;
-
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVerySecureKeyEvenThisWasntLongEnoughBlyat123456789"));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        var securityKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes("YourVerySecureKeyEvenThisWasntLongEnoughBlyat123456789"));
 
         try
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+            var handler = new JwtSecurityTokenHandler();
+            var principal = handler.ValidateToken(token, new TokenValidationParameters
             {
+                ValidateIssuerSigningKey = true,           
+                IssuerSigningKey = securityKey,
+
                 ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
                 ValidIssuer = "mitchellrevill",
+
+                ValidateAudience = true,
                 ValidAudience = "AccessAPI",
-                IssuerSigningKey = securityKey
+
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero                  
             }, out SecurityToken validatedToken);
 
             claimsPrincipal = principal;
             return true;
         }
+        catch (SecurityTokenExpiredException ex)
+        {
+            Console.WriteLine($"Token expired: {ex.Message}");
+            return false;
+        }
+        catch (SecurityTokenSignatureKeyNotFoundException ex)
+        {
+            Console.WriteLine($"Signature key problem: {ex.Message}");
+            return false;
+        }
+        catch (SecurityTokenInvalidIssuerException ex)
+        {
+            Console.WriteLine($"Invalid issuer: {ex.Message}");
+            return false;
+        }
+        catch (SecurityTokenInvalidAudienceException ex)
+        {
+            Console.WriteLine($"Invalid audience: {ex.Message}");
+            return false;
+        }
         catch (Exception ex)
         {
-            // Handle any exceptions (invalid token, expired, etc.)
-            Console.WriteLine("Token validation failed: " + ex.Message);
+            Console.WriteLine($"Other validation failure: {ex.GetType().Name}: {ex.Message}");
             return false;
         }
     }
+
 
 
     private static bool HasValidRole(ClaimsPrincipal claimsPrincipal, params string[] allowedRoles)
@@ -296,21 +376,21 @@ public static class MethodHandle
         try
         {
 
-            if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
-            {
-                resp.StatusCode = 401; // Unauthorized
-                await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
-                return;
-            }
+                if (!ValidateTokenAndGetClaims(req, out var claimsPrincipal))
+                {
+                    resp.StatusCode = 401; // Unauthorized
+                    await SendResponse(resp, "{\"error\":\"Unauthorized: Invalid token.\"}", "application/json");
+                    return;
+                }
 
-            if (!HasValidRole(claimsPrincipal, "Admin", "User"))
-            {
-                resp.StatusCode = 403; // Forbidden
-                await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
-                return;
-            }
+                if (!HasValidRole(claimsPrincipal, "Admin", "User"))
+                {
+                    resp.StatusCode = 403; // Forbidden
+                    await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
+                    return;
+                }
 
-            var employees = await LeaveRequestService.GetAllLeaveRequestsAsync();
+            var employees = await leaveRequestService.GetAllLeaveRequestsAsync();
             string jsonResponse = JsonConvert.SerializeObject(employees);
             await SendResponse(resp, jsonResponse, "application/json");
         }
@@ -341,7 +421,7 @@ public static class MethodHandle
 
             var newLeaveRequest = await ReadRequestBodyAsync<LeaveRequest>(req);
             Console.WriteLine("HandlerFailure");
-            await LeaveRequestService.InsertLeaveRequestAsync(newLeaveRequest);
+            await leaveRequestService.InsertLeaveRequestAsync(newLeaveRequest);
             await SendResponse(resp, "LeaveRequest inserted successfully.");
         }
         catch (Exception ex)
@@ -351,7 +431,7 @@ public static class MethodHandle
     }
 
     // EMPLOYEE
-    private static async Task GetEmployees(HttpListenerRequest req, HttpListenerResponse resp)
+    public static async Task GetEmployees(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
         {
@@ -380,7 +460,7 @@ public static class MethodHandle
         }
     }
 
-    private static async Task InsertEmployee(HttpListenerRequest req, HttpListenerResponse resp)
+    public static async Task InsertEmployee(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
         {
@@ -684,6 +764,7 @@ public static class MethodHandle
         }
     }
 
+
     private static async Task GetAllApplications(HttpListenerRequest req, HttpListenerResponse resp)
     {
         Console.WriteLine("Method start");
@@ -704,7 +785,9 @@ public static class MethodHandle
             }
 
             Console.WriteLine("Entered method");
-            var Applications = await ApplicantService.GetAllApplicantsAsync();
+
+            var Applications = await applicantService.GetAllApplicantsAsync();
+
             string jsonResponse = JsonConvert.SerializeObject(Applications);
             await SendResponse(resp, jsonResponse, "application/json");
             Console.WriteLine("Method finished");
@@ -714,6 +797,7 @@ public static class MethodHandle
             await HandleError(resp, ex);
         }
     }
+
     private static async Task UpdateApplication(HttpListenerRequest req, HttpListenerResponse resp)
     {
         try
@@ -734,7 +818,7 @@ public static class MethodHandle
 
             var Applications = await ReadRequestBodyAsync<Applicant>
                 (req);
-            await ApplicantService.UpdateApplicantAsync(Applications);
+            await applicantService.UpdateApplicantAsync(Applications);
             await SendResponse(resp, "Employee inserted successfully.");
         }
         catch (Exception ex)
@@ -763,7 +847,7 @@ public static class MethodHandle
 
             var newEmployee = await ReadRequestBodyAsync<Applicant>
                 (req);
-            await ApplicantService.DeleteApplicantAsync(newEmployee.applicantId);
+            await applicantService.DeleteApplicantAsync(newEmployee.applicantId);
             await SendResponse(resp, "Employee inserted successfully.");
         }
         catch (Exception ex)
@@ -789,7 +873,7 @@ public static class MethodHandle
                 return;
             }
             var newApplication = await ReadRequestBodyAsync<Applicant>(req);
-            await ApplicantService.InsertApplicantAsync(newApplication);
+            await applicantService.InsertApplicantAsync(newApplication);
             await SendResponse(resp, "Employee inserted successfully.");
         }
         catch (Exception ex)
@@ -1262,7 +1346,7 @@ public static class MethodHandle
                 await SendResponse(resp, "{\"error\":\"Forbidden: Insufficient permissions.\"}", "application/json");
                 return;
             }
-            var Locations = await LocationService.GetAllLocationsAsync();
+            var Locations = await locationService.GetAllLocationsAsync();
             string jsonResponse = JsonConvert.SerializeObject(Locations);
             await SendResponse(resp, jsonResponse, "application/json");
         }
@@ -1291,7 +1375,7 @@ public static class MethodHandle
             }
             Console.WriteLine("Entered try part 1");
             var location = await ReadRequestBodyAsync<Location>(req);
-            var locationObject = await LocationService.GetLocationIdAsync(location.LocationId);
+            var locationObject = await locationService.GetLocationIdAsync(location.LocationId);
             string jsonResponse = JsonConvert.SerializeObject(locationObject);
             await SendResponse(resp, jsonResponse, "application/json");
             Console.WriteLine("Exited try part 1");
@@ -1320,7 +1404,7 @@ public static class MethodHandle
                 return;
             }
             var newLocation = await ReadRequestBodyAsync<Location>(req);
-            await LocationService.InsertLocationAsync(newLocation);
+            await locationService.InsertLocationAsync(newLocation);
             await SendResponse(resp, "Location inserted successfully.");
         }
         catch (Exception ex)
@@ -1347,7 +1431,7 @@ public static class MethodHandle
                 return;
             }
             var newLocation = await ReadRequestBodyAsync<Location>(req);
-            await LocationService.UpdateLocationAsync(newLocation);
+            await locationService.UpdateLocationAsync(newLocation);
             await SendResponse(resp, "Location inserted successfully.");
         }
         catch (Exception ex)
@@ -1374,7 +1458,7 @@ public static class MethodHandle
                 return;
             }
             var newLocation = await ReadRequestBodyAsync<Location>(req);
-            await LocationService.DeleteLocationAsync(newLocation.LocationId);
+            await locationService.DeleteLocationAsync(newLocation.LocationId);
             await SendResponse(resp, "Location inserted successfully.");
         }
         catch (Exception ex)
@@ -1387,7 +1471,7 @@ public static class MethodHandle
 
 
     // STATIC FOR KNOWN FILE TYPES USED FOR STATIC FILES THAT NEED REQUESTING
-    private static async Task ServeStaticFile(HttpListenerRequest req, HttpListenerResponse resp, string requestedPath)
+    public static async Task ServeStaticFile(HttpListenerRequest req, HttpListenerResponse resp, string requestedPath)
     {
         string filePath = Path.Combine(HttpServer.ResourcesDirectory, requestedPath);
 

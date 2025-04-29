@@ -4,11 +4,33 @@ using UniversityProject.Repository;
 
 public class RegionService : IRegionService
 {
+    // Singleton instance
+    private static RegionService _instance;
+
+
+    private static readonly object _lock = new object();
+
     private readonly RegionSQL _regionDatabase;
 
-    public RegionService(string dbPath)
+
+    private RegionService(string dbPath)
     {
         _regionDatabase = new RegionSQL(dbPath);
+    }
+
+    public static RegionService GetInstance(string dbPath)
+    {
+        if (_instance == null)
+        {
+            lock (_lock) 
+            {
+                if (_instance == null)
+                {
+                    _instance = new RegionService(dbPath);
+                }
+            }
+        }
+        return _instance;
     }
 
     public async Task<IEnumerable<Region>> GetAllRegionsAsync()

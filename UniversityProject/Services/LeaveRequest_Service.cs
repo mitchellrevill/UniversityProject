@@ -4,12 +4,35 @@ using UniversityProject.Repository;
 
 public class LeaveRequestService : ILeaveRequestService
 {
+    // Singleton instance
+    private static LeaveRequestService _instance;
+
+    private static readonly object _lock = new object();
+
+
     private readonly LeaveRequestRepository _repository;
 
-    public LeaveRequestService(string dbPath)
+    private LeaveRequestService(string dbPath)
     {
         _repository = new LeaveRequestRepository(dbPath);
     }
+
+   
+    public static LeaveRequestService GetInstance(string dbPath)
+    {
+        if (_instance == null)
+        {
+            lock (_lock) // Ensure thread safety
+            {
+                if (_instance == null)
+                {
+                    _instance = new LeaveRequestService(dbPath);
+                }
+            }
+        }
+        return _instance;
+    }
+
 
     public async Task<IEnumerable<LeaveRequest>> GetAllLeaveRequestsAsync()
     {

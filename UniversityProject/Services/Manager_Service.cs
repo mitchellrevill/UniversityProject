@@ -4,13 +4,36 @@ using UniversityProject.Repository;
 
 public class ManagerService : IManagerService
 {
+    // Singleton instance
+    private static ManagerService _instance;
+
+
+    private static readonly object _lock = new object();
+
     private readonly ManagerSQL _managerSQL;
 
-    public ManagerService(string dbPath)
+ 
+    private ManagerService(string dbPath)
     {
         _managerSQL = new ManagerSQL(dbPath);
     }
 
+    public static ManagerService GetInstance(string dbPath)
+    {
+        if (_instance == null)
+        {
+            lock (_lock) 
+            {
+                if (_instance == null)
+                {
+                    _instance = new ManagerService(dbPath);
+                }
+            }
+        }
+        return _instance;
+    }
+
+    // Methods remain unchanged
     public async Task<IEnumerable<Manager>> GetAllManagersAsync()
     {
         return await Task.Run(() => _managerSQL.GetAllManagers());
